@@ -1,0 +1,22 @@
+static CtModelId
+static TModelId
+
+public TM_Init()
+{
+	CtModelId = CreateModel("team_red")
+	TModelId = CreateModel("team_blue")
+}
+
+public TM_Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	new client = GetClientOfUserId(GetEventInt(event, "userid"))
+	new team = GetClientTeam(client)
+	if (team == CS_TEAM_CT)
+	{
+		SetEntityModelById(client, CtModelId)
+	}
+	else if (team == CS_TEAM_T)
+	{
+		SetEntityModelById(client, TModelId)
+	}
+}

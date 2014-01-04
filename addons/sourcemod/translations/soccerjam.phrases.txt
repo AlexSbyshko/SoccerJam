@@ -1,0 +1,98 @@
+﻿"Phrases"
+{
+	"YOU_HAVE_BALL"
+	{
+		"en"		"YOU HAVE THE BALL!!"
+	}
+	"MENU_TITLE"
+	{
+		"en"		"Character Upgrade:"
+	}
+	"BALL_RESPAWNED"
+	{
+		"en"		"Ball RESPAWNED!"
+	}
+	"health"
+	{
+		"en"		"Health"
+	}
+	"strength"
+	{
+		"en"		"Strength"
+	}
+	"speed"
+	{
+		"en"		"Speed"
+	}
+	"dexterity"
+	{
+		"en"		"Dexterity"
+	}
+	"disarm"
+	{
+		"en"		"Disarm"
+	}
+	"gravity"
+	{
+		"en"		"Gravity"
+	}
+	"turbo_duration"
+	{
+		"en"		"Turbo Duration"
+	}
+	"turbo_cooldown"
+	{
+		"en"		"Turbo Cooldown"
+	}
+	"longjump_cooldown"
+	{
+		"en"		"LongJump Cooldown"
+	}
+	"HELP_KICK_BALL"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} = Kick ball"
+	}
+	"HELP_UPGRADE_MENU"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} = Upgrade menu"
+	}
+	"HELP_TURBO"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} = Turbo"
+	}
+	"HELP_CURVE_LEFT"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} = Curve ball left"
+	}
+	"HELP_CURVE_RIGHT"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} = Curve ball rigth"
+	}
+	"HELP_HELP"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} (in chat) = this help"
+	}
+	"GOAL"
+	{
+		"en"		"GOAL"
+	}
+	"SCORER"
+	{
+		"#format"	"{1:s}"
+		"en"		"Scorer: {1}"
+	}
+	"RESET_ALL"
+	{
+		"en"		"RESET ALL"
+	}
+	"CANCEL_RESET"
+	{
+		"en"		"CANCEL RESET"
+	}
+}

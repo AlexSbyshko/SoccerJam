@@ -1,0 +1,91 @@
+﻿"Phrases"
+{
+	"YOU_HAVE_BALL"
+	{
+		"ru"		"ВЫ ПОЛУЧИЛИ МЯЧ!!"
+	}
+	"MENU_TITLE"
+	{
+		"ru"		"Прокачка игрока:"
+	}
+	"BALL_RESPAWNED"
+	{
+		"ru"		"Мяч ВЕРНУЛСЯ!"
+	}
+	"health"
+	{
+		"ru"		"Здоровье"
+	}
+	"strength"
+	{
+		"ru"		"Сила"
+	}
+	"speed"
+	{
+		"ru"		"Скорость"	
+	}
+	"dexterity"
+	{
+		"ru"		"Ловкость"
+	}
+	"disarm"
+	{
+		"ru"		"Разоружение"
+	}
+	"gravity"
+	{
+		"ru"		"Гравитация"
+	}
+	"turbo_duration"
+	{
+		"en"		"Длительность турбо"
+	}
+	"turbo_cooldown"
+	{
+		"en"		"Перезарядка турбо"
+	}
+	"longjump_cooldown"
+	{
+		"en"		"Перезарядка прыжка"
+	}
+	"HELP_KICK_BALL"
+	{
+		"ru"		"{1} = Пнуть мяч"
+	}
+	"HELP_UPGRADE_MENU"
+	{
+		"ru"		"{1} = Меню прокачки"
+	}
+	"HELP_TURBO"
+	{
+		"ru"		"{1} = Турбо"
+	}
+	"HELP_CURVE_LEFT"
+	{
+		"ru"		"{1} = Закрутить мяч влево"
+	}
+	"HELP_CURVE_RIGHT"
+	{
+		"ru"		"{1} = Закрутить мяч вправо"
+	}
+	"HELP_HELP"
+	{
+		"ru"		"{1} (в чате) = эта помощь"
+	}
+	"GOAL"
+	{
+		"ru"		"ГОЛ"
+	}
+	"SCORER"
+	{
+		"ru"		"Мяч забил {1}"
+	}
+	"RESET_ALL"
+	{
+		"ru"		"СБРОСИТЬ ВСЕ"
+	}
+	"CANCEL_RESET"
+	{
+		"ru"		"ОТМЕНИТЬ СБРОС"
+	}
+}
