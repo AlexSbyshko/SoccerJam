@@ -14,6 +14,14 @@ public TEST_Init()
 	MatchStats5Id = CreateMatchStats("stats5")
 	RegAdminCmd("sm_t", TEST_Cmd_Test, ADMFLAG_ROOT)
 	RegAdminCmd("sm_t2", TEST_Cmd_Test2, ADMFLAG_ROOT)
+
+	HookEvent("grenade_bounce", Bounced)
+}
+
+public Action:Bounced(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	PrintToChatAll("bounce")
+	return Plugin_Continue
 }
 
 public Action:TEST_Cmd_Test(client, args)
@@ -33,4 +41,25 @@ public Action:TEST_Cmd_Test2(client, args)
 	AddMatchStatsValue(MatchStats4Id, client, 400)
 	AddMatchStatsValue(MatchStats5Id, client, 500)
 	return Plugin_Handled
+}
+
+public OnGameFrame()
+{
+	static solid = 0
+
+	if (IsValidEntity(g_Ball))
+	{
+		solid = GetEntData(g_Ball, g_CollisionOffset)
+		if (solid == 3 || solid == 1)
+		{
+			if (g_IsBallFree)
+			{
+				SetEntitySolidForClients(g_Ball)
+			}
+			else
+			{
+				SetEntityNotSolidForClients(g_Ball)
+			}				
+		}	
+	}
 }

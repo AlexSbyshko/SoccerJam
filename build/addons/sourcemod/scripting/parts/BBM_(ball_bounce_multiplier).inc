@@ -6,7 +6,7 @@ public BBM_Init()
 }
 
 public BBM_OnBallCreated(ballEntity)
-{
+{	
 	SDKHook(ballEntity, SDKHook_Touch, BBM_OnBallTouch)
 }
 

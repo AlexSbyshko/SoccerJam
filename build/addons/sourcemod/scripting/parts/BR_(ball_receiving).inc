@@ -31,7 +31,6 @@ public BR_Event_PrePlayerDeath(Handle:event, const String:name[], bool:dontBroad
 	new client = GetClientOfUserId(GetEventInt(event, "userid"))	
 	if (client == g_BallHolder)
 	{
-		PrintToChatAll("yse")
 		RemoveBallHolder()
 	}
 }

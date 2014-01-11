@@ -53,7 +53,7 @@ KickBall(client)
 	kickOrigin[2] = frontOrigin[2] + BALL_KICK_HEIGHT_ADDITION
 
 	RecreateBall()
-	
+
 	SetBallTeam(GetClientTeam(client))
 
 	TeleportEntity(g_Ball, kickOrigin, NULL_VECTOR, ballVelocity)

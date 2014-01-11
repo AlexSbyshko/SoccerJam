@@ -43,7 +43,7 @@ ClearTimer(&Handle:timer)
 
 stock SetEntitySolidForClients(entity)
 {
-	SetEntData(entity, g_CollisionOffset, 5, 1, true);
+	SetEntData(entity, g_CollisionOffset, 0, 1, true);
 }
 
 stock SetEntityNotSolidForClients(entity)
