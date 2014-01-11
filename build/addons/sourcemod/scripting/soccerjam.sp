@@ -8,7 +8,7 @@
 #include <adminmenu>
 #define REQUIRE_PLUGIN
 
-#define SOCCERJAMSOURCE_VERSION	 "2.0.0"
+#define SOCCERJAMSOURCE_VERSION	 "2.0.1"
 #define SOCCERJAMSOURCE_URL "http://steamcommunity.com/groups/sj-source"
 
 functag public UpgradeFunc(client, Float:upgradeValue)

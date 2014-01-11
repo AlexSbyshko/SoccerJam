@@ -56,6 +56,12 @@ public BALL_OnGoal(team, scorer)
 	HideBall()
 }
 
+RecreateBall()
+{
+	DestroyBall()
+	CreateBall()
+}
+
 CreateBall()
 {
 	g_Ball = CreateEntityByName("hegrenade_projectile")
@@ -181,6 +187,7 @@ RemoveBallHolder()
 
 ClearBall()
 {
+	RecreateBall()
 	SetBallTeam(CS_TEAM_NONE)
 	RemoveBallHolder()
 	SetBallOwner(0)
