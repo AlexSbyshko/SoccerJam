@@ -187,11 +187,6 @@ static FireOnBallReceived(ballHolder, oldBallOwner)
 	Call_Finish()
 }
 
-OnTeamReceivedBall(team)
-{
-	SetEntityRenderColor(g_Ball, g_TeamColors[team][0], g_TeamColors[team][1], g_TeamColors[team][2], g_TeamColors[team][3]);
-}
-
 public Action:CMD_JoinTeam(client, const String:command[], argc) 
 {	
 	if (argc)

@@ -53,7 +53,7 @@ public BALL_OnGoal(team, scorer)
 {
 	g_BallSpawnTeam = GetConVarBool(BallSpawnCenterConVar) ? CS_TEAM_NONE :
 		(team == CS_TEAM_T) ? CS_TEAM_CT : CS_TEAM_T
-	RemoveBall()
+	HideBall()
 }
 
 CreateBall()
@@ -65,6 +65,11 @@ CreateBall()
 	g_BallRadius = GetEntityRadius(g_Ball)
 	SetEntityRenderMode(g_Ball, RENDER_TRANSCOLOR)
 	FireOnBallCreated(g_Ball)
+}
+
+DestroyBall()
+{
+	AcceptEntityInput(g_Ball, "Kill")
 }
 
 ClearBallSpawnPoint()
@@ -161,7 +166,7 @@ RespawnBallNearTeam(team)
 	FireOnBallSpawned(g_Ball, team)
 }
 
-RemoveBall()
+HideBall()
 {
 	SetEntityRenderColor(g_Ball, 0, 0, 0, 0);
 	SetEntityMoveType(g_Ball, MOVETYPE_NONE);
@@ -185,7 +190,12 @@ ClearBall()
 SetBallTeam(team)
 {
 	g_BallTeam = team;
-	OnTeamReceivedBall(team);
+	SetBallTeamColor(team);
+}
+
+SetBallTeamColor(team)
+{
+	SetEntityRenderColor(g_Ball, g_TeamColors[team][0], g_TeamColors[team][1], g_TeamColors[team][2], g_TeamColors[team][3]);
 }
 
 SetBallOwner(client)

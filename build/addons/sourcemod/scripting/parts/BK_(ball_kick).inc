@@ -51,6 +51,11 @@ KickBall(client)
 	kickOrigin[0] = frontOrigin[0]
 	kickOrigin[1] = frontOrigin[1]
 	kickOrigin[2] = frontOrigin[2] + BALL_KICK_HEIGHT_ADDITION
+
+	DestroyBall()
+	CreateBall()
+	SetBallTeam(GetClientTeam(client))
+
 	TeleportEntity(g_Ball, kickOrigin, NULL_VECTOR, ballVelocity)
 	for (new i = 0; i < 3; i++)
 	{
