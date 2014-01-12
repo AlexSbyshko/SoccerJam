@@ -70,7 +70,7 @@ CreateBall()
 	SetEntityModelById(g_Ball, BallModelId)
 	g_BallRadius = GetEntityRadius(g_Ball)
 	SetEntityRenderMode(g_Ball, RENDER_TRANSCOLOR)
-	FireOnBallCreated(g_Ball)
+	FireOnBallCreated(g_Ball)	
 }
 
 DestroyBall()

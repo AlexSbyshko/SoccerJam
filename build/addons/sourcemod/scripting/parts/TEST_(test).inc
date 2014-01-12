@@ -43,7 +43,7 @@ public Action:TEST_Cmd_Test2(client, args)
 	return Plugin_Handled
 }
 
-public OnGameFrame()
+/*public OnGameFrame()
 {
 	static solid = 0
 
@@ -62,4 +62,4 @@ public OnGameFrame()
 			}				
 		}	
 	}
-}
+}*/
