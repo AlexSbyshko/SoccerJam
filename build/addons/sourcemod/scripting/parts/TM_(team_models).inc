@@ -3,8 +3,8 @@ static TModelId
 
 public TM_Init()
 {
-	CtModelId = CreateModel("team_red")
-	TModelId = CreateModel("team_blue")
+	TModelId = CreateModel("team_red")
+	CtModelId = CreateModel("team_blue")
 }
 
 public TM_Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)

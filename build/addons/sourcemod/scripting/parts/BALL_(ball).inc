@@ -53,7 +53,7 @@ public BALL_OnGoal(team, scorer)
 {
 	g_BallSpawnTeam = GetConVarBool(BallSpawnCenterConVar) ? CS_TEAM_NONE :
 		(team == CS_TEAM_T) ? CS_TEAM_CT : CS_TEAM_T
-	HideBall()
+	DestroyBall()
 }
 
 RecreateBall()
@@ -98,28 +98,6 @@ GetBallSpawnOrigin(Float:buffer[3])
 GetBallOrigin(Float:dest[3])
 {
 	Entity_GetAbsOrigin(g_Ball, dest)
-}
-
-SetBallInFront(client)
-{
-	decl Float:origin[3];
-	GetClientFrontBallOrigin(client, origin);
-	TeleportEntity(g_Ball, origin, NULL_VECTOR, g_StartBallVelocity);
-}
-
-GetClientFrontBallOrigin(client, Float:destOrigin[3])
-{
-	decl Float:clientOrigin[3]
-	GetClientAbsOrigin(client, clientOrigin)
-	decl Float:clientEyeAngles[3]
-	GetClientEyeAngles(client, clientEyeAngles)
-	
-	new Float:cos = Cosine(DegToRad(clientEyeAngles[1]))
-	new Float:sin = Sine(DegToRad(clientEyeAngles[1]))
-	
-	destOrigin[0] = clientOrigin[0] + cos * DISTANCE_BETWEEN_PLAYER_AND_BALL
-	destOrigin[1] = clientOrigin[1] + sin * DISTANCE_BETWEEN_PLAYER_AND_BALL
-	destOrigin[2] = clientOrigin[2] + BALL_HOLD_HEIGHT
 }
 
 public bool:BallTraceFilter(entity, mask, any:client)
@@ -170,13 +148,6 @@ RespawnBallNearTeam(team)
 	SetEntityMoveType(g_Ball, MOVETYPE_FLYGRAVITY)
 	TeleportEntity(g_Ball, spawnOrigin, NULL_VECTOR, g_StartBallVelocity)
 	FireOnBallSpawned(g_Ball, team)
-}
-
-HideBall()
-{
-	SetEntityRenderColor(g_Ball, 0, 0, 0, 0);
-	SetEntityMoveType(g_Ball, MOVETYPE_NONE);
-	SetEntityNotSolidForClients(g_Ball);
 }
 
 RemoveBallHolder()
