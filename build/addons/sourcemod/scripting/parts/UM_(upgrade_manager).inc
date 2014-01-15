@@ -1,5 +1,6 @@
-static Handle:MatchCreditsConVar
-static Handle:PublicCreditsConVar
+static Handle:InitialCreditsConVar
+static Handle:ResetUpgradesEnabledConVar
+static Handle:WarmupUpgradesEnabledConVar
 
 const MAX_UPGRADES = 128
 const UPGRADE_NAME_LENGTH = 32
@@ -66,14 +67,7 @@ public ClearClientUpgrades(client)
 	{
 		SetPlayerUpgradeLevel(client, SJUpgrade:upgrade, 0)
 	}
-	if (IsMatchPublic())
-	{
-		PlayerCredits[client] = GetConVarInt(PublicCreditsConVar)
-	}
-	else
-	{
-		PlayerCredits[client] = GetConVarInt(MatchCreditsConVar)
-	}
+	PlayerCredits[client] = GetConVarInt(InitialCreditsConVar)
 }
 
 ////////////
@@ -84,8 +78,9 @@ public UM_Init()
 	CatchingUpgradeId = CreateUpgrade("dexterity", 20.0, 90.0, 5, 1, "%")
 	UpgradeMaxLevelSoundId = CreateSound("upgrade_maxlevel")
 
-	MatchCreditsConVar = CreateConVar("sj_match_credits", "12", "Max credits for upgrades in match mode", 0, true, 0.0)
-	PublicCreditsConVar = CreateConVar("sj_public_credits", "6", "Start credits for upgrades in public mode", 0, true, 0.0)
+	InitialCreditsConVar = CreateConVar("sj_initial_credits", "6", "Start credits for upgrades in public mode", 0, true, 0.0)
+	ResetUpgradesEnabledConVar = CreateConVar("sj_reset_upgrades_enabled", "0", "Enable reset upgrades", 0, true, 0.0, true, 1.0)
+	WarmupUpgradesEnabledConVar = CreateConVar("sj_warmup_upgrades_enabled", "0", "Enable upgrades during WarmUp", 0, true, 0.0, true, 1.0)
 }
 
 public UM_OnPlayerRunCmd(client, &buttons)
@@ -194,6 +189,11 @@ FindUpgradeByName(const String:name[])
 
 ShowUpgradeMenu(client)
 {
+	if (GameRules_GetProp("m_bWarmupPeriod") == 1 && !GetConVarBool(WarmupUpgradesEnabledConVar)) 
+    {
+    	return
+    }
+
 	new Handle:menu = CreateMenu(Upgrade_Handler)
 	decl String:line[128]
 	new currentCredits = PlayerCredits[client]
@@ -223,7 +223,7 @@ ShowUpgradeMenu(client)
 		style = (currentCredits > 0) ? style : ITEMDRAW_DISABLED
 		AddMenuItem(menu, upgradeName, line, style)
 	}
-	if (!Match_IsRunning() && !IsMatchPublic())
+	if (GetConVarBool(ResetUpgradesEnabledConVar))
 	{
 		Format(line, sizeof(line), "%T", "RESET_ALL", client)
 		AddMenuItem(menu, "reset", line)

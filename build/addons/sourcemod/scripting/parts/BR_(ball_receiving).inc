@@ -90,13 +90,16 @@ public BR_OnBallKicked(client)
 
 static CheckPlayerTouchBall(client)
 {
-	if (g_BallOwner == 0 || GetClientTeam(client) != GetClientTeam(g_BallOwner))
-	{		
-		CheckPlayerInterception(client);
-	}
-	else
+	if (IsPlayerAlive(client))
 	{
-		SetBallHolder(client)
+		if (g_BallOwner == 0 || GetClientTeam(client) != GetClientTeam(g_BallOwner))
+		{		
+			CheckPlayerInterception(client);
+		}
+		else
+		{
+			SetBallHolder(client)
+		}
 	}
 }
 

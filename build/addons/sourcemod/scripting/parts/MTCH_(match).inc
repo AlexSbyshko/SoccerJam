@@ -252,13 +252,6 @@ static bool:Match_CheckForWin()
 	return false
 }
 
-bool:Match_IsRunning()
-{
-	return CurrentState == MatchState_FirstHalf
-		|| CurrentState == MatchState_SecondHalf
-		|| CurrentState == MatchState_OverTime
-}
-
 bool:Match_IsWaitingPlayers()
 {
 	return CurrentState == MatchState_Preparing
