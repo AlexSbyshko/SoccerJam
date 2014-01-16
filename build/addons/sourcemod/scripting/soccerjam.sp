@@ -8,7 +8,7 @@
 #include <adminmenu>
 #define REQUIRE_PLUGIN
 
-#define SOCCERJAMSOURCE_VERSION	 "2.0.5"
+#define SOCCERJAMSOURCE_VERSION	 "2.1.0"
 #define SOCCERJAMSOURCE_URL "http://steamcommunity.com/groups/sj-source"
 
 functag public UpgradeFunc(client, Float:upgradeValue)
@@ -74,7 +74,7 @@ public Plugin:myinfo =
 {
 	name = "SoccerJam: Source",
 	author = "Alex Sang",
-	description = "SoccerJam mod for CS:S/CS:GO",
+	description = "SoccerJam mod for CS:GO",
 	version = SOCCERJAMSOURCE_VERSION,
 	url = SOCCERJAMSOURCE_URL
 }
@@ -118,7 +118,7 @@ public OnPluginStart()
 	RegisterPart("PAC") // Player Attack Check
 	RegisterPart("PR") // Player Respawn
 	RegisterPart("RBAH") // Remove Bomb And Hostages
-	//RegisterPart("RS") // Reward System
+	RegisterPart("RS") // Reward System
 	RegisterPart("RTE") // Round Time Extend
 	RegisterPart("RWOS") // Remove Weapons On Spawn
 	RegisterPart("SG") // Speed and Gravity
