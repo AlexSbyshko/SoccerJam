@@ -13,7 +13,7 @@ public BK_Init()
 	KickStrengthUpgradeId = CreateUpgrade("strength", 650.0, 1000.0, 5, 1)
 	KickSoundId = CreateSound("ball_kick")
 
-	KickDistanceConVar = CreateConVar("sj_kick_distance", "60", "Distance between the player and the ball in kick", 0, true, 1.0)
+	KickDistanceConVar = CreateConVar("sj_kick_distance", "55", "Distance between the player and the ball in kick", 0, true, 1.0)
 }
 
 public BK_OnPlayerRunCmd(client, &buttons)

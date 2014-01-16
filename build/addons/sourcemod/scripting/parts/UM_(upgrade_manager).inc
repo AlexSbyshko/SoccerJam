@@ -2,6 +2,8 @@ static Handle:InitialCreditsConVar
 static Handle:ResetUpgradesEnabledConVar
 static Handle:WarmupUpgradesEnabledConVar
 
+static Handle:OnClientResetUpgradesForward
+
 const MAX_UPGRADES = 128
 const UPGRADE_NAME_LENGTH = 32
 const UPGRADE_MEAS_NAME_LENGTH = 8
@@ -68,6 +70,7 @@ public ClearClientUpgrades(client)
 		SetPlayerUpgradeLevel(client, SJUpgrade:upgrade, 0)
 	}
 	PlayerCredits[client] = GetConVarInt(InitialCreditsConVar)
+	FireOnClientResetUpgrades(client)
 }
 
 ////////////
@@ -78,9 +81,12 @@ public UM_Init()
 	CatchingUpgradeId = CreateUpgrade("dexterity", 20.0, 90.0, 5, 1, "%")
 	UpgradeMaxLevelSoundId = CreateSound("upgrade_maxlevel")
 
-	InitialCreditsConVar = CreateConVar("sj_initial_credits", "6", "Start credits for upgrades", 0, true, 0.0)
+	InitialCreditsConVar = CreateConVar("sj_initial_credits", "12", "Start credits for upgrades", 0, true, 0.0)
 	ResetUpgradesEnabledConVar = CreateConVar("sj_reset_upgrades_enabled", "0", "Enable reset upgrades", 0, true, 0.0, true, 1.0)
 	WarmupUpgradesEnabledConVar = CreateConVar("sj_warmup_upgrades_enabled", "0", "Enable upgrades during Warmup", 0, true, 0.0, true, 1.0)
+
+	OnClientResetUpgradesForward = CreateForward(ET_Ignore, Param_Cell)
+	RegisterCustomForward(OnClientResetUpgradesForward, "OnClientResetUpgrades")
 }
 
 public UM_OnPlayerRunCmd(client, &buttons)
@@ -287,4 +293,11 @@ Float:GetPlayerCatchingPercent(client)
 Float:GetPlayerUpgradeValue(client, upgrade)
 {
 	return Float:PlayerUpgradeValue[client][upgrade]
+}
+
+static FireOnClientResetUpgrades(client)
+{
+	Call_StartForward(OnClientResetUpgradesForward)
+	Call_PushCell(client)
+	Call_Finish()
 }

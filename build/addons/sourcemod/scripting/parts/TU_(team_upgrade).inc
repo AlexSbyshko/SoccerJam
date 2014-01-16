@@ -1,15 +1,15 @@
-static Handle:CreditsForPublicGoalConVar
+static Handle:GoalCreditsAdditionGoalConVar
 
 static AdditionCreditsCount
 
 public TU_Init()
 {
-	CreditsForPublicGoalConVar = CreateConVar("sj_credits_for_goal", "2", "Number of credits that get all players at the goal", 0, true, 0.0)
+	GoalCreditsAdditionGoalConVar = CreateConVar("sj_goal_credits_addition", "0", "Number of credits that get all players at the goal", 0, true, 0.0)
 }
 
 public TU_OnGoal(team, scorer)
 {
-	new creditsForGoal = GetConVarInt(CreditsForPublicGoalConVar)
+	new creditsForGoal = GetConVarInt(GoalCreditsAdditionGoalConVar)
 	for (new i = 1; i <= MaxClients; i++)
 	{
 		AddPlayerCredits(i, creditsForGoal)
@@ -32,4 +32,9 @@ public TU_OnStartPublic()
 public TU_OnStartMatch()
 {
 	AdditionCreditsCount = 0
+}
+
+public TU_OnClientResetUpgrades(client)
+{
+	AddPlayerCredits(client, AdditionCreditsCount)
 }
