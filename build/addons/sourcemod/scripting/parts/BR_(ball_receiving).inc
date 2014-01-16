@@ -20,58 +20,26 @@ public BR_Init()
 	AddCommandListener(CMD_JoinTeam, "jointeam")
 }
 
-public BR_OnBallCreated(ballEntity)
-{
-	SDKHook(ballEntity, SDKHook_ShouldCollide, BR_OnBallShouldCollide)
-}
-
-public bool:BR_OnBallShouldCollide(entity, collisiongroup, contentsmask, bool:result)
-{
-	if (collisiongroup == 8 && g_IsBallFree)
-	{
-		decl Float:ballOrigin[3]
-		GetEntPropVector(entity, Prop_Send, "m_vecOrigin", ballOrigin)
-		new chosenPlayer = 0
-		new Float:chosenPlayerDistance = 999999.0
-		new Float:currentDistance
-		for (new client = 1; client <= MaxClients; client++)
-		{
-			if (IsClientInGame(client))
-			{
-				decl Float:clientOrigin[3]
-				GetClientAbsOrigin(client, clientOrigin)
-				currentDistance = GetVectorDistance(ballOrigin, clientOrigin)
-				if (currentDistance < chosenPlayerDistance)
-				{
-					chosenPlayer = client
-					chosenPlayerDistance = currentDistance
-				}
-			}
-		}
-		if (chosenPlayer > 0)
-		{			
-			CheckPlayerTouchBall(chosenPlayer)
-		}
-	}
-	return result
-}
-
 public BR_Event_PlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	new client = GetClientOfUserId(GetEventInt(event, "userid"))
-	SDKHook(client, SDKHook_ShouldCollide, BR_OnClientShouldCollide)
+	SDKHook(client, SDKHook_Touch, BR_OnClientTouch)
 }
 
-public bool:BR_OnClientShouldCollide(client, collisiongroup, contentsmask, bool:result)
+public BR_OnClientTouch(client, entity)
 {
-	const BALL_CONTENT_MASK = 1107320971
-	if (contentsmask == BALL_CONTENT_MASK 
-		&& g_IsBallFree
-		&& IsPlayerAlive(client))
+	if (entity == g_Ball)
 	{
-		CheckPlayerTouchBall(client);
+		if (!IsPlayerAlive(client))
+		{
+			return;
+		}
+		if (!g_IsBallFree)
+		{
+			return;
+		}
+		CheckPlayerTouchBall(client)
 	}
-	return result
 }
 
 public BR_Event_PrePlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
@@ -188,7 +156,6 @@ SetBallHolder(client)
 		SetBallOwner(client)
 		GetClientName(client, g_BallOwnerName, sizeof(g_BallOwnerName))
 		SetBallNotFree()
-		SDKUnhook(g_Ball, SDKHook_ShouldCollide, BR_OnBallShouldCollide)
 		FireOnBallReceived(client, oldBallOwner)
 	}
 }

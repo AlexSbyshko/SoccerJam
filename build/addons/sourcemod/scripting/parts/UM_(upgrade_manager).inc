@@ -78,9 +78,9 @@ public UM_Init()
 	CatchingUpgradeId = CreateUpgrade("dexterity", 20.0, 90.0, 5, 1, "%")
 	UpgradeMaxLevelSoundId = CreateSound("upgrade_maxlevel")
 
-	InitialCreditsConVar = CreateConVar("sj_initial_credits", "6", "Start credits for upgrades in public mode", 0, true, 0.0)
+	InitialCreditsConVar = CreateConVar("sj_initial_credits", "6", "Start credits for upgrades", 0, true, 0.0)
 	ResetUpgradesEnabledConVar = CreateConVar("sj_reset_upgrades_enabled", "0", "Enable reset upgrades", 0, true, 0.0, true, 1.0)
-	WarmupUpgradesEnabledConVar = CreateConVar("sj_warmup_upgrades_enabled", "0", "Enable upgrades during WarmUp", 0, true, 0.0, true, 1.0)
+	WarmupUpgradesEnabledConVar = CreateConVar("sj_warmup_upgrades_enabled", "0", "Enable upgrades during Warmup", 0, true, 0.0, true, 1.0)
 }
 
 public UM_OnPlayerRunCmd(client, &buttons)

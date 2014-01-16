@@ -41,6 +41,3 @@ new Float:g_BallDistOrigin[2][3]
 
 new Float:g_PlayerSpeedMultiplier[MAXPLAYERS+1]
 new Float:g_PlayerGravityMultiplier[MAXPLAYERS+1]
-
-// ENGINE
-new g_CollisionOffset

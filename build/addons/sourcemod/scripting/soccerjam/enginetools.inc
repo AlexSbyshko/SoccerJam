@@ -1,7 +1,7 @@
 #define FFADE_OUT			0x0002
 #define	FFADE_PURGE		0x0010  
 
-stock FadeClient(client, duration, const color[4]) 
+FadeClient(client, duration, const color[4]) 
 {
 	new Handle:hFadeClient = StartMessageOne("Fade",client)
 	if (GetUserMessageType() == UM_Protobuf)
@@ -24,14 +24,6 @@ stock FadeClient(client, duration, const color[4])
 	EndMessage()
 }
 
-bool:IsEntitySolidForClients(entity)
-{
-	decl String:classname[32];
-	GetEdictClassname(entity, classname, sizeof(classname));	
-	return StrContains(classname, "trigger_", false) < 0 
-		&& StrContains(classname, "func_", false) < 0;
-}
-
 ClearTimer(&Handle:timer)
 {
 	if (timer != INVALID_HANDLE)
@@ -41,33 +33,10 @@ ClearTimer(&Handle:timer)
 	timer = INVALID_HANDLE;
 }
 
-stock SetEntitySolidForClients(entity)
-{
-	SetEntData(entity, g_CollisionOffset, 5, 1, true);
-}
-
-stock SetEntityNotSolidForClients(entity)
-{
-	SetEntData(entity, g_CollisionOffset, 2, 1, true);
-}
-
-stock Float:GetEntityRadius(entity)
+Float:GetEntityRadius(entity)
 {
 	decl Float:vecMax[3];
 	Entity_GetMaxSize(entity, vecMax);
 	new highestSizeIndex = Array_FindHighestValue(vecMax, sizeof(vecMax));
 	return vecMax[highestSizeIndex];
-}
-
-stock SendTopMessageToAll(String:text[], any:...)
-{
-	decl String:message[100];
-	VFormat(message, sizeof(message), text, 2);
-	for (new i = 1; i <= MaxClients; i++)
-	{
-		if (IsClientInGame(i))
-		{
-			SendTopMessage(i, message);			
-		}
-	}	
 }

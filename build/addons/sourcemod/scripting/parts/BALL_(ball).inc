@@ -70,7 +70,10 @@ CreateBall()
 	SetEntityModelById(g_Ball, BallModelId)
 	g_BallRadius = GetEntityRadius(g_Ball)
 	SetEntityRenderMode(g_Ball, RENDER_TRANSCOLOR)
-	FireOnBallCreated(g_Ball)	
+	SetEntProp(g_Ball, Prop_Data, "m_CollisionGroup", 2)
+	SetEntProp(g_Ball, Prop_Send, "m_usSolidFlags", 12) //FSOLID_NOT_SOLID|FSOLID_TRIGGER
+
+	FireOnBallCreated(g_Ball)
 }
 
 DestroyBall()
@@ -184,13 +187,13 @@ SetBallOwner(client)
 SetBallFree()
 {
 	g_IsBallFree = true;
-	SetEntitySolidForClients(g_Ball);
+//	SetEntitySolidForClients(g_Ball);
 }
 
 SetBallNotFree()
 {
 	g_IsBallFree = false;
-	SetEntityNotSolidForClients(g_Ball);
+//	SetEntityNotSolidForClients(g_Ball);
 }
 
 SetBallCatchEffect()

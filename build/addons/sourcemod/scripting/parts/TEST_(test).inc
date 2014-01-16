@@ -28,7 +28,8 @@ public Action:TEST_Cmd_Test(client, args)
 {
 	ReplyToCommand(client, "test1")
 	//ShowMatchStats(client)
-	ShowAssistants(client)
+	//ShowAssistants(client)
+	TeleportEntity(g_Ball, NULL_VECTOR, NULL_VECTOR, g_StartBallVelocity)
 	return Plugin_Handled
 }
 
@@ -42,24 +43,3 @@ public Action:TEST_Cmd_Test2(client, args)
 	AddMatchStatsValue(MatchStats5Id, client, 500)
 	return Plugin_Handled
 }
-
-/*public OnGameFrame()
-{
-	static solid = 0
-
-	if (IsValidEntity(g_Ball))
-	{
-		solid = GetEntData(g_Ball, g_CollisionOffset)
-		if (solid == 3 || solid == 1)
-		{
-			if (g_IsBallFree)
-			{
-				SetEntitySolidForClients(g_Ball)
-			}
-			else
-			{
-				SetEntityNotSolidForClients(g_Ball)
-			}				
-		}	
-	}
-}*/
