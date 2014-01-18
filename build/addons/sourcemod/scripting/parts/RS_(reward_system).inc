@@ -4,8 +4,8 @@ static Handle:InterceptionRewardConVar
 static Handle:GoalRewardConVar
 static Handle:GoalTeamRewardConVar
 static Handle:AssistingRewardConVar
-static Handle:LevelCreditCostMultConVar
-static Handle:LevelCreditCostAddConVar
+static Handle:LevelCostMultConVar
+static Handle:LevelCostAddConVar
 static Handle:CreditsPerLevelConVar
 
 static PlayerCash[MAXPLAYERS+1]
@@ -19,9 +19,9 @@ public RS_Init()
 
 	CreditsPerLevelConVar = CreateConVar("sj_credits_per_level_addition", "1", "Credits for level", 0, true, 0.0)
 
-	CreditCostConVar = CreateConVar("sj_initial_credit_cost", "500", "Cost of one credit", 0, true, 1.0)
-	LevelCreditCostMultConVar = CreateConVar("sj_credit_cost_per_level_multiplier", "1.2", "Level cost multiplier", 0, true, 1.0)
-	LevelCreditCostAddConVar = CreateConVar("sj_credit_cost_per_level_addition", "0", "Level cost multiplier", 0, true, 0.0)
+	CreditCostConVar = CreateConVar("sj_first_level_cost", "500", "Level 1 cost", 0, true, 1.0)
+	LevelCostMultConVar = CreateConVar("sj_level_cost_multiplier", "1.2", "Level cost multiplier", 0, true, 1.0)
+	LevelCostAddConVar = CreateConVar("sj_level_cost_addition", "0", "Level cost addition", 0, true, 0.0)
 	
 	InterceptionRewardConVar = CreateConVar("sj_interception_reward", "50", "Reward for ball interception", 0, true, 0.0)
 	GoalTeamRewardConVar = CreateConVar("sj_goal_team_reward", "100", "Reward ALL players in team for goal scoring", 0, true, 0.0)
@@ -87,8 +87,8 @@ GetCreditCostForPlayer(client)
 {
 	new playerLevel = PlayerLevel[client]
 	new initialCost = GetConVarInt(CreditCostConVar)
-	new costAddition = GetConVarInt(LevelCreditCostAddConVar)
-	new Float:costMultiplier = GetConVarFloat(LevelCreditCostMultConVar)
+	new costAddition = GetConVarInt(LevelCostAddConVar)
+	new Float:costMultiplier = GetConVarFloat(LevelCostMultConVar)
 
 	
 	new Float:creditCost = float(initialCost)
