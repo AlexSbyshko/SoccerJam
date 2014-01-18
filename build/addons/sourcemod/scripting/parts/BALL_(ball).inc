@@ -70,8 +70,8 @@ CreateBall()
 	SetEntityModelById(g_Ball, BallModelId)
 	g_BallRadius = GetEntityRadius(g_Ball)
 	SetEntityRenderMode(g_Ball, RENDER_TRANSCOLOR)
-	SetEntProp(g_Ball, Prop_Data, "m_CollisionGroup", 2)
-	SetEntProp(g_Ball, Prop_Send, "m_usSolidFlags", 12) //FSOLID_NOT_SOLID|FSOLID_TRIGGER
+
+	SetEntProp(g_Ball, Prop_Send, "m_usSolidFlags", FSOLID_NOT_SOLID | FSOLID_TRIGGER)
 
 	FireOnBallCreated(g_Ball)
 }

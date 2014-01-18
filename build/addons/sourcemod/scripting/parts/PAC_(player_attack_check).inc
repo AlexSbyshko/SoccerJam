@@ -29,7 +29,7 @@ public Action:PAC_OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &da
 	}
 	decl Float:playerOrig[3];
 	decl Float:ballOrigin[3];
-	if (g_Ball)
+	if (IsValidEntity(g_Ball))
 	{
 		Entity_GetAbsOrigin(g_Ball, ballOrigin);
 		Entity_GetAbsOrigin(victim, playerOrig);
