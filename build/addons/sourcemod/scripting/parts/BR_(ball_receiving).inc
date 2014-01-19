@@ -20,10 +20,39 @@ public BR_Init()
 	AddCommandListener(CMD_JoinTeam, "jointeam")
 }
 
+public BR_OnBallCreated(ballEntity)
+{
+	//SDKHook(ballEntity, SDKHook_ShouldCollide, BR_OnBallShouldCollide)
+	SDKHook(ballEntity, SDKHook_Touch, BR_OnBallTouch)
+}
+
+public BR_OnBallTouch(ball, entity)
+{
+	if (entity >= 1 && entity <= MaxClients)
+	{
+		CheckPlayerTouchBall(entity)
+	}
+}
+
 public BR_Event_PlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))
+	/*new client = GetClientOfUserId(GetEventInt(event, "userid"))
 	SDKHook(client, SDKHook_Touch, BR_OnClientTouch)
+	SDKHook(client, SDKHook_ShouldCollide, BR_OnClientShouldCollide)*/
+
+	//SetEntProp(client, Prop_Send, "m_usSolidFlags", FSOLID_NOT_SOLID | FSOLID_TRIGGER)
+}
+
+public bool:BR_OnClientShouldCollide(client, collisiongroup, contentsmask, bool:result)
+{
+	const BALL_CONTENT_MASK = 1107320971
+	if (contentsmask == BALL_CONTENT_MASK 
+		&& g_IsBallFree
+		&& IsPlayerAlive(client))
+	{
+		CheckPlayerTouchBall(client);
+	}
+	return result
 }
 
 public BR_OnClientTouch(client, entity)
