@@ -8,9 +8,13 @@ static Handle:LevelCostMultConVar
 static Handle:LevelCostAddConVar
 static Handle:CreditsPerLevelConVar
 
+static Handle:LevelCostCacheTrie
+
 static PlayerCash[MAXPLAYERS+1]
 static PlayerTotalCash[MAXPLAYERS+1]
 static PlayerLevel[MAXPLAYERS+1]
+
+static LevelUpSoundId
 
 
 public RS_Init()
@@ -27,11 +31,24 @@ public RS_Init()
 	GoalTeamRewardConVar = CreateConVar("sj_goal_team_reward", "100", "Reward ALL players in team for goal scoring", 0, true, 0.0)
 	GoalRewardConVar = CreateConVar("sj_goal_reward", "300", "Reward goal scoring", 0, true, 0.0)
 	AssistingRewardConVar = CreateConVar("sj_assisting_reward", "200", "Reward assisting", 0, true, 0.0)
+
+	LevelCostCacheTrie = CreateTrie()
+
+	LevelUpSoundId = CreateSound("level_up")
 }
 
 public RS_OnStartPublic()
 {
 	ForEachClient(ResetPlayerCash)
+}
+
+public RS_OnGetUpgradeInfo(client, String:info[512])
+{
+	if (!GetConVarBool(RewardsEnabledConVar))
+	{
+		return
+	}
+	Format(info, sizeof(info), "%s\nLevel: %i\nNext level: $%i\n\n", info, PlayerLevel[client], GetNextLevelCost(client))
 }
 
 public RS_OnBallReceived(ballHolder, oldBallOwner)
@@ -61,13 +78,18 @@ public RS_OnClientAssisted(client)
 	AddPlayerCash(client, GetConVarInt(AssistingRewardConVar))
 }
 
+public RS_OnClientResetUpgrades(client)
+{
+	AddPlayerCredits(client, GetConVarInt(CreditsPerLevelConVar) * PlayerLevel[client])
+}
+
 AddPlayerCash(client, value)
 {	
 	if (!GetConVarBool(RewardsEnabledConVar))
 	{
 		return
 	}
-	new creditCost = GetCreditCostForPlayer(client)
+	new creditCost = GetNextLevelCost(client)
 
 	PlayerTotalCash[client] += value
 	
@@ -77,25 +99,55 @@ AddPlayerCash(client, value)
 		PlayerCash[client] -= creditCost
 		AddPlayerCredits(client, GetConVarInt(CreditsPerLevelConVar))
 		PlayerLevel[client]++
-		PrintSJMessage(client, "You have reached level %i and got %i credits. Next level cost: $%i", PlayerLevel[client], GetConVarInt(CreditsPerLevelConVar), GetCreditCostForPlayer(client))
+		PlaySoundByIdToClient(client, LevelUpSoundId)
+		PrintSJMessage(client, "You have reached level %i and got %i credits. Next level cost: $%i", PlayerLevel[client], GetConVarInt(CreditsPerLevelConVar), GetNextLevelCost(client))
 		AddPlayerCash(client, 0)
 	}
 	UpdateClientVisibleCash(client)
 }
 
-GetCreditCostForPlayer(client)
+GetNextLevelCost(client)
 {
 	new playerLevel = PlayerLevel[client]
+	return GetLevelCost(playerLevel + 1)
+}
+
+GetLevelCost(level)
+{
+	decl String:levelNumberString[8]
+	IntToString(level, levelNumberString, sizeof(levelNumberString))
+	
+	new cost
+	if (GetTrieValue(LevelCostCacheTrie, levelNumberString, cost))
+	{
+		return cost
+	}
+
+	cost = CalculateLevelCost(level)
+	SetTrieValue(LevelCostCacheTrie, levelNumberString, cost)
+
+	return cost
+}
+
+CalculateLevelCost(level)
+{
 	new initialCost = GetConVarInt(CreditCostConVar)
+	new Float:creditCost = float(initialCost)
+	
+	if (level == 0)
+	{
+		return RoundFloat(creditCost)
+	}
+	
 	new costAddition = GetConVarInt(LevelCostAddConVar)
 	new Float:costMultiplier = GetConVarFloat(LevelCostMultConVar)
-
 	
-	new Float:creditCost = float(initialCost)
-	for (new i = 0; i < playerLevel; i++)
+	
+	for (new i = 0; i < level - 1; i++)
 	{
 		creditCost = (creditCost * costMultiplier) + costAddition
 	}
+
 	return RoundFloat(creditCost)
 }
 
