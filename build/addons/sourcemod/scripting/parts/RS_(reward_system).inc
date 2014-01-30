@@ -57,25 +57,34 @@ public RS_OnBallReceived(ballHolder, oldBallOwner)
 	if (oldBallOwner > 0
 		&& team != GetClientTeam(oldBallOwner))
 	{
-		AddPlayerCash(ballHolder, GetConVarInt(InterceptionRewardConVar))
+		new credits =  GetConVarInt(InterceptionRewardConVar)
+		PrintSJMessage(ballHolder, "You have gained %i for %s", credits, "Interception")
+		AddPlayerCash(ballHolder, credits)
 	}
 }
 
 public RS_OnGoal(team, scorer)
 {
+	new credits
 	for (new client = 1; client <= MaxClients; client++)
 	{
 		if (IsClientInGame(client) && GetClientTeam(client) == team)
 		{
-			AddPlayerCash(scorer, GetConVarInt(GoalTeamRewardConVar))
+			credits =  GetConVarInt(GoalTeamRewardConVar)
+			PrintSJMessage(client, "You have gained %i for %s", credits, "Team Goal")
+			AddPlayerCash(scorer, credits)
 		}
 	}
-	AddPlayerCash(scorer, GetConVarInt(GoalRewardConVar))
+	credits = GetConVarInt(GoalRewardConVar)
+	PrintSJMessage(scorer, "You have gained %i for %s", credits, "Goal scoring")
+	AddPlayerCash(scorer, credits)
 }
 
 public RS_OnClientAssisted(client)
 {
-	AddPlayerCash(client, GetConVarInt(AssistingRewardConVar))
+	new credits =  GetConVarInt(AssistingRewardConVar)
+	PrintSJMessage(client, "You have gained %i for %s", credits, "Goal Assisting")
+	AddPlayerCash(client, credits)
 }
 
 public RS_OnClientResetUpgrades(client)

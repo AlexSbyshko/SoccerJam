@@ -24,13 +24,16 @@ public GOAL_OnBallCreated(ballEntity)
 
 public GOAL_OnBallTouch(ball, entity)
 {
-	if (entity == g_Goals[CS_TEAM_CT])
+	if (g_IsBallFree)
 	{
-		CheckForGoal(CS_TEAM_T);		
-	}
-	else if (entity == g_Goals[CS_TEAM_T])
-	{
-		CheckForGoal(CS_TEAM_CT);
+		if (entity == g_Goals[CS_TEAM_CT])
+		{
+			CheckForGoal(CS_TEAM_T);		
+		}
+		else if (entity == g_Goals[CS_TEAM_T])
+		{
+			CheckForGoal(CS_TEAM_CT);
+		}
 	}
 }
 
