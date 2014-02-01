@@ -20,6 +20,11 @@ public BAR_Event_PrePlayerDisconnect(Handle:event, const String:name[], bool:don
 	}
 }
 
+public BAR_OnBallHolderDeath(client)
+{
+	StartBallRespawnTimer()
+}
+
 public BAR_OnBallReceived(client, oldBallOwner)
 {
 	StopBallRespawnTimer()

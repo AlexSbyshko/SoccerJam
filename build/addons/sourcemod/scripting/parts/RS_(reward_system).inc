@@ -39,6 +39,10 @@ public RS_Init()
 
 public RS_OnStartPublic()
 {
+	if (!GetConVarBool(RewardsEnabledConVar))
+	{
+		return
+	}
 	ForEachClient(ResetPlayerCash)
 }
 
@@ -53,6 +57,10 @@ public RS_OnGetUpgradeInfo(client, String:info[512])
 
 public RS_OnBallReceived(ballHolder, oldBallOwner)
 {
+	if (!GetConVarBool(RewardsEnabledConVar))
+	{
+		return
+	}
 	new team = GetClientTeam(ballHolder)
 	if (oldBallOwner > 0
 		&& team != GetClientTeam(oldBallOwner))
@@ -65,6 +73,10 @@ public RS_OnBallReceived(ballHolder, oldBallOwner)
 
 public RS_OnGoal(team, scorer)
 {
+	if (!GetConVarBool(RewardsEnabledConVar))
+	{
+		return
+	}
 	new credits
 	for (new client = 1; client <= MaxClients; client++)
 	{
@@ -82,6 +94,10 @@ public RS_OnGoal(team, scorer)
 
 public RS_OnClientAssisted(client)
 {
+	if (!GetConVarBool(RewardsEnabledConVar))
+	{
+		return
+	}
 	new credits =  GetConVarInt(AssistingRewardConVar)
 	PrintSJMessage(client, "You have gained %i for %s", credits, "Goal Assisting")
 	AddPlayerCash(client, credits)
@@ -89,6 +105,10 @@ public RS_OnClientAssisted(client)
 
 public RS_OnClientResetUpgrades(client)
 {
+	if (!GetConVarBool(RewardsEnabledConVar))
+	{
+		return
+	}
 	AddPlayerCredits(client, GetConVarInt(CreditsPerLevelConVar) * PlayerLevel[client])
 }
 

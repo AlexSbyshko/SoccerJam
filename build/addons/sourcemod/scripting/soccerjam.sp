@@ -8,7 +8,7 @@
 #include <adminmenu>
 #define REQUIRE_PLUGIN
 
-#define SOCCERJAMSOURCE_VERSION	 "2.1.2"
+#define SOCCERJAMSOURCE_VERSION	 "2.1.3"
 #define SOCCERJAMSOURCE_URL "http://steamcommunity.com/groups/sj-source"
 
 functag public UpgradeFunc(client, Float:upgradeValue)
@@ -63,6 +63,7 @@ functag public UpgradeFunc(client, Float:upgradeValue)
 #include "parts/SJT_(sj_timer)"
 #include "parts/SM_(sound_manager)"
 #include "parts/SSP_(swap_spawn_points)"
+#include "parts/TBHD_(teleport_ball_on_holder_death)"
 #include "parts/TEST_(test)"
 #include "parts/TM_(team_models)"
 #include "parts/TRB_(turbo)"
@@ -127,6 +128,7 @@ public OnPluginStart()
 	RegisterPart("SJT") // SJ Timer	
 	RegisterPart("SM") // Sound Manager
 	RegisterPart("SSP") // Swap Spawn Points
+	RegisterPart("TBHD") // Teleport Ball on Holder Death
 	RegisterPart("TEST") // Sound Manager
 	RegisterPart("TM") // Team Models
 	RegisterPart("TRB") // Turbo

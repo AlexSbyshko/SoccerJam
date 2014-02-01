@@ -60,8 +60,6 @@ KickBall(client)
 
 	RecreateBall()
 
-	SetBallTeam(GetClientTeam(client))
-
 	TeleportEntity(g_Ball, kickOrigin, NULL_VECTOR, ballVelocity)
 	for (new i = 0; i < 3; i++)
 	{

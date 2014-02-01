@@ -60,6 +60,7 @@ RecreateBall()
 {
 	DestroyBall()
 	CreateBall()
+	SetBallTeam(g_BallTeam)
 }
 
 CreateBall()
