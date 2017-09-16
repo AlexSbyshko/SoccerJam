@@ -15,10 +15,12 @@ static Handle:OnEndPublicForward
 static Handle:OnEndFirstHalfForward
 static Handle:OnEndMatchForward
 
-static MatchState:CurrentState
 static Handle:CvarGoalsToWin
 
 static MatchTimeIsUpSoundId
+
+static MatchState:CurrentState
+static CurrentTick
 
 // API //
 
@@ -65,15 +67,15 @@ public MTCH_Init()
 
 public MTCH_OnMapStart()
 {
-	Match_StartPublic()
+	Match_Start()
 }
 
 public MTCH_Event_MatchEndRestart(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	Match_StartPublic()
+	Match_Start()
 }
 
-public Match_StartPublic()
+public Match_Start()
 {
 	CurrentState = MatchState_Public
 	ClearAllClients()
@@ -122,7 +124,7 @@ public Match_StartOverTime()
 static Match_End()
 {
 	FireOnEndMatch()
-	CreateSjTimer(10, Match_StartPublic, "public mode start in ")
+	CreateSjTimer(10, Match_Start, "public mode start in ")
 }
 
 public MTCH_OnHalfEnd()
@@ -281,7 +283,7 @@ public Action:MTCH_Cmd_StartMatch(client, argc)
 
 public Action:MTCH_Cmd_StartPublic(client, argc) 
 {
-	Match_StartPublic()
+	Match_Start()
 	return Plugin_Handled
 }
 

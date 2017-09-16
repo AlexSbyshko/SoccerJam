@@ -29,6 +29,8 @@ public Action:TEST_Cmd_Test(client, args)
 	ReplyToCommand(client, "test1")
 	//ShowMatchStats(client)
 	//ShowAssistants(client)
+
+	SetRemainingRoundTime( 100.0 );
 	TeleportEntity(g_Ball, NULL_VECTOR, NULL_VECTOR, g_StartBallVelocity)
 	return Plugin_Handled
 }
@@ -42,4 +44,16 @@ public Action:TEST_Cmd_Test2(client, args)
 	AddMatchStatsValue(MatchStats4Id, client, 400)
 	AddMatchStatsValue(MatchStats5Id, client, 500)
 	return Plugin_Handled
+}
+
+Float:GetRemainingRoundTime() {
+    new Float:roundtime = float(GameRules_GetProp( "m_iRoundTime" ));
+    new Float:elapsed = GetGameTime() - GameRules_GetPropFloat( "m_fRoundStartTime" );
+    return roundtime - elapsed;
+}
+
+SetRemainingRoundTime( Float:time ) 
+{
+	PrintToChatAll("roundtime: %f, starttime: %f, time: %f", float(GameRules_GetProp( "m_iRoundTime")), GetGameTime(), time );
+    GameRules_SetPropFloat( "m_fRoundStartTime", GetGameTime() - float(GameRules_GetProp( "m_iRoundTime"))  + time );
 }

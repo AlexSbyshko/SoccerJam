@@ -98,10 +98,10 @@ HookPartForward(Handle:fwd, const String:partName[PART_NAME_LENGTH], const Strin
 {
 	decl String:partFunctionName[MAX_NAME_LENGTH]
 	Format(partFunctionName, MAX_NAME_LENGTH, "%s_%s", partName, postfix);
-	new Function:function = GetFunctionByName(INVALID_HANDLE, partFunctionName)
-	if (function != INVALID_FUNCTION)
+	new Function:partFunction = GetFunctionByName(INVALID_HANDLE, partFunctionName)
+	if (partFunction != INVALID_FUNCTION)
 	{
-		AddToForward(fwd, INVALID_HANDLE, function);
+		AddToForward(fwd, INVALID_HANDLE, partFunction);
 	}
 }
 
@@ -109,10 +109,10 @@ HookPartEvent(const String:hookName[], const String:partName[PART_NAME_LENGTH], 
 {
 	decl String:partFunctionName[MAX_NAME_LENGTH]
 	Format(partFunctionName, MAX_NAME_LENGTH, "%s_Event_%s", partName, postfix);
-	new EventHook:function = GetFunctionByName(INVALID_HANDLE, partFunctionName)
-	if (function != INVALID_FUNCTION)
+	new EventHook:partFunction = GetFunctionByName(INVALID_HANDLE, partFunctionName)
+	if (partFunction != INVALID_FUNCTION)
 	{
-		HookEventEx(hookName, function)
+		HookEventEx(hookName, partFunction)
 	}
 
 	decl String:partPreFunctionName[MAX_NAME_LENGTH]

@@ -74,7 +74,7 @@ functag public UpgradeFunc(client, Float:upgradeValue)
 public Plugin:myinfo = 
 {
 	name = "SoccerJam: Source",
-	author = "AlexSang",
+	author = "AlexSbysh",
 	description = "SoccerJam mod for CS:GO",
 	version = SOCCERJAMSOURCE_VERSION,
 	url = SOCCERJAMSOURCE_URL
