@@ -46,7 +46,7 @@ public Action:TEST_Cmd_Test2(client, args)
 	return Plugin_Handled
 }
 
-Float:GetRemainingRoundTime() {
+stock Float:GetRemainingRoundTime() {
     new Float:roundtime = float(GameRules_GetProp( "m_iRoundTime" ));
     new Float:elapsed = GetGameTime() - GameRules_GetPropFloat( "m_fRoundStartTime" );
     return roundtime - elapsed;

@@ -49,7 +49,6 @@ static Handle:CvarGoalsToWin
 static MatchTimeIsUpSoundId
 
 static MatchState:CurrentState
-static CurrentTick
 
 // API //
 
