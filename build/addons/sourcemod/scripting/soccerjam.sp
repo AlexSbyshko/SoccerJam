@@ -2,16 +2,14 @@
 #include <sdkhooks>
 #include <sdktools>
 #include <cstrike>
-//#include <smlib>
 
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
 #define REQUIRE_PLUGIN
 
-#define SOCCERJAMSOURCE_VERSION	 "2.1.3"
-#define SOCCERJAMSOURCE_URL "http://steamcommunity.com/groups/sj-source"
+#define SOCCERJAMSOURCE_VERSION	 "2.1.4"
+#define SOCCERJAMSOURCE_URL "https://github.com/AlexSbyshko/SoccerJam"
 
-//functag public UpgradeFunc(client, Float:upgradeValue)
 typedef UpgradeFunc = function void (int client, float upgradeValue)
 
 #include "soccerjam/constants"
