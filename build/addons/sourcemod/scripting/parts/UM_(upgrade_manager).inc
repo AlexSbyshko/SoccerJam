@@ -199,7 +199,9 @@ FindUpgradeByName(const String:name[])
 
 ShowUpgradeMenu(client)
 {
-	if (GameRules_GetProp("m_bWarmupPeriod") == 1 && !GetConVarBool(WarmupUpgradesEnabledConVar)) 
+	if (StrEqual(GameFolderName, "csgo", true)
+		&& GameRules_GetProp("m_bWarmupPeriod") == 1
+		&& !GetConVarBool(WarmupUpgradesEnabledConVar)) 
     {
     	return
     }
