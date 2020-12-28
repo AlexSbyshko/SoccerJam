@@ -194,7 +194,7 @@ UpdateClientVisibleCash(client)
 {
 	if (IsClientInGame(client))
 	{
-		new accountOffset = FindSendPropOffs("CCSPlayer", "m_iAccount")
+		new accountOffset = FindSendPropInfo("CCSPlayer", "m_iAccount")
 		SetEntData(client, accountOffset, PlayerCash[client])
 	}
 }

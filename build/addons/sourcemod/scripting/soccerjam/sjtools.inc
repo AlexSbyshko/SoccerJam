@@ -41,7 +41,7 @@ stock Client_GetWeaponsOffset(client)
 	static offset = -1;
 
 	if (offset == -1) {
-		offset = FindDataMapOffs(client, "m_hMyWeapons");
+		offset = FindDataMapInfo(client, "m_hMyWeapons");
 	}
 	
 	return offset;
@@ -71,7 +71,7 @@ stock bool:Entity_ClassNameMatches(entity, const String:className[], partialMatc
 stock Client_SetActiveWeapon(client, weapon)
 {
 	SetEntPropEnt(client, Prop_Data, "m_hActiveWeapon", weapon);
-	ChangeEdictState(client, FindDataMapOffs(client, "m_hActiveWeapon"));
+	ChangeEdictState(client, FindDataMapInfo(client, "m_hActiveWeapon"));
 }
 
 stock Weapon_GetPrimaryAmmoType(weapon)
@@ -95,7 +95,7 @@ stock bool:Entity_IsPlayer(entity)
 
 stock Client_SetWeaponPlayerAmmoEx(client, weapon, primaryAmmo=-1, secondaryAmmo=-1)
 {
-	new offset_ammo = FindDataMapOffs(client, "m_iAmmo");
+	new offset_ammo = FindDataMapInfo(client, "m_iAmmo");
 
 	if (primaryAmmo != -1) {
 		new offset = offset_ammo + (Weapon_GetPrimaryAmmoType(weapon) * 4);
