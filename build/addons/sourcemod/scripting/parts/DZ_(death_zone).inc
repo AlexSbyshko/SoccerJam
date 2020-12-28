@@ -3,6 +3,14 @@ static Handle:DeathZoneDamageMinConVar
 static Handle:DeathZoneDamageMaxConVar
 static DeathZoneKillSoundId
 
+enum DissolveType
+{
+	DISSOLVE_NORMAL = 0,
+	DISSOLVE_ELECTRICAL,
+	DISSOLVE_ELECTRICAL_LIGHT,
+	DISSOLVE_CORE
+};
+
 public DZ_Init()
 {
 	DeathZoneRadiusConVar = CreateConVar("sj_death_zone_radius", "650", "Radius of death zone that does damage to enemy", 0, true, 0.0)
@@ -88,6 +96,17 @@ TerminatePlayer(client, team, dmg)
 	TE_SendToAll()
 }
 
+stock bool:Effect_DissolvePlayerRagDoll(client, DissolveType:dissolveType=DISSOLVE_NORMAL)
+{
+	new m_hRagdoll = GetEntPropEnt(client, Prop_Send, "m_hRagdoll");
+
+	if (m_hRagdoll == -1) {
+		return false;
+	}
+	
+	return Effect_DissolveEntity(m_hRagdoll, dissolveType);
+}
+
 public bool:IsClientInOwnDeathZone(client)
 {
 	new team = GetClientTeam(client);
@@ -101,4 +120,53 @@ bool:IsClientInDeathZone(client, deathZoneTeam)
 	decl Float:clientOrigin[3]
 	GetClientAbsOrigin(client, clientOrigin)
 	return GetVectorDistance(goalOverrideOrigin, clientOrigin) < GetConVarFloat(DeathZoneRadiusConVar)
+}
+
+stock bool:Effect_DissolveEntity(entity, DissolveType:dissolveType=DISSOLVE_NORMAL)
+{
+	new env_entity_dissolver = CreateEntityByName("env_entity_dissolver");
+
+	if (env_entity_dissolver == -1) {
+		return false;
+	}
+
+	Entity_PointAtTarget(env_entity_dissolver, entity);
+	SetEntProp(env_entity_dissolver, Prop_Send, "m_nDissolveType", _:dissolveType);
+	AcceptEntityInput(env_entity_dissolver,	"Dissolve");
+	Entity_Kill(env_entity_dissolver);
+
+	return true;
+}
+
+stock Entity_PointAtTarget(entity, target, const String:name[]="")
+{
+	decl String:targetName[128];
+	Entity_GetTargetName(entity, targetName, sizeof(targetName));
+
+	if (name[0] == '\0') {
+
+		if (targetName[0] == '\0') {
+			// Let's generate our own name
+			Format(
+				targetName,
+				sizeof(targetName),
+				"_smlib_Entity_PointAtTarget:%d",
+				target
+			);
+		}
+	}
+	else {
+		strcopy(targetName, sizeof(targetName), name);
+	}
+	
+	Entity_SetTargetName(entity, targetName);
+	Entity_SetName(target, targetName);
+}
+
+stock Entity_SetTargetName(entity, const String:name[], any:...)
+{
+	decl String:format[128];
+	VFormat(format, sizeof(format), name, 3);
+
+	DispatchKeyValue(entity, "target", format);
 }

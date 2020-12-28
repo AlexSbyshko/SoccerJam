@@ -2,7 +2,8 @@ static Handle:OnSjConfigLoadedForward
 
 #define SJ_CONFIG_DIRECTORY "cfg/sourcemod/soccerjam"
 
-functag public ConfigProcessingFunc(Handle:kv)
+//functag public ConfigProcessingFunc(Handle:kv)
+typedef ConfigProcessingFunc = function void (Handle kv);
 
 const MAX_CONFIGS = 32
 static ConfigsCount

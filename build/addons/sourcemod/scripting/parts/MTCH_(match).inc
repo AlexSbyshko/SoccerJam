@@ -8,6 +8,35 @@ enum MatchState
 	MatchState_Public,
 }
 
+#define CLIENTFILTER_ALL				0		// No filtering
+#define CLIENTFILTER_BOTS			( 1	<< 1  )	// Fake clients
+#define CLIENTFILTER_NOBOTS			( 1	<< 2  )	// No fake clients
+#define CLIENTFILTER_AUTHORIZED		( 1 << 3  ) // SteamID validated
+#define CLIENTFILTER_NOTAUTHORIZED  ( 1 << 4  ) // SteamID not validated (yet)
+#define CLIENTFILTER_ADMINS			( 1	<< 5  )	// Generic Admins (or higher)
+#define CLIENTFILTER_NOADMINS		( 1	<< 6  )	// No generic admins
+// All flags below require ingame checking (optimization)
+#define CLIENTFILTER_INGAME			( 1	<< 7  )	// Ingame
+#define CLIENTFILTER_INGAMEAUTH		( 1 << 8  ) // Ingame & Authorized
+#define CLIENTFILTER_NOTINGAME		( 1 << 9  )	// Not ingame (currently connecting)
+#define CLIENTFILTER_ALIVE			( 1	<< 10 )	// Alive
+#define CLIENTFILTER_DEAD			( 1	<< 11 )	// Dead
+#define CLIENTFILTER_SPECTATORS		( 1 << 12 )	// Spectators
+#define CLIENTFILTER_NOSPECTATORS	( 1 << 13 )	// No Spectators
+#define CLIENTFILTER_OBSERVERS		( 1 << 14 )	// Observers
+#define CLIENTFILTER_NOOBSERVERS	( 1 << 15 )	// No Observers
+#define CLIENTFILTER_TEAMONE		( 1 << 16 )	// First Team (Terrorists, ...)
+#define CLIENTFILTER_TEAMTWO		( 1 << 17 )	// Second Team (Counter-Terrorists, ...)
+
+// Team Defines
+#define	TEAM_INVALID	-1
+#define TEAM_UNASSIGNED	0
+#define TEAM_SPECTATOR	1
+#define TEAM_ONE		2
+#define TEAM_TWO		3
+#define TEAM_THREE		4
+#define TEAM_FOUR		5
+
 static Handle:OnStartOverTimeForward
 static Handle:OnStartPublicForward
 static Handle:OnStartMatchForward
@@ -229,6 +258,115 @@ static bool:IsTeamsReady()
 		&& Team_GetClientCount(CS_TEAM_CT, CLIENTFILTER_DEAD) == 0
 }
 
+stock Team_GetClientCount(team, flags=0)
+{
+	flags |= CLIENTFILTER_INGAME;
+
+	new numClients = 0;
+	for (new client=1; client <= MaxClients; client++) {
+
+		if (!Client_MatchesFilter(client, flags)) {
+			continue;
+		}
+
+		if (GetClientTeam(client) == team) {
+			numClients++;
+		}
+	}
+
+	return numClients;
+}
+
+stock bool:Client_MatchesFilter(client, flags)
+{
+	new bool:isIngame = false;
+
+	if (flags >= CLIENTFILTER_INGAME) {
+		isIngame = IsClientInGame(client);
+
+		if (isIngame) {
+			if (flags & CLIENTFILTER_NOTINGAME) {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	else if (!IsClientConnected(client)) {
+		return false;
+	}
+
+	if (!flags) {
+		return true;
+	}
+
+	if (flags & CLIENTFILTER_INGAMEAUTH) {
+		flags |= CLIENTFILTER_INGAME | CLIENTFILTER_AUTHORIZED;
+	}
+
+	if (flags & CLIENTFILTER_BOTS && !IsFakeClient(client)) {
+		return false;
+	}
+
+	if (flags & CLIENTFILTER_NOBOTS && IsFakeClient(client)) {
+		return false;
+	}
+
+	if (flags & CLIENTFILTER_ADMINS && !Client_IsAdmin(client)) {
+		return false;
+	}
+
+	if (flags & CLIENTFILTER_NOADMINS && Client_IsAdmin(client)) {
+		return false;
+	}
+
+	if (flags & CLIENTFILTER_AUTHORIZED && !IsClientAuthorized(client)) {
+		return false;
+	}
+
+	if (flags & CLIENTFILTER_NOTAUTHORIZED && IsClientAuthorized(client)) {
+		return false;
+	}
+
+	if (isIngame) {
+
+		if (flags & CLIENTFILTER_ALIVE && !IsPlayerAlive(client)) {
+			return false;
+		}
+
+		if (flags & CLIENTFILTER_DEAD && IsPlayerAlive(client)) {
+			return false;
+		}
+
+		if (flags & CLIENTFILTER_SPECTATORS && GetClientTeam(client) != TEAM_SPECTATOR) {
+			return false;
+		}
+
+		if (flags & CLIENTFILTER_NOSPECTATORS && GetClientTeam(client) == TEAM_SPECTATOR) {
+			return false;
+		}
+
+		if (flags & CLIENTFILTER_OBSERVERS && !IsClientObserver(client)) {
+			return false;
+		}
+
+		if (flags & CLIENTFILTER_NOOBSERVERS && IsClientObserver(client)) {
+			return false;
+		}
+
+		if (flags & CLIENTFILTER_TEAMONE && GetClientTeam(client) != TEAM_ONE) {
+			return false;
+		}
+
+		if (flags & CLIENTFILTER_TEAMTWO && GetClientTeam(client) != TEAM_TWO) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 static Match_OnClientReady(client)
 {
 	if (Match_IsWaitingPlayers())
@@ -355,4 +493,30 @@ FireOnEndMatch()
 {
 	Call_StartForward(OnEndMatchForward)
 	Call_Finish()
+}
+
+stock bool:Client_IsAdmin(client)
+{
+	new AdminId:adminId = GetUserAdmin(client);
+	
+	if (adminId == INVALID_ADMIN_ID) {
+		return false;
+	}
+	
+	return GetAdminFlag(adminId, Admin_Generic);
+}
+
+stock bool:Game_End()
+{
+	new game_end = FindEntityByClassname(-1, "game_end");
+
+	if (game_end == -1) {
+		game_end = CreateEntityByName("game_end");
+		
+		if (game_end == -1) {
+			ThrowError("Unable to find or create entity \"game_end\"");
+		}
+	}
+
+	return AcceptEntityInput(game_end, "EndGame");
 }

@@ -54,6 +54,6 @@ Float:GetRemainingRoundTime() {
 
 SetRemainingRoundTime( Float:time ) 
 {
-	PrintToChatAll("roundtime: %f, starttime: %f, time: %f", float(GameRules_GetProp( "m_iRoundTime")), GetGameTime(), time );
+    PrintToChatAll("roundtime: %f, starttime: %f, time: %f", float(GameRules_GetProp( "m_iRoundTime")), GetGameTime(), time );
     GameRules_SetPropFloat( "m_fRoundStartTime", GetGameTime() - float(GameRules_GetProp( "m_iRoundTime"))  + time );
 }

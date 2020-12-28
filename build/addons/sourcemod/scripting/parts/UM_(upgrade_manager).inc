@@ -14,15 +14,15 @@ new CatchingUpgradeId
 static UpgradeMaxLevelSoundId
 
 
-enum SJUpgradeData
+enum struct SJUpgradeData
 {
-	String:SJUpgradeData_Name[UPGRADE_NAME_LENGTH],
-	Float:SJUpgradeData_MinValue,
-	Float:SJUpgradeData_MaxValue,
-	SJUpgradeData_LevelsCount,
-	SJUpgradeData_Cost,
-	UpgradeFunc:SJUpgradeData_Func,
-	String:SJUpgradeData_MeasName[UPGRADE_MEAS_NAME_LENGTH],
+	char SJUpgradeData_Name[UPGRADE_NAME_LENGTH]
+	float SJUpgradeData_MinValue
+	float SJUpgradeData_MaxValue
+	int SJUpgradeData_LevelsCount
+	int SJUpgradeData_Cost
+	UpgradeFunc SJUpgradeData_Func
+	char SJUpgradeData_MeasName[UPGRADE_MEAS_NAME_LENGTH]
 }
 
 static UpgradesCount
@@ -30,7 +30,7 @@ static PlayerUpgrades[MAXPLAYERS+1][MAX_UPGRADES]
 static EnabledUpgrades[MAX_UPGRADES]
 static EnabledUpgradesCount
 static Float:PlayerUpgradeValue[MAXPLAYERS+1][MAX_UPGRADES]
-static UpgradeInfo[MAX_UPGRADES][SJUpgradeData]
+static SJUpgradeData UpgradeInfo[MAX_UPGRADES]
 static PlayerCredits[MAXPLAYERS+1]
 
 /// API ////
@@ -54,13 +54,13 @@ stock SetPlayerCredits(client, creditsCount)
 stock CreateUpgrade(const String:name[], Float:minValue, Float:maxValue, levelsCount, cost, 
 		const String:measureName[] = "", UpgradeFunc:funcion = INVALID_FUNCTION)
 {
-	strcopy(UpgradeInfo[UpgradesCount][SJUpgradeData_Name], UPGRADE_NAME_LENGTH, name)
-	UpgradeInfo[UpgradesCount][SJUpgradeData_MinValue] = minValue
-	UpgradeInfo[UpgradesCount][SJUpgradeData_MaxValue] = maxValue
-	UpgradeInfo[UpgradesCount][SJUpgradeData_LevelsCount] = levelsCount
-	UpgradeInfo[UpgradesCount][SJUpgradeData_Cost] = cost
-	UpgradeInfo[UpgradesCount][SJUpgradeData_Func] = funcion
-	strcopy(UpgradeInfo[UpgradesCount][SJUpgradeData_MeasName], UPGRADE_MEAS_NAME_LENGTH, measureName)
+	strcopy(UpgradeInfo[UpgradesCount].SJUpgradeData_Name, UPGRADE_NAME_LENGTH, name)
+	UpgradeInfo[UpgradesCount].SJUpgradeData_MinValue = minValue
+	UpgradeInfo[UpgradesCount].SJUpgradeData_MaxValue = maxValue
+	UpgradeInfo[UpgradesCount].SJUpgradeData_LevelsCount = levelsCount
+	UpgradeInfo[UpgradesCount].SJUpgradeData_Cost = cost
+	UpgradeInfo[UpgradesCount].SJUpgradeData_Func = funcion
+	strcopy(UpgradeInfo[UpgradesCount].SJUpgradeData_MeasName, UPGRADE_MEAS_NAME_LENGTH, measureName)
 	return UpgradesCount++
 }
 
@@ -68,7 +68,7 @@ public ClearClientUpgrades(client)
 {
 	for (new upgrade = 0; upgrade < UpgradesCount; upgrade++)
 	{
-		SetPlayerUpgradeLevel(client, SJUpgrade:upgrade, 0)
+		SetPlayerUpgradeLevel(client, upgrade, 0)
 	}
 	PlayerCredits[client] = GetConVarInt(InitialCreditsConVar)
 	FireOnClientResetUpgrades(client)
@@ -123,29 +123,29 @@ public UM_OnStartMatch()
 
 GetUpgradeName(upgradeIndex, String:destination[UPGRADE_NAME_LENGTH])
 {
-	strcopy(destination, UPGRADE_NAME_LENGTH, UpgradeInfo[upgradeIndex][SJUpgradeData_Name])
+	strcopy(destination, UPGRADE_NAME_LENGTH, UpgradeInfo[upgradeIndex].SJUpgradeData_Name)
 }
 
-IncreasePlayerUpgradeLevel(client, SJUpgrade:upgrade)
+IncreasePlayerUpgradeLevel(client, int upgrade)
 {
 	new newLevel = PlayerUpgrades[client][upgrade] + 1
 	SetPlayerUpgradeLevel(client, upgrade, newLevel)
 }
 
-SetPlayerUpgradeLevel(client, SJUpgrade:upgrade, level)
+SetPlayerUpgradeLevel(client, int upgrade, level)
 {
 	PlayerUpgrades[client][upgrade] = level
-	new Float:maxValue = UpgradeInfo[upgrade][SJUpgradeData_MaxValue]
-	new Float:minValue = UpgradeInfo[upgrade][SJUpgradeData_MinValue]
-	new levelsCount = UpgradeInfo[upgrade][SJUpgradeData_LevelsCount]
+	new Float:maxValue = UpgradeInfo[upgrade].SJUpgradeData_MaxValue
+	new Float:minValue = UpgradeInfo[upgrade].SJUpgradeData_MinValue
+	new levelsCount = UpgradeInfo[upgrade].SJUpgradeData_LevelsCount
 	new Float:step = (maxValue - minValue) / levelsCount
 	new Float:value = minValue + step * level
 	PlayerUpgradeValue[client][upgrade] = value
-	new Function:function = UpgradeInfo[upgrade][SJUpgradeData_Func]
+	new Function:func = UpgradeInfo[upgrade].SJUpgradeData_Func
 	
-	if (function != INVALID_FUNCTION)
+	if (func != INVALID_FUNCTION)
 	{
-		Call_StartFunction(INVALID_HANDLE, function)
+		Call_StartFunction(INVALID_HANDLE, func)
 		Call_PushCell(client)
 		Call_PushFloat(value)
 		Call_Finish()
@@ -154,7 +154,7 @@ SetPlayerUpgradeLevel(client, SJUpgrade:upgrade, level)
 
 GetUpgradeMaxLevel(upgradeIndex)
 {
-	return UpgradeInfo[upgradeIndex][SJUpgradeData_LevelsCount]
+	return UpgradeInfo[upgradeIndex].SJUpgradeData_LevelsCount
 }
 
 public UM_ReadConfig(Handle:kv)
@@ -169,10 +169,10 @@ public UM_ReadConfig(Handle:kv)
 			new upgrade = FindUpgradeByName(upgradeName)
 			if (upgrade != INVALID_UPGRADE)
 			{					
-				UpgradeInfo[upgrade][SJUpgradeData_MinValue] = KvGetFloat(kv, "min_value", UpgradeInfo[upgrade][SJUpgradeData_MinValue])
-				UpgradeInfo[upgrade][SJUpgradeData_MaxValue] = KvGetFloat(kv, "max_value", UpgradeInfo[upgrade][SJUpgradeData_MaxValue])
-				UpgradeInfo[upgrade][SJUpgradeData_LevelsCount] = KvGetNum(kv, "levels_count", UpgradeInfo[upgrade][SJUpgradeData_LevelsCount])
-				UpgradeInfo[upgrade][SJUpgradeData_Cost] = KvGetNum(kv, "cost", UpgradeInfo[upgrade][SJUpgradeData_Cost])
+				UpgradeInfo[upgrade].SJUpgradeData_MinValue = KvGetFloat(kv, "min_value", UpgradeInfo[upgrade].SJUpgradeData_MinValue)
+				UpgradeInfo[upgrade].SJUpgradeData_MaxValue = KvGetFloat(kv, "max_value", UpgradeInfo[upgrade].SJUpgradeData_MaxValue)
+				UpgradeInfo[upgrade].SJUpgradeData_LevelsCount = KvGetNum(kv, "levels_count", UpgradeInfo[upgrade].SJUpgradeData_LevelsCount)
+				UpgradeInfo[upgrade].SJUpgradeData_Cost = KvGetNum(kv, "cost", UpgradeInfo[upgrade].SJUpgradeData_Cost)
 				new isEnabled = KvGetNum(kv, "enabled", 1)
 				if (isEnabled)
 				{
@@ -189,7 +189,7 @@ FindUpgradeByName(const String:name[])
 {
 	for (new upgrade = 0; upgrade < UpgradesCount; upgrade++)
 	{
-		if (StrEqual(name, UpgradeInfo[upgrade][SJUpgradeData_Name], false))
+		if (StrEqual(name, UpgradeInfo[upgrade].SJUpgradeData_Name, false))
 		{
 			return upgrade
 		}
@@ -223,13 +223,13 @@ ShowUpgradeMenu(client)
 		if (level < maxLevel
 			&& IsPlayerCanBuyUpgrade(client, upgrade))
 		{
-			price = UpgradeInfo[upgrade][SJUpgradeData_Cost]
-			Format(line, sizeof(line), "%T: %i %s (lvl %i/%i) cost: %i", upgradeName, client, value, UpgradeInfo[upgrade][SJUpgradeData_MeasName], level, maxLevel, price)
+			price = UpgradeInfo[upgrade].SJUpgradeData_Cost
+			Format(line, sizeof(line), "%T: %i %s (lvl %i/%i) cost: %i", upgradeName, client, value, UpgradeInfo[upgrade].SJUpgradeData_MeasName, level, maxLevel, price)
 		}
 		else
 		{
 			style |= ITEMDRAW_DISABLED
-			Format(line, sizeof(line), "%T: %i %s (lvl %i/%i)", upgradeName, client, value, UpgradeInfo[upgrade][SJUpgradeData_MeasName], level, maxLevel)
+			Format(line, sizeof(line), "%T: %i %s (lvl %i/%i)", upgradeName, client, value, UpgradeInfo[upgrade].SJUpgradeData_MeasName, level, maxLevel)
 		}
 		style = (currentCredits > 0) ? style : ITEMDRAW_DISABLED
 		AddMenuItem(menu, upgradeName, line, style)
@@ -259,9 +259,9 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 			decl String:upgradeTitle[64];
 			Format(upgradeTitle, sizeof(upgradeTitle), "%T", upgradeName, client);
 			new currentLevel = PlayerUpgrades[client][upgrade];		
-			new price = UpgradeInfo[upgrade][SJUpgradeData_Cost]			
+			new price = UpgradeInfo[upgrade].SJUpgradeData_Cost			
 			PlayerCredits[client] -= price;
-			IncreasePlayerUpgradeLevel(client, SJUpgrade:upgrade)
+			IncreasePlayerUpgradeLevel(client, upgrade)
 			new maxLevel = GetUpgradeMaxLevel(upgrade)
 			if (currentLevel >= maxLevel - 1)
 			{
@@ -287,7 +287,7 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 
 bool:IsPlayerCanBuyUpgrade(client, upgrade)
 {
-	return PlayerCredits[client] >= UpgradeInfo[upgrade][SJUpgradeData_Cost]
+	return PlayerCredits[client] >= UpgradeInfo[upgrade].SJUpgradeData_Cost
 }
 
 Float:GetPlayerCatchingPercent(client)

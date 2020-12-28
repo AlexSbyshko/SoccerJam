@@ -108,6 +108,101 @@ static SmackPlayerOnBallSpeed(client, Float:ballSpeed)
 	TeleportEntity(g_Ball, NULL_VECTOR, NULL_VECTOR, ballVelovity)
 }
 
+stock bool:Entity_Hurt(entity, damage, attacker=0, damageType=DMG_GENERIC, const String:fakeClassName[]="")
+{
+	static point_hurt = INVALID_ENT_REFERENCE;
+	
+	if (point_hurt == INVALID_ENT_REFERENCE || !IsValidEntity(point_hurt)) {
+		point_hurt = EntIndexToEntRef(Entity_Create("point_hurt"));
+		
+		if (point_hurt == INVALID_ENT_REFERENCE) {
+			return false;
+		}
+		
+		DispatchSpawn(point_hurt);
+	}
+	
+	AcceptEntityInput(point_hurt, "TurnOn");
+	SetEntProp(point_hurt, Prop_Data, "m_nDamage", damage);
+	SetEntProp(point_hurt, Prop_Data, "m_bitsDamageType", damageType);
+	Entity_PointHurtAtTarget(point_hurt, entity);
+	
+	if (fakeClassName[0] != '\0') {
+		Entity_SetClassName(point_hurt, fakeClassName);
+	}
+	
+	AcceptEntityInput(point_hurt, "Hurt", attacker);
+	AcceptEntityInput(point_hurt, "TurnOff");
+	
+	if (fakeClassName[0] != '\0') {
+		Entity_SetClassName(point_hurt, "point_hurt");
+	}
+	
+	return true;
+}
+
+stock Entity_Create(const String:className[], ForceEdictIndex=-1)
+{
+	if (ForceEdictIndex != -1 && Entity_IsValid(ForceEdictIndex)) {
+		return INVALID_ENT_REFERENCE;
+	}
+
+	return CreateEntityByName(className, ForceEdictIndex);
+}
+
+stock Entity_GetLocalVelocity(entity, Float:vec[3])
+{
+	GetEntPropVector(entity, Prop_Data, "m_vecVelocity", vec);
+}
+
+stock Entity_SetClassName(entity, const String:className[])
+{
+	DispatchKeyValue(entity, "classname", className);
+}
+
+stock Entity_IsValid(entity)
+{
+	return IsValidEntity(entity);
+}
+
+stock Entity_PointHurtAtTarget(entity, target, const String:name[]="")
+{
+	decl String:targetName[128];
+	Entity_GetTargetName(entity, targetName, sizeof(targetName));
+
+	if (name[0] == '\0') {
+
+		if (targetName[0] == '\0') {
+			// Let's generate our own name
+			Format(
+				targetName,
+				sizeof(targetName),
+				"_smlib_Entity_PointHurtAtTarget:%d",
+				target
+			);
+		}
+	}
+	else {
+		strcopy(targetName, sizeof(targetName), name);
+	}
+
+	DispatchKeyValue(entity, "DamageTarget", targetName);
+	Entity_SetName(target, targetName);
+}
+
+stock Entity_GetTargetName(entity, String:buffer[], size)
+{
+	GetEntPropString(entity, Prop_Data, "m_target", buffer, size);
+}
+
+stock Entity_SetName(entity, const String:name[], any:...)
+{
+	decl String:format[128];
+	VFormat(format, sizeof(format), name, 3);
+
+	DispatchKeyValue(entity, "targetname", format);
+}
+
 static bool:IsClientSmacked(client, Float:ballSpeed)
 {
 	if (ballSpeed < BALL_SPEED_FAST)

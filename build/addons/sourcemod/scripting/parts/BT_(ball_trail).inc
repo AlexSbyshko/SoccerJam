@@ -1,4 +1,4 @@
-new Function:CreateBallTrailProc
+I_void_void CreateBallTrailProc
 new g_BallSpriteTrail
 
 public BT_Init()
@@ -21,7 +21,7 @@ public BT_OnBallReceived(ballHolder, oldBallOwner)
 InitGame()
 {
 	GetGameFolderName(GameFolderName, sizeof(GameFolderName))
-	new Function:initGameFunc
+	I_void_void initGameFunc
 	MapFunction(initGameFunc, "Init")
 	I_Call_void_void(initGameFunc)
 }
@@ -31,9 +31,9 @@ public BT_OnBallCreated(ballEntity)
 	I_Call_void_void(CreateBallTrailProc)
 }
 
-MapFunction(&Function:function, const String:functionName[])
+MapFunction(&Function:func, const String:functionName[])
 {
-	MapFunctionPrefix(function, GameFolderName, functionName)
+	MapFunctionPrefix(func, GameFolderName, functionName)
 }
 
 public csgo_Init()

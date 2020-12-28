@@ -1,6 +1,36 @@
 #define FFADE_OUT			0x0002
 #define	FFADE_PURGE		0x0010  
 
+
+stock Entity_GetMaxSize(entity, Float:vec[3])
+{
+	GetEntPropVector(entity, Prop_Send, "m_vecMaxs", vec);
+}
+
+stock Array_FindHighestValue(any:array[], size, start=0)
+{
+	if (start < 0) {
+		start = 0;
+	}
+
+	new any:value = array[start];
+	new any:tempValue;
+	new x = start;
+	
+	for (new i=start; i < size; i++) {
+		
+		tempValue = array[i];
+		
+		if (tempValue > value) {
+			value = tempValue;
+			x = i;
+		}
+		
+	}
+	
+	return x;
+}
+
 FadeClient(client, duration, const color[4]) 
 {
 	new Handle:hFadeClient = StartMessageOne("Fade",client)
@@ -40,3 +70,6 @@ Float:GetEntityRadius(entity)
 	new highestSizeIndex = Array_FindHighestValue(vecMax, sizeof(vecMax));
 	return vecMax[highestSizeIndex];
 }
+
+
+

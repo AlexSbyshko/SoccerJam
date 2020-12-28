@@ -2,3 +2,8 @@
 *.bat
 *.smx
 *.zip
+
+# build info files
+compiler_directory.txt
+game_directory.txt
+plugin_directory.txt

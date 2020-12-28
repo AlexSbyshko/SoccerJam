@@ -1,9 +1,15 @@
 //functag public ClientFunc(client);
 
-funcenum ClientFunc
+// funcenum ClientFunc
+// {
+//    public(client),
+//    public(client, value),
+// }
+
+typeset ClientFunc
 {
-   public(client),
-   public(client, value),
+  function void (int client);
+  function void (int client, int value);
 }
 
 ForEachClient(ClientFunc:func, value = 0)

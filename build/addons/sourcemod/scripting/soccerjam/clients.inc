@@ -1,3 +1,13 @@
+stock Client_SetScore(client, value)
+{
+	SetEntProp(client, Prop_Data, "m_iFrags", value);
+}
+
+stock Client_SetDeaths(client, value)
+{
+	SetEntProp(client, Prop_Data, "m_iDeaths", value);
+}
+
 public Client_Respawn(client)
 {
 	CS_RespawnPlayer(client);

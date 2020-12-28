@@ -79,3 +79,19 @@ GetEntityTeam(entity)
 	}
 	return CS_TEAM_T;
 }
+
+stock Float:Entity_GetDistance(entity, target)
+{
+	new Float:targetVec[3];
+	Entity_GetAbsOrigin(target, targetVec);
+	
+	return Entity_GetDistanceOrigin(entity, targetVec);
+}
+
+stock Float:Entity_GetDistanceOrigin(entity, const Float:vec[3])
+{
+	new Float:entityVec[3];
+	Entity_GetAbsOrigin(entity, entityVec);
+	
+	return GetVectorDistance(entityVec, vec);
+}

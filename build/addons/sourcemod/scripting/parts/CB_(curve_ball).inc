@@ -6,7 +6,8 @@
 static g_BallDirection
 static Float:g_BallSpinDirection[3]
 static g_CurveCount
-functag public CurveBallFunc()
+//functag public CurveBallFunc()
+typedef CurveBallFunc = function void ()
 
 public CB_Init()
 {

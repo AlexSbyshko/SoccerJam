@@ -31,6 +31,12 @@ public SSP_OnMapStart()
 	}
 }
 
+stock Entity_GetAbsAngles(entity, Float:vec[3])
+{
+	GetEntPropVector(entity, Prop_Data, "m_angAbsRotation", vec);
+}
+
+
 public SSP_OnGoal(team, scorer)
 {
 	if (IsMatchPublic())
