@@ -18,6 +18,8 @@ typedef UpgradeFunc = function void (int client, float upgradeValue)
 #include "soccerjam/sjtools"
 #include "soccerjam/clients"
 
+#include "PlayerGreeter"
+
 #include "parts"
 #include "parts/BALL_(ball)"
 #include "parts/BAR_(ball_autorespawn)"
@@ -68,7 +70,6 @@ typedef UpgradeFunc = function void (int client, float upgradeValue)
 #include "parts/TRB_(turbo)"
 #include "parts/TU_(team_upgrade)"
 #include "parts/UM_(upgrade_manager)"
-#include "parts/WM_(welcome_message)"
 
 public Plugin:myinfo = 
 {
@@ -78,6 +79,8 @@ public Plugin:myinfo =
 	version = SOCCERJAMSOURCE_VERSION,
 	url = SOCCERJAMSOURCE_URL
 }
+
+static PlayerGreeter playerGreeter
 
 public OnPluginStart()
 {
@@ -133,11 +136,14 @@ public OnPluginStart()
 	RegisterPart("TRB") // Turbo
 	RegisterPart("TU") // Team Upgrade
 	RegisterPart("UM") // Upgrades
-	RegisterPart("WM") // Welcome Message
 
 	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
+
+	playerGreeter = PlayerGreeter()
+
+	HookEventEx("player_activate", OnPlayerActivate)
 }
 
 public OnMapStart()
@@ -176,6 +182,13 @@ public OnClientDisconnect(client)
 			ClearBall()			
 		}
 	}
+}
+
+public OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	new userId = GetEventInt(event, "userid")
+
+	playerGreeter.GreetPlayer(userId)
 }
 
 public Action:OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:angles[3], &weapon)
