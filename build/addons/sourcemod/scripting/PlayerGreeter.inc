@@ -1,6 +1,9 @@
-void GreetPlayer(int userId)
+methodmap PlayerGreeter
 {
-    CreateTimer(10.0, Timer_PrintWelcomeMessage, userId)
+	public void GreetPlayer(int userId)
+	{
+		CreateTimer(10.0, Timer_PrintWelcomeMessage, userId)
+	}
 }
 
 static Action:Timer_PrintWelcomeMessage(Handle:timer, any:userId) 
