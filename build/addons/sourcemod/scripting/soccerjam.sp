@@ -18,7 +18,7 @@ typedef UpgradeFunc = function void (int client, float upgradeValue)
 #include "soccerjam/sjtools"
 #include "soccerjam/clients"
 
-#include "PlayerGreeter"
+#include "GreetPlayer"
 
 #include "parts"
 #include "parts/BALL_(ball)"
@@ -80,8 +80,6 @@ public Plugin:myinfo =
 	url = SOCCERJAMSOURCE_URL
 }
 
-static PlayerGreeter playerGreeter
-
 public OnPluginStart()
 {
 	CreateConVar("soccerjamsource_version", SOCCERJAMSOURCE_VERSION, "SoccerJam: Source Version", FCVAR_SPONLY|FCVAR_UNLOGGED|FCVAR_DONTRECORD|FCVAR_REPLICATED|FCVAR_NOTIFY)
@@ -141,8 +139,6 @@ public OnPluginStart()
 	
 	LoadTranslations("soccerjam.phrases")
 
-	playerGreeter = PlayerGreeter()
-
 	HookEventEx("player_activate", OnPlayerActivate)
 }
 
@@ -188,7 +184,7 @@ public OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	new userId = GetEventInt(event, "userid")
 
-	playerGreeter.GreetPlayer(userId)
+	GreetPlayer(userId)
 }
 
 public Action:OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:angles[3], &weapon)
