@@ -73,7 +73,7 @@ typedef UpgradeFunc = function void (int client, float upgradeValue)
 public Plugin:myinfo = 
 {
 	name = "SoccerJam: Source",
-	author = "AlexSbysh",
+	author = "Alex Sbyshko",
 	description = "SoccerJam mod for CS:GO",
 	version = SOCCERJAMSOURCE_VERSION,
 	url = SOCCERJAMSOURCE_URL
