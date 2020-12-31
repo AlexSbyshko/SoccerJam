@@ -1,6 +1,3 @@
-//functag public I_void_void()
-//functag public I_void_i(i)
-
 typedef I_void_void = function Action ()
 typedef I_void_i = function Action (int args)
 

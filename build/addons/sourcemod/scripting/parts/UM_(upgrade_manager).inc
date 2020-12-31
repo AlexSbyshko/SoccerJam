@@ -13,6 +13,7 @@ const INVALID_UPGRADE = -1
 new CatchingUpgradeId
 static UpgradeMaxLevelSoundId
 
+static UpgradeMenuDisplayer _menuDisplayer
 
 enum struct SJUpgradeData
 {
@@ -76,6 +77,11 @@ public ClearClientUpgrades(client)
 
 ////////////
 
+void ConstructUpgradeManager(const UpgradeMenuDisplayer menuDisplayer)
+{
+	_menuDisplayer = menuDisplayer
+}
+
 public UM_Init()
 {
 	CreateConfig("upgrades.cfg", "upgrades", UM_ReadConfig)
@@ -101,7 +107,12 @@ public UM_OnPlayerRunCmd(client, &buttons)
 	{
 		if (!reloading[client])
 		{
-			ShowUpgradeMenu(client)
+			_menuDisplayer.DisplayMenu(client)
+			//ShowUpgradeMenu(client)
+			// Call_StartFunction(INVALID_HANDLE, _menuDisplayer.DisplayMenuFunc)
+			// Call_PushCell(client)
+			// Call_Finish()
+
 			reloading[client] = true
 		}
 	}
@@ -197,7 +208,7 @@ FindUpgradeByName(const String:name[])
 	return INVALID_UPGRADE
 }
 
-ShowUpgradeMenu(client)
+void ShowUpgradeMenu(int client)
 {
 	if (StrEqual(GameFolderName, "csgo", true)
 		&& GameRules_GetProp("m_bWarmupPeriod") == 1
@@ -243,6 +254,8 @@ ShowUpgradeMenu(client)
 	}
 	SetMenuExitButton(menu, true)
 	DisplayMenu(menu, client, 20)
+
+	return
 }
 
 public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice) 

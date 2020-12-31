@@ -19,6 +19,7 @@ typedef UpgradeFunc = function void (int client, float upgradeValue)
 #include "soccerjam/clients"
 
 #include "PlayerGreeter"
+#include "UpgradeMenuDisplayer"
 
 #include "parts"
 #include "parts/BALL_(ball)"
@@ -80,6 +81,8 @@ public Plugin:myinfo =
 	url = SOCCERJAMSOURCE_URL
 }
 
+
+
 static PlayerGreeter playerGreeter
 
 public OnPluginStart()
@@ -135,6 +138,10 @@ public OnPluginStart()
 	RegisterPart("TM") // Team Models
 	RegisterPart("TRB") // Turbo
 	RegisterPart("TU") // Team Upgrade
+
+	UpgradeMenuDisplayer manager
+	CreateMenuDisplayer(ShowUpgradeMenu, manager)
+	ConstructUpgradeManager(manager)
 	RegisterPart("UM") // Upgrades
 
 	InitParts()
