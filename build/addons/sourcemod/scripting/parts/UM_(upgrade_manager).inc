@@ -3,7 +3,6 @@ static Handle:ResetUpgradesEnabledConVar
 static Handle:WarmupUpgradesEnabledConVar
 
 static Handle:OnClientResetUpgradesForward
-static Handle:OnGetClientUpgradeInfoForward
 
 const MAX_UPGRADES = 128
 const UPGRADE_NAME_LENGTH = 32
@@ -94,9 +93,6 @@ public UM_Init()
 
 	OnClientResetUpgradesForward = CreateForward(ET_Ignore, Param_Cell)
 	RegisterCustomForward(OnClientResetUpgradesForward, "OnClientResetUpgrades")
-
-	OnGetClientUpgradeInfoForward = CreateForward(ET_Ignore, Param_Cell, Param_String)
-	RegisterCustomForward(OnGetClientUpgradeInfoForward, "OnGetUpgradeInfo")
 }
 
 public UM_OnPlayerRunCmd(client, &buttons)
@@ -221,7 +217,6 @@ void ShowUpgradeMenu(int client)
 	decl String:line[512]
 	new currentCredits = PlayerCredits[client]
 	Format(line, sizeof(line), "%T\nCredits: %i", "MENU_TITLE", client, currentCredits)
-	FireOnGetClientUpgradeInfo(client, line)
 	SetMenuTitle(menu, line)
 	new style, level, price, maxLevel, value, upgrade
 	for (new i = 0; i < EnabledUpgradesCount; i++)
@@ -319,13 +314,5 @@ static FireOnClientResetUpgrades(client)
 {
 	Call_StartForward(OnClientResetUpgradesForward)
 	Call_PushCell(client)
-	Call_Finish()
-}
-
-static FireOnGetClientUpgradeInfo(client, String:info[512])
-{
-	Call_StartForward(OnGetClientUpgradeInfoForward)
-	Call_PushCell(client)
-	Call_PushStringEx(info, sizeof(info), SM_PARAM_STRING_COPY, SM_PARAM_COPYBACK)
 	Call_Finish()
 }
