@@ -7,6 +7,7 @@ void CreateUpgradeModule(Module result, UpgradeMenuDisplayer menuDisplayer)
 	result.InitFunc = Init
 	result.OnPlayerRunCmdFunc = OnRunCmd
 	result.OnStartPublicFunc = OnStartPublic
+	result.OnStartMatchFunc = OnStartMatch
 
 	_menuDisplayer = menuDisplayer
 }
@@ -130,7 +131,7 @@ static OnStartPublic()
 	ForEachClient(ClearClientUpgrades)
 }
 
-public UM_OnStartMatch()
+static OnStartMatch()
 {
 	ForEachClient(ClearClientUpgrades)
 }

@@ -95,6 +95,9 @@ static OnRunCmdFuncCount
 static OnStartPublicDel OnStartPublicFuncs[MAX_MODULES]
 static OnStartPublicFuncsCount
 
+static OnStartMatchDel OnStartMatchFuncs[MAX_MODULES]
+static OnStartMatchFuncsCount
+
 static PlayerGreeter playerGreeter
 
 public OnPluginStart()
@@ -184,6 +187,11 @@ static RegisterModule(Module module)
 	{
 		OnStartPublicFuncs[OnStartPublicFuncsCount++] = module.OnStartPublicFunc
 	}
+
+	if (module.OnStartMatchFunc != INVALID_FUNCTION)
+	{
+		OnStartMatchFuncs[OnStartMatchFuncsCount++] = module.OnStartMatchFunc
+	}
 }
 
 static InitModules()
@@ -258,6 +266,15 @@ public OnStartPublic()
 	for (int i = 0; i < OnStartPublicFuncsCount; i++)
 	{
 		Call_StartFunction(INVALID_HANDLE, OnStartPublicFuncs[i])
+		Call_Finish()
+	}
+}
+
+public OnStartMatch()
+{
+	for (int i = 0; i < OnStartMatchFuncsCount; i++)
+	{
+		Call_StartFunction(INVALID_HANDLE, OnStartMatchFuncs[i])
 		Call_Finish()
 	}
 }
