@@ -2,7 +2,7 @@
 
 void CreateUpgradeModule(Module result)
 {
-	result.InitFunc = UM_Init
+	result.InitFunc = Init
 }
 
 static Handle:InitialCreditsConVar
@@ -85,7 +85,7 @@ void ConstructUpgradeManager(const UpgradeMenuDisplayer menuDisplayer)
 	_menuDisplayer = menuDisplayer
 }
 
-static UM_Init()
+static Init()
 {
 	CreateConfig("upgrades.cfg", "upgrades", UM_ReadConfig)
 	CatchingUpgradeId = CreateUpgrade("dexterity", 20.0, 90.0, 5, 1, "%")
