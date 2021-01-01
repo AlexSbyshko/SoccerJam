@@ -5,11 +5,14 @@ static BallPickUpSoundId
 static BallInterceptionSoundId
 
 static BallStealsStatsId
+static CatchingUpgradeId
 
 public BR_Init()
 {
 	OnBallReceivedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
 	RegisterCustomForward(OnBallReceivedForward, "OnBallReceived")
+
+	CatchingUpgradeId = CreateUpgrade("dexterity", 20.0, 90.0, 5, 1, "%")
 	
 	BallKickSoundId = CreateSound("ball_kill")
 	BallPickUpSoundId = CreateSound("ball_pickup")
@@ -293,4 +296,9 @@ public Action:CMD_JoinTeam(client, const String:command[], argc)
 		RespawnBallWithNotify()
 	}
 	return Plugin_Continue;
+}
+
+Float:GetPlayerCatchingPercent(client)
+{
+	return GetPlayerUpgradeValue(client, CatchingUpgradeId)
 }

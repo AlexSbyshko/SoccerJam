@@ -24,7 +24,7 @@ const UPGRADE_NAME_LENGTH = 32
 const UPGRADE_MEAS_NAME_LENGTH = 8
 const INVALID_UPGRADE = -1
 
-new CatchingUpgradeId
+
 static UpgradeMaxLevelSoundId
 
 
@@ -94,7 +94,7 @@ public ClearClientUpgrades(client)
 static Init()
 {
 	CreateConfig("upgrades.cfg", "upgrades", OnReadConfig)
-	CatchingUpgradeId = CreateUpgrade("dexterity", 20.0, 90.0, 5, 1, "%")
+	
 	UpgradeMaxLevelSoundId = CreateSound("upgrade_maxlevel")
 
 	InitialCreditsConVar = CreateConVar("sj_initial_credits", "12", "Start credits for upgrades", 0, true, 0.0)
@@ -307,11 +307,6 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 bool:IsPlayerCanBuyUpgrade(client, upgrade)
 {
 	return PlayerCredits[client] >= UpgradeInfo[upgrade].SJUpgradeData_Cost
-}
-
-Float:GetPlayerCatchingPercent(client)
-{
-	return GetPlayerUpgradeValue(client, CatchingUpgradeId)
 }
 
 Float:GetPlayerUpgradeValue(client, upgrade)
