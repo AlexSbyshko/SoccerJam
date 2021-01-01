@@ -5,6 +5,7 @@ static UpgradeMenuDisplayer _menuDisplayer
 void CreateUpgradeModule(Module result, UpgradeMenuDisplayer menuDisplayer)
 {
 	result.InitFunc = Init
+	result.OnPlayerRunCmdFunc = OnRunCmd
 
 	_menuDisplayer = menuDisplayer
 }
@@ -105,7 +106,7 @@ static Init()
 	RegisterCustomForward(OnGetClientUpgradeInfoForward, "OnGetUpgradeInfo")
 }
 
-public UM_OnPlayerRunCmd(client, &buttons)
+static OnRunCmd(client, &buttons)
 {
 	static bool:reloading[MAXPLAYERS+1]
 	

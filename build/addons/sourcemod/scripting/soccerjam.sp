@@ -89,6 +89,9 @@ const int MAX_MODULES = 64
 static InitFuncDel InitFuncs[MAX_MODULES]
 static InitFuncCount
 
+static OnPlayerRunCmdDel OnRunCmdFuncs[MAX_MODULES]
+static OnRunCmdFuncCount
+
 static PlayerGreeter playerGreeter
 
 public OnPluginStart()
@@ -168,6 +171,11 @@ static RegisterModule(Module module)
 	{
 		InitFuncs[InitFuncCount++] = module.InitFunc
 	}
+	
+	if (module.OnPlayerRunCmdFunc != INVALID_FUNCTION)
+	{
+		OnRunCmdFuncs[OnRunCmdFuncCount++] = module.OnPlayerRunCmdFunc
+	}
 }
 
 static InitModules()
@@ -224,7 +232,15 @@ static OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 	playerGreeter.GreetPlayer(userId)
 }
 
-public Action:OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:angles[3], &weapon)
-{	
+public Action OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:angles[3], &weapon)
+{
+	for (int i = 0; i < OnRunCmdFuncCount; i++)
+	{
+		Call_StartFunction(INVALID_HANDLE, OnRunCmdFuncs[i])
+		Call_PushCell(client)
+		Call_PushCellRef(buttons)
+		Call_Finish()
+	}
+
 	return FireOnPlayerRunCmd(client, buttons)
 }
