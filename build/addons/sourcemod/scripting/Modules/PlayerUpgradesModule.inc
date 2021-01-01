@@ -2,7 +2,7 @@
 
 static UpgradeMenuDisplayer _menuDisplayer
 
-void CreateUpgradeModule(Module result, UpgradeMenuDisplayer menuDisplayer)
+void CreatePlayerUpgradesModule(Module result, UpgradeMenuDisplayer menuDisplayer)
 {
 	result.InitFunc = Init
 	result.OnPlayerRunCmdFunc = OnRunCmd

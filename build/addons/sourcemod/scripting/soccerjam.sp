@@ -157,9 +157,9 @@ public OnPluginStart()
 	UpgradeMenuDisplayer menuDisplayer
 	CreateMenuDisplayer(ShowUpgradeMenu, menuDisplayer)
 
-	Module upgradeModule
-	CreateUpgradeModule(upgradeModule, menuDisplayer)
-	RegisterModule(upgradeModule)
+	Module playerUpgradesModule
+	CreatePlayerUpgradesModule(playerUpgradesModule, menuDisplayer)
+	RegisterModule(playerUpgradesModule)
 
 	RegisterPart("UM") // Upgrades
 
