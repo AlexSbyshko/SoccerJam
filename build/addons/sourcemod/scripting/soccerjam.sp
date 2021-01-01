@@ -161,8 +161,6 @@ public OnPluginStart()
 	CreatePlayerUpgradesModule(playerUpgradesModule, menuDisplayer)
 	RegisterModule(playerUpgradesModule)
 
-	RegisterPart("UM") // Upgrades
-
 	InitModules()
 	InitParts()
 	
