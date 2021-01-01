@@ -93,7 +93,7 @@ public ClearClientUpgrades(client)
 
 static Init()
 {
-	CreateConfig("upgrades.cfg", "upgrades", UM_ReadConfig)
+	CreateConfig("upgrades.cfg", "upgrades", OnReadConfig)
 	CatchingUpgradeId = CreateUpgrade("dexterity", 20.0, 90.0, 5, 1, "%")
 	UpgradeMaxLevelSoundId = CreateSound("upgrade_maxlevel")
 
@@ -172,7 +172,7 @@ GetUpgradeMaxLevel(upgradeIndex)
 	return UpgradeInfo[upgradeIndex].SJUpgradeData_LevelsCount
 }
 
-public UM_ReadConfig(Handle:kv)
+static OnReadConfig(Handle:kv)
 {
 	EnabledUpgradesCount = 0
 	if (KvGotoFirstSubKey(kv))
