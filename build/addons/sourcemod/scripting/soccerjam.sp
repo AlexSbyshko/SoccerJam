@@ -81,7 +81,9 @@ public Plugin:myinfo =
 	url = SOCCERJAMSOURCE_URL
 }
 
-
+const int MAX_MODULES = 64
+static Module Modules[MAX_MODULES]
+static ModulesCount
 
 static PlayerGreeter playerGreeter
 
@@ -142,13 +144,36 @@ public OnPluginStart()
 	UpgradeMenuDisplayer manager
 	CreateMenuDisplayer(ShowUpgradeMenu, manager)
 	ConstructUpgradeManager(manager)
+
+	Module upgradeModule
+	CreateUpgradeModule(upgradeModule)
+	RegisterModule(upgradeModule)
+
 	RegisterPart("UM") // Upgrades
 
+	InitModules()
 	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
 
 	HookEventEx("player_activate", OnPlayerActivate)
+}
+
+static RegisterModule(Module module)
+{
+	Modules[ModulesCount++] = module
+}
+
+static InitModules()
+{
+	for (int i = 0; i < ModulesCount; i++)
+	{
+		if (Modules[i].InitFunc != INVALID_FUNCTION)
+		{
+			Call_StartFunction(INVALID_HANDLE, Modules[i].InitFunc)
+			Call_Finish()
+		}
+	}
 }
 
 public OnMapStart()
