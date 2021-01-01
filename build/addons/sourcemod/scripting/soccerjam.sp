@@ -85,8 +85,6 @@ public Plugin:myinfo =
 }
 
 const int MAX_MODULES = 64
-static Module Modules[MAX_MODULES]
-static ModulesCount
 
 static InitFuncDel InitFuncs[MAX_MODULES]
 static InitFuncCount
@@ -167,7 +165,6 @@ public OnPluginStart()
 
 static RegisterModule(Module module)
 {
-	Modules[ModulesCount++] = module
 	if (module.InitFunc != INVALID_FUNCTION)
 	{
 		InitFuncs[InitFuncCount++] = module.InitFunc
