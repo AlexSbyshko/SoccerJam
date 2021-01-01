@@ -92,6 +92,9 @@ static InitFuncCount
 static OnPlayerRunCmdDel OnRunCmdFuncs[MAX_MODULES]
 static OnRunCmdFuncCount
 
+static OnStartPublicDel OnStartPublicFuncs[MAX_MODULES]
+static OnStartPublicFuncsCount
+
 static PlayerGreeter playerGreeter
 
 public OnPluginStart()
@@ -176,6 +179,11 @@ static RegisterModule(Module module)
 	{
 		OnRunCmdFuncs[OnRunCmdFuncCount++] = module.OnPlayerRunCmdFunc
 	}
+
+	if (module.OnStartPublicFunc != INVALID_FUNCTION)
+	{
+		OnStartPublicFuncs[OnStartPublicFuncsCount++] = module.OnStartPublicFunc
+	}
 }
 
 static InitModules()
@@ -243,4 +251,13 @@ public Action OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:ang
 	}
 
 	return FireOnPlayerRunCmd(client, buttons)
+}
+
+public OnStartPublic()
+{
+	for (int i = 0; i < OnStartPublicFuncsCount; i++)
+	{
+		Call_StartFunction(INVALID_HANDLE, OnStartPublicFuncs[i])
+		Call_Finish()
+	}
 }

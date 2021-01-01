@@ -41,6 +41,11 @@ RegisterCustomForward(Handle:fwd, const String:postfix[])
 {
 	PushArrayCell(CustomForwardsArray, fwd)
 	PushArrayString(CustomForwardNamesArray, postfix)
+	new Function:func = GetFunctionByName(INVALID_HANDLE, postfix)
+	if (func != INVALID_FUNCTION)
+	{
+		AddToForward(fwd, INVALID_HANDLE, func)
+	}
 }
 
 RegisterPart(const String:partName[PART_NAME_LENGTH])
