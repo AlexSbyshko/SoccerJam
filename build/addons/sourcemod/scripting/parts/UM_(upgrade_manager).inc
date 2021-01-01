@@ -98,11 +98,6 @@ public UM_OnPlayerRunCmd(client, &buttons)
 		if (!reloading[client])
 		{
 			_menuDisplayer.DisplayMenu(client)
-			//ShowUpgradeMenu(client)
-			// Call_StartFunction(INVALID_HANDLE, _menuDisplayer.DisplayMenuFunc)
-			// Call_PushCell(client)
-			// Call_Finish()
-
 			reloading[client] = true
 		}
 	}
