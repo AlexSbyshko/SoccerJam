@@ -145,12 +145,11 @@ public OnPluginStart()
 	RegisterPart("TRB") // Turbo
 	RegisterPart("TU") // Team Upgrade
 
-	UpgradeMenuDisplayer manager
-	CreateMenuDisplayer(ShowUpgradeMenu, manager)
-	ConstructUpgradeManager(manager)
+	UpgradeMenuDisplayer menuDisplayer
+	CreateMenuDisplayer(ShowUpgradeMenu, menuDisplayer)
 
 	Module upgradeModule
-	CreateUpgradeModule(upgradeModule)
+	CreateUpgradeModule(upgradeModule, menuDisplayer)
 	RegisterModule(upgradeModule)
 
 	RegisterPart("UM") // Upgrades

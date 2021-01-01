@@ -1,8 +1,12 @@
 #include "Module"
 
-void CreateUpgradeModule(Module result)
+static UpgradeMenuDisplayer _menuDisplayer
+
+void CreateUpgradeModule(Module result, UpgradeMenuDisplayer menuDisplayer)
 {
 	result.InitFunc = Init
+
+	_menuDisplayer = menuDisplayer
 }
 
 static Handle:InitialCreditsConVar
@@ -20,7 +24,7 @@ const INVALID_UPGRADE = -1
 new CatchingUpgradeId
 static UpgradeMaxLevelSoundId
 
-static UpgradeMenuDisplayer _menuDisplayer
+
 
 enum struct SJUpgradeData
 {
@@ -83,11 +87,6 @@ public ClearClientUpgrades(client)
 }
 
 ////////////
-
-void ConstructUpgradeManager(const UpgradeMenuDisplayer menuDisplayer)
-{
-	_menuDisplayer = menuDisplayer
-}
 
 static Init()
 {
