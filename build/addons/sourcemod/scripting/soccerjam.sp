@@ -73,7 +73,7 @@ typedef UpgradeFunc = function void (int client, float upgradeValue)
 #include "parts/TM_(team_models)"
 #include "parts/TRB_(turbo)"
 #include "parts/TU_(team_upgrade)"
-#include "parts/UM_(upgrade_manager)"
+#include "Modules/PlayerUpgradesModule"
 
 public Plugin:myinfo = 
 {
