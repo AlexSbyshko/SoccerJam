@@ -18,6 +18,9 @@ typedef UpgradeFunc = function void (int client, float upgradeValue)
 #include "soccerjam/sjtools"
 #include "soccerjam/clients"
 
+#include "module"
+
+
 #include "PlayerGreeter"
 #include "UpgradeMenuDisplayer"
 
@@ -84,6 +87,9 @@ public Plugin:myinfo =
 const int MAX_MODULES = 64
 static Module Modules[MAX_MODULES]
 static ModulesCount
+
+static InitFuncDel InitFuncs[MAX_MODULES]
+static InitFuncCount
 
 static PlayerGreeter playerGreeter
 
@@ -162,17 +168,18 @@ public OnPluginStart()
 static RegisterModule(Module module)
 {
 	Modules[ModulesCount++] = module
+	if (module.InitFunc != INVALID_FUNCTION)
+	{
+		InitFuncs[InitFuncCount++] = module.InitFunc
+	}
 }
 
 static InitModules()
 {
-	for (int i = 0; i < ModulesCount; i++)
+	for (int i = 0; i < InitFuncCount; i++)
 	{
-		if (Modules[i].InitFunc != INVALID_FUNCTION)
-		{
-			Call_StartFunction(INVALID_HANDLE, Modules[i].InitFunc)
-			Call_Finish()
-		}
+		Call_StartFunction(INVALID_HANDLE, InitFuncs[i])
+		Call_Finish()
 	}
 }
 
