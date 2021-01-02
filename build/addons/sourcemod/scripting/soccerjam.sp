@@ -39,6 +39,7 @@ Handle:WarmupUpgradesEnabledConVar
 
 #include "PlayerGreeter"
 #include "UpgradeMenuDisplayer"
+#include "UpgradeMenuDisplayers/CommonMenuDisplayer"
 
 #include "parts"
 #include "parts/BALL_(ball)"
@@ -187,7 +188,7 @@ public OnPluginStart()
 	RegisterPart("TU") // Team Upgrade
 
 	UpgradeMenuDisplayer upgradeMenuDisplayer
-	CreateMenuDisplayer(upgradeMenuDisplayer)
+	CreateCommonMenuDisplayer(upgradeMenuDisplayer)
 
 	Module playerUpgradesModule
 	CreatePlayerUpgradesModule(playerUpgradesModule, upgradeMenuDisplayer)

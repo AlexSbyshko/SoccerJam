@@ -6,5 +6,7 @@
 enum SjEngine
 {
     SjEngine_Css,
-    SjEngine_Csgo
+    SjEngine_Csgo,
+
+    SjEngine_Count
 }
