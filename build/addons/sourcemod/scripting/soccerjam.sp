@@ -19,6 +19,7 @@ typedef UpgradeFunc = function void (int client, float upgradeValue)
 #include "soccerjam/clients"
 
 #include "module"
+#include "Data/Upgrade"
 
 
 #include "PlayerGreeter"

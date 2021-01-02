@@ -1,5 +1,6 @@
 #include "Module"
 #include "Data/DisplayMenuData"
+#include "Data/Upgrade"
 
 void CreatePlayerUpgradesModule(Module result)
 {
@@ -17,25 +18,10 @@ static Handle:OnClientResetUpgradesForward
 static Handle:OnGetClientUpgradeInfoForward
 
 const MAX_UPGRADES = 128
-const UPGRADE_NAME_LENGTH = 32
-const UPGRADE_MEAS_NAME_LENGTH = 8
 const INVALID_UPGRADE = -1
-
 
 static UpgradeMaxLevelSoundId
 
-
-
-enum struct SJUpgradeData
-{
-	char SJUpgradeData_Name[UPGRADE_NAME_LENGTH]
-	float SJUpgradeData_MinValue
-	float SJUpgradeData_MaxValue
-	int SJUpgradeData_LevelsCount
-	int SJUpgradeData_Cost
-	UpgradeFunc SJUpgradeData_Func
-	char SJUpgradeData_MeasName[UPGRADE_MEAS_NAME_LENGTH]
-}
 
 static UpgradesCount
 static PlayerUpgrades[MAXPLAYERS+1][MAX_UPGRADES]
