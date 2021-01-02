@@ -22,6 +22,7 @@ const INVALID_UPGRADE = -1
 
 #include "module"
 #include "Data/Upgrade"
+#include "Enums/SjEngine"
 
 int UpgradesCount
 int PlayerUpgrades[MAXPLAYERS+1][MAX_UPGRADES]
@@ -30,6 +31,8 @@ int EnabledUpgradesCount
 float PlayerUpgradeValue[MAXPLAYERS+1][MAX_UPGRADES]
 SJUpgradeData UpgradeInfo[MAX_UPGRADES]
 int PlayerCredits[MAXPLAYERS+1]
+
+SjEngine CurrentEngine
 
 
 Handle:WarmupUpgradesEnabledConVar
@@ -115,6 +118,20 @@ static PlayerGreeter playerGreeter
 
 public OnPluginStart()
 {
+	EngineVersion engineVersion = GetEngineVersion()
+	if (engineVersion == Engine_CSS)
+	{
+		CurrentEngine = SjEngine_Css
+	}
+	else if (engineVersion == Engine_CSGO)
+	{
+		CurrentEngine = SjEngine_Csgo
+	}
+	else
+	{
+		ThrowError("[SoccerJam] Unsupported game")
+	}
+
 	CreateConVar("soccerjamsource_version", SOCCERJAMSOURCE_VERSION, "SoccerJam: Source Version", FCVAR_SPONLY|FCVAR_UNLOGGED|FCVAR_DONTRECORD|FCVAR_REPLICATED|FCVAR_NOTIFY)
 	
 	WarmupUpgradesEnabledConVar = CreateConVar("sj_warmup_upgrades_enabled", "0", "Enable upgrades during Warmup", 0, true, 0.0, true, 1.0)

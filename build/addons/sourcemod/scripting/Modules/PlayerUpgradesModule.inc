@@ -204,7 +204,7 @@ static FireOnClientResetUpgrades(client)
 	Call_Finish()
 }
 
-static FireOnGetClientUpgradeInfo(client, String:info[512])
+stock FireOnGetClientUpgradeInfo(client, String:info[512])
 {
 	Call_StartForward(OnGetClientUpgradeInfoForward)
 	Call_PushCell(client)
