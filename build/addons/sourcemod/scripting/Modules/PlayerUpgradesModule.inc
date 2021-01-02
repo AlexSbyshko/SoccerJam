@@ -1,5 +1,5 @@
 #include "Module"
-#include "Data/DisplayMenuInfo"
+#include "Data/DisplayMenuData"
 
 void CreatePlayerUpgradesModule(Module result)
 {
@@ -113,7 +113,7 @@ static OnRunCmd(int client, int &buttons)
 	{
 		if (!reloading[client])
 		{
-			ShowUpgradeMenu(client)
+			DisplayUpgradeMenu(client)
 			reloading[client] = true
 		}
 	}
@@ -211,11 +211,19 @@ FindUpgradeByName(const String:name[])
 	return INVALID_UPGRADE
 }
 
-void ShowUpgradeMenu(int client)
+static void DisplayUpgradeMenu(int client)
+{
+	DisplayMenuData displayMenuData
+	displayMenuData.IsWarmupUpgradingEnabled = GetConVarBool(WarmupUpgradesEnabledConVar)
+	
+	ShowUpgradeMenu(client, displayMenuData)
+}
+
+void ShowUpgradeMenu(int client, DisplayMenuData displayMenuData)
 {
 	if (StrEqual(GameFolderName, "csgo", true)
 		&& GameRules_GetProp("m_bWarmupPeriod") == 1
-		&& !GetConVarBool(WarmupUpgradesEnabledConVar)) 
+		&& !displayMenuData.IsWarmupUpgradingEnabled) 
     {
     	return
     }
@@ -274,6 +282,8 @@ void ShowUpgradeMenu(int client)
 	DisplayMenu(menu, client, 20)
 }
 
+
+
 static Upgrade_Handler(Handle:menu, MenuAction:action, client, choice) 
 {
 	if (action == MenuAction_End)
@@ -301,16 +311,10 @@ static Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 		{
 			int upgradeId = data.ReadCell()
 			IncreasePlayerUpgradeLevel(client, upgradeId)
-			
-			if (PlayerCredits[client] > 0)
-			{
-				ShowUpgradeMenu(client);
-			}
 		}
 		else if (upgradeAction == 1)
 		{
-			ClearClientUpgrades(client)
-			ShowUpgradeMenu(client)		
+			ClearClientUpgrades(client)	
 		}
 	}
 }

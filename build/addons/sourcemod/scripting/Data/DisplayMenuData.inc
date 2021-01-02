@@ -3,8 +3,7 @@
 #endif
 #define _DisplayMenuInfo_included
 
-enum struct DisplayMenuInfo
+enum struct DisplayMenuData
 {
     bool IsWarmupUpgradingEnabled
-    
 }
