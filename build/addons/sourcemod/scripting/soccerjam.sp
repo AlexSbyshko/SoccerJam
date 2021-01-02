@@ -31,6 +31,9 @@ float PlayerUpgradeValue[MAXPLAYERS+1][MAX_UPGRADES]
 SJUpgradeData UpgradeInfo[MAX_UPGRADES]
 int PlayerCredits[MAXPLAYERS+1]
 
+
+Handle:WarmupUpgradesEnabledConVar
+
 #include "PlayerGreeter"
 #include "UpgradeMenuDisplayer"
 
@@ -113,6 +116,8 @@ static PlayerGreeter playerGreeter
 public OnPluginStart()
 {
 	CreateConVar("soccerjamsource_version", SOCCERJAMSOURCE_VERSION, "SoccerJam: Source Version", FCVAR_SPONLY|FCVAR_UNLOGGED|FCVAR_DONTRECORD|FCVAR_REPLICATED|FCVAR_NOTIFY)
+	
+	WarmupUpgradesEnabledConVar = CreateConVar("sj_warmup_upgrades_enabled", "0", "Enable upgrades during Warmup", 0, true, 0.0, true, 1.0)
 	InitPartSystem()
 
 	RegisterPart("BALL") // Ball
@@ -164,8 +169,11 @@ public OnPluginStart()
 	RegisterPart("TRB") // Turbo
 	RegisterPart("TU") // Team Upgrade
 
+	UpgradeMenuDisplayer upgradeMenuDisplayer
+	CreateMenuDisplayer(upgradeMenuDisplayer)
+
 	Module playerUpgradesModule
-	CreatePlayerUpgradesModule(playerUpgradesModule)
+	CreatePlayerUpgradesModule(playerUpgradesModule, upgradeMenuDisplayer)
 	RegisterModule(playerUpgradesModule)
 
 	InitModules()
