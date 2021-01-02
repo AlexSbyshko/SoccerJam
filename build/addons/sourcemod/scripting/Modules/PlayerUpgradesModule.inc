@@ -17,19 +17,7 @@ static Handle:WarmupUpgradesEnabledConVar
 static Handle:OnClientResetUpgradesForward
 static Handle:OnGetClientUpgradeInfoForward
 
-const MAX_UPGRADES = 128
-const INVALID_UPGRADE = -1
-
 static UpgradeMaxLevelSoundId
-
-
-static UpgradesCount
-static PlayerUpgrades[MAXPLAYERS+1][MAX_UPGRADES]
-static EnabledUpgrades[MAX_UPGRADES]
-static EnabledUpgradesCount
-static Float:PlayerUpgradeValue[MAXPLAYERS+1][MAX_UPGRADES]
-static SJUpgradeData UpgradeInfo[MAX_UPGRADES]
-static PlayerCredits[MAXPLAYERS+1]
 
 /// API ////
 

@@ -11,6 +11,8 @@
 #define SOCCERJAMSOURCE_URL "https://github.com/AlexSbyshko/SoccerJam"
 
 typedef UpgradeFunc = function void (int client, float upgradeValue)
+const MAX_UPGRADES = 128
+const INVALID_UPGRADE = -1
 
 #include "soccerjam/constants"
 #include "soccerjam/globalvars"
@@ -21,6 +23,13 @@ typedef UpgradeFunc = function void (int client, float upgradeValue)
 #include "module"
 #include "Data/Upgrade"
 
+int UpgradesCount
+int PlayerUpgrades[MAXPLAYERS+1][MAX_UPGRADES]
+int EnabledUpgrades[MAX_UPGRADES]
+int EnabledUpgradesCount
+float PlayerUpgradeValue[MAXPLAYERS+1][MAX_UPGRADES]
+SJUpgradeData UpgradeInfo[MAX_UPGRADES]
+int PlayerCredits[MAXPLAYERS+1]
 
 #include "PlayerGreeter"
 #include "UpgradeMenuDisplayer"
