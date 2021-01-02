@@ -252,8 +252,6 @@ void ShowUpgradeMenu(int client)
 		char info[64]
 		Format(info, sizeof(info), "%d", view_as<int>(data));
 		AddMenuItem(menu, info, line, style)
-		PrintToServer("add item %i : %s", i, info)
-		//AddMenuItem(menu, upgradeName, line, style)
 	}
 	if (GetConVarBool(ResetUpgradesEnabledConVar))
 	{
@@ -264,7 +262,6 @@ void ShowUpgradeMenu(int client)
 
 		char info[64]
 		Format(info, sizeof(info), "%d", view_as<int>(data));
-		PrintToServer("add item %s", info)
 		AddMenuItem(menu, info, line)
 	}
 	SetMenuExitButton(menu, true)
@@ -278,13 +275,11 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 {
 	if (action == MenuAction_End)
 	{
-		PrintToServer("close menu %i", choice)
 		int itemsCount = GetMenuItemCount(menu)
 		for (int i = 0; i < itemsCount; i++)
 		{
 			decl String:info[64]
 			GetMenuItem(menu, i, info, sizeof(info))
-			PrintToServer("delete item %i : %s", i, info)
 			DataPack data = view_as<DataPack>(StringToInt(info))
 			delete data
 		}
@@ -295,7 +290,6 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 	{
 		decl String:info[64]
 		GetMenuItem(menu, choice, info, sizeof(info))
-		PrintToServer("read item %i : %s", choice, info)
 		DataPack data = view_as<DataPack>(StringToInt(info))
 		data.Reset()
 
@@ -319,15 +313,10 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 		}
 		else
 		{
-			//if (StrEqual(info, "reset"))
-			{
-				ClearClientUpgrades(client)
-				ShowUpgradeMenu(client)		
-			}
+			ClearClientUpgrades(client)
+			ShowUpgradeMenu(client)		
 		}
 	}
-
-	//delete data
 }
 
 bool:IsPlayerCanBuyUpgrade(client, upgrade)
