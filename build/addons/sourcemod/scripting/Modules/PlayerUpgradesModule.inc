@@ -275,8 +275,6 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 			new upgrade = EnabledUpgrades[choice]
 			decl String:upgradeName[UPGRADE_NAME_LENGTH]
 			GetUpgradeName(upgrade, upgradeName)
-			decl String:upgradeTitle[64];
-			Format(upgradeTitle, sizeof(upgradeTitle), "%T", upgradeName, client);
 			new currentLevel = PlayerUpgrades[client][upgrade];		
 			new price = UpgradeInfo[upgrade].SJUpgradeData_Cost			
 			PlayerCredits[client] -= price;
