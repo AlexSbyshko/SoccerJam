@@ -155,7 +155,7 @@ public OnPluginStart()
 	RegisterPart("TU") // Team Upgrade
 
 	UpgradeMenuDisplayer menuDisplayer
-	CreateMenuDisplayer(ShowUpgradeMenu, menuDisplayer)
+	CreateMenuDisplayer(menuDisplayer, ShowUpgradeMenu)
 
 	Module playerUpgradesModule
 	CreatePlayerUpgradesModule(playerUpgradesModule, menuDisplayer)

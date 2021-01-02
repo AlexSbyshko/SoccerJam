@@ -1,5 +1,4 @@
 typedef DisplayMenuDel = function void (int client)
-const MAX_DISPLAYERS = 4;
 
 enum struct UpgradeMenuDisplayer
 {
@@ -13,13 +12,7 @@ enum struct UpgradeMenuDisplayer
 	}
 }
 
-
-static UpgradeMenuDisplayer _displayers[MAX_DISPLAYERS]
-static int Count
-
-void CreateMenuDisplayer(DisplayMenuDel displayMenuFunc, UpgradeMenuDisplayer displayer = 0)
+void CreateMenuDisplayer(UpgradeMenuDisplayer displayer, DisplayMenuDel displayMenuFunc)
 {
-    int id = Count++
-    _displayers[id].DisplayMenuFunc = displayMenuFunc
-    displayer = _displayers[id]
+    displayer.DisplayMenuFunc = displayMenuFunc
 }
