@@ -225,6 +225,10 @@ void ShowUpgradeMenu(int client)
 	new style, level, price, maxLevel, value, upgrade
 	for (new i = 0; i < EnabledUpgradesCount; i++)
 	{
+		DataPack data = new DataPack()
+		data.WriteCell(0)
+		
+
 		upgrade = EnabledUpgrades[i]
 		decl String:upgradeName[UPGRADE_NAME_LENGTH]
 		value = RoundFloat(PlayerUpgradeValue[client][upgrade])
@@ -244,14 +248,27 @@ void ShowUpgradeMenu(int client)
 			Format(line, sizeof(line), "%T: %i %s (lvl %i/%i)", upgradeName, client, value, UpgradeInfo[upgrade].SJUpgradeData_MeasName, level, maxLevel)
 		}
 		style = (currentCredits > 0) ? style : ITEMDRAW_DISABLED
-		AddMenuItem(menu, upgradeName, line, style)
+
+		char info[64]
+		Format(info, sizeof(info), "%d", view_as<int>(data));
+		AddMenuItem(menu, info, line, style)
+		PrintToServer("add item %i : %s", i, info)
+		//AddMenuItem(menu, upgradeName, line, style)
 	}
 	if (GetConVarBool(ResetUpgradesEnabledConVar))
 	{
+		DataPack data = new DataPack()
+		data.WriteCell(1)
+
 		Format(line, sizeof(line), "%T", "RESET_ALL", client)
-		AddMenuItem(menu, "reset", line)
+
+		char info[64]
+		Format(info, sizeof(info), "%d", view_as<int>(data));
+		PrintToServer("add item %s", info)
+		AddMenuItem(menu, info, line)
 	}
 	SetMenuExitButton(menu, true)
+
 	DisplayMenu(menu, client, 20)
 
 	return
@@ -261,11 +278,29 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 {
 	if (action == MenuAction_End)
 	{
+		PrintToServer("close menu %i", choice)
+		int itemsCount = GetMenuItemCount(menu)
+		for (int i = 0; i < itemsCount; i++)
+		{
+			decl String:info[64]
+			GetMenuItem(menu, i, info, sizeof(info))
+			PrintToServer("delete item %i : %s", i, info)
+			DataPack data = view_as<DataPack>(StringToInt(info))
+			delete data
+		}
+
 		CloseHandle(menu);
 	}
 	else if (action == MenuAction_Select)
 	{
-		if (choice < EnabledUpgradesCount)
+		decl String:info[64]
+		GetMenuItem(menu, choice, info, sizeof(info))
+		PrintToServer("read item %i : %s", choice, info)
+		DataPack data = view_as<DataPack>(StringToInt(info))
+		data.Reset()
+
+		int upgradeAction = data.ReadCell()
+		if (upgradeAction == 0)
 		{
 			new upgrade = EnabledUpgrades[choice]
 			new currentLevel = PlayerUpgrades[client][upgrade];		
@@ -284,15 +319,15 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 		}
 		else
 		{
-			decl String:info[32]
-			GetMenuItem(menu, choice, info, sizeof(info))
-			if (StrEqual(info, "reset"))
+			//if (StrEqual(info, "reset"))
 			{
-				ClearClientUpgrades(client)				
+				ClearClientUpgrades(client)
 				ShowUpgradeMenu(client)		
 			}
 		}
 	}
+
+	//delete data
 }
 
 bool:IsPlayerCanBuyUpgrade(client, upgrade)
