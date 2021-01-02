@@ -141,10 +141,17 @@ GetUpgradeName(upgradeIndex, String:destination[UPGRADE_NAME_LENGTH])
 	strcopy(destination, UPGRADE_NAME_LENGTH, UpgradeInfo[upgradeIndex].SJUpgradeData_Name)
 }
 
-IncreasePlayerUpgradeLevel(client, int upgrade)
+IncreasePlayerUpgradeLevel(int client, int upgradeId)
 {
-	new newLevel = PlayerUpgrades[client][upgrade] + 1
-	SetPlayerUpgradeLevel(client, upgrade, newLevel)
+	new newLevel = PlayerUpgrades[client][upgradeId] + 1
+	SetPlayerUpgradeLevel(client, upgradeId, newLevel)
+	int price = UpgradeInfo[upgradeId].SJUpgradeData_Cost
+	PlayerCredits[client] -= price
+	new maxLevel = UpgradeInfo[upgradeId].SJUpgradeData_LevelsCount
+	if (newLevel >= maxLevel)
+	{
+		PlaySoundByIdToClient(client, UpgradeMaxLevelSoundId)
+	}
 }
 
 SetPlayerUpgradeLevel(client, int upgrade, level)
@@ -167,7 +174,7 @@ SetPlayerUpgradeLevel(client, int upgrade, level)
 	}
 }
 
-static OnReadConfig(Handle:kv)
+static void OnReadConfig(Handle:kv)
 {
 	EnabledUpgradesCount = 0
 	if (KvGotoFirstSubKey(kv))
@@ -236,11 +243,11 @@ void ShowUpgradeMenu(int client)
 		GetUpgradeName(upgrade, upgradeName)
 		style = ITEMDRAW_DEFAULT
 		level = PlayerUpgrades[client][upgrade]
+
 		maxLevel = UpgradeInfo[upgrade].SJUpgradeData_LevelsCount
 		if (level < maxLevel
 			&& IsPlayerCanBuyUpgrade(client, upgrade))
 		{
-			price = UpgradeInfo[upgrade].SJUpgradeData_Cost
 			Format(line, sizeof(line), "%T: %i %s (lvl %i/%i) cost: %i", upgradeName, client, value, UpgradeInfo[upgrade].SJUpgradeData_MeasName, level, maxLevel, price)
 		}
 		else
@@ -279,7 +286,7 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 		int itemsCount = GetMenuItemCount(menu)
 		for (int i = 0; i < itemsCount; i++)
 		{
-			decl String:info[64]
+			decl String:info[16]
 			GetMenuItem(menu, i, info, sizeof(info))
 			DataPack data = view_as<DataPack>(StringToInt(info))
 			delete data
@@ -289,7 +296,7 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 	}
 	else if (action == MenuAction_Select)
 	{
-		decl String:info[64]
+		decl String:info[16]
 		GetMenuItem(menu, choice, info, sizeof(info))
 		DataPack data = view_as<DataPack>(StringToInt(info))
 		data.Reset()
@@ -297,16 +304,9 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 		int upgradeAction = data.ReadCell()
 		if (upgradeAction == 0)
 		{
-			new upgrade = data.ReadCell()
-			new currentLevel = PlayerUpgrades[client][upgrade];		
-			new price = UpgradeInfo[upgrade].SJUpgradeData_Cost			
-			PlayerCredits[client] -= price;
-			IncreasePlayerUpgradeLevel(client, upgrade)
-			new maxLevel = UpgradeInfo[upgrade].SJUpgradeData_LevelsCount
-			if (currentLevel >= maxLevel - 1)
-			{
-				PlaySoundByIdToClient(client, UpgradeMaxLevelSoundId)
-			}
+			int upgradeId = data.ReadCell()
+			IncreasePlayerUpgradeLevel(client, upgradeId)
+			
 			if (PlayerCredits[client] > 0)
 			{
 				ShowUpgradeMenu(client);
