@@ -13,6 +13,7 @@ enum struct UpgradeMenuDisplayer
 	{
 		Call_StartFunction(INVALID_HANDLE, this.DisplayMenuFunc)
 		Call_PushCell(client)
+		Call_PushCell(isResetEnabled)
 		Call_Finish()
 	}
 }
