@@ -227,9 +227,10 @@ void ShowUpgradeMenu(int client)
 	{
 		DataPack data = new DataPack()
 		data.WriteCell(0)
-		
 
 		upgrade = EnabledUpgrades[i]
+		data.WriteCell(upgrade)
+
 		decl String:upgradeName[UPGRADE_NAME_LENGTH]
 		value = RoundFloat(PlayerUpgradeValue[client][upgrade])
 		GetUpgradeName(upgrade, upgradeName)
@@ -296,7 +297,7 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 		int upgradeAction = data.ReadCell()
 		if (upgradeAction == 0)
 		{
-			new upgrade = EnabledUpgrades[choice]
+			new upgrade = data.ReadCell()
 			new currentLevel = PlayerUpgrades[client][upgrade];		
 			new price = UpgradeInfo[upgrade].SJUpgradeData_Cost			
 			PlayerCredits[client] -= price;
@@ -311,7 +312,7 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 				ShowUpgradeMenu(client);
 			}
 		}
-		else
+		else if (upgradeAction == 1)
 		{
 			ClearClientUpgrades(client)
 			ShowUpgradeMenu(client)		
