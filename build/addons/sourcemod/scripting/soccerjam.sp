@@ -40,6 +40,7 @@ Handle:WarmupUpgradesEnabledConVar
 #include "PlayerGreeter"
 #include "UpgradeMenuDisplayer"
 #include "UpgradeMenuDisplayers/CommonMenuDisplayer"
+#include "UpgradeMenuDisplayers/WarmupCheckMenuDisplayer"
 
 #include "parts"
 #include "parts/BALL_(ball)"
@@ -187,9 +188,17 @@ public OnPluginStart()
 	RegisterPart("TRB") // Turbo
 	RegisterPart("TU") // Team Upgrade
 
+	// UpgradeMenuDisplayer
 	UpgradeMenuDisplayer upgradeMenuDisplayer
 	CreateCommonMenuDisplayer(upgradeMenuDisplayer)
 
+	switch (CurrentEngine)
+	{
+		case SjEngine_Csgo:
+			CreateWmCheckMenuDisplayer(upgradeMenuDisplayer, upgradeMenuDisplayer)
+	}
+
+	// Player Upgrade Module
 	Module playerUpgradesModule
 	CreatePlayerUpgradesModule(playerUpgradesModule, upgradeMenuDisplayer)
 	RegisterModule(playerUpgradesModule)

@@ -7,13 +7,6 @@ void CreateCommonMenuDisplayer(UpgradeMenuDisplayer displayer)
 
 static void ShowUpgradeMenu(int client, bool isResetEnabled)
 {
-	if (StrEqual(GameFolderName, "csgo", true)
-		&& GameRules_GetProp("m_bWarmupPeriod") == 1
-		&& !GetConVarBool(WarmupUpgradesEnabledConVar)) 
-    {
-    	return
-    }
-
 	new Handle:menu = CreateMenu(Upgrade_Handler)
 	decl String:line[512]
 	new currentCredits = PlayerCredits[client]
