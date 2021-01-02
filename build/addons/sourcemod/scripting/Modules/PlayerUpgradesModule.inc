@@ -1,15 +1,12 @@
 #include "Module"
+#include "Data/DisplayMenuInfo"
 
-static UpgradeMenuDisplayer _menuDisplayer
-
-void CreatePlayerUpgradesModule(Module result, UpgradeMenuDisplayer menuDisplayer)
+void CreatePlayerUpgradesModule(Module result)
 {
 	result.InitFunc = Init
 	result.OnPlayerRunCmdFunc = OnRunCmd
 	result.OnStartPublicFunc = OnStartPublic
 	result.OnStartMatchFunc = OnStartMatch
-
-	_menuDisplayer = menuDisplayer
 }
 
 static Handle:InitialCreditsConVar
@@ -116,7 +113,7 @@ static OnRunCmd(int client, int &buttons)
 	{
 		if (!reloading[client])
 		{
-			_menuDisplayer.DisplayMenu(client)
+			ShowUpgradeMenu(client)
 			reloading[client] = true
 		}
 	}
