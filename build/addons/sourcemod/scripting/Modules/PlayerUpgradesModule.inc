@@ -187,17 +187,14 @@ FindUpgradeByName(const String:name[])
 
 static void DisplayUpgradeMenu(int client)
 {
-	DisplayMenuData displayMenuData
-	displayMenuData.IsWarmupUpgradingEnabled = GetConVarBool(WarmupUpgradesEnabledConVar)
-	
-	ShowUpgradeMenu(client, displayMenuData)
+	ShowUpgradeMenu(client)
 }
 
-void ShowUpgradeMenu(int client, DisplayMenuData displayMenuData)
+void ShowUpgradeMenu(int client)
 {
 	if (StrEqual(GameFolderName, "csgo", true)
 		&& GameRules_GetProp("m_bWarmupPeriod") == 1
-		&& !displayMenuData.IsWarmupUpgradingEnabled) 
+		&& !GetConVarBool(WarmupUpgradesEnabledConVar)) 
     {
     	return
     }
