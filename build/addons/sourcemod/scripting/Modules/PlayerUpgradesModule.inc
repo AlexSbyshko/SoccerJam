@@ -275,11 +275,9 @@ void ShowUpgradeMenu(int client)
 	SetMenuExitButton(menu, true)
 
 	DisplayMenu(menu, client, 20)
-
-	return
 }
 
-public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice) 
+static Upgrade_Handler(Handle:menu, MenuAction:action, client, choice) 
 {
 	if (action == MenuAction_End)
 	{
