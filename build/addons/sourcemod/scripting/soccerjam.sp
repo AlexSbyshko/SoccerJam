@@ -87,7 +87,7 @@ public Plugin:myinfo =
 const int MAX_MODULES = 64
 
 static InitFuncDel InitFuncs[MAX_MODULES]
-static InitFuncCount
+static InitFuncsCount
 
 static OnPlayerRunCmdDel OnRunCmdFuncs[MAX_MODULES]
 static OnRunCmdFuncCount
@@ -173,7 +173,7 @@ static RegisterModule(Module module)
 {
 	if (module.InitFunc != INVALID_FUNCTION)
 	{
-		InitFuncs[InitFuncCount++] = module.InitFunc
+		InitFuncs[InitFuncsCount++] = module.InitFunc
 	}
 	
 	if (module.OnPlayerRunCmdFunc != INVALID_FUNCTION)
@@ -194,7 +194,7 @@ static RegisterModule(Module module)
 
 static InitModules()
 {
-	for (int i = 0; i < InitFuncCount; i++)
+	for (int i = 0; i < InitFuncsCount; i++)
 	{
 		Call_StartFunction(INVALID_HANDLE, InitFuncs[i])
 		Call_Finish()
