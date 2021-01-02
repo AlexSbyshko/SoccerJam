@@ -167,11 +167,6 @@ SetPlayerUpgradeLevel(client, int upgrade, level)
 	}
 }
 
-GetUpgradeMaxLevel(upgradeIndex)
-{
-	return UpgradeInfo[upgradeIndex].SJUpgradeData_LevelsCount
-}
-
 static OnReadConfig(Handle:kv)
 {
 	EnabledUpgradesCount = 0
@@ -236,7 +231,7 @@ void ShowUpgradeMenu(int client)
 		GetUpgradeName(upgrade, upgradeName)
 		style = ITEMDRAW_DEFAULT
 		level = PlayerUpgrades[client][upgrade]
-		maxLevel = GetUpgradeMaxLevel(upgrade)
+		maxLevel = UpgradeInfo[upgrade].SJUpgradeData_LevelsCount
 		if (level < maxLevel
 			&& IsPlayerCanBuyUpgrade(client, upgrade))
 		{
@@ -277,11 +272,11 @@ public Upgrade_Handler(Handle:menu, MenuAction:action, client, choice)
 			new price = UpgradeInfo[upgrade].SJUpgradeData_Cost			
 			PlayerCredits[client] -= price;
 			IncreasePlayerUpgradeLevel(client, upgrade)
-			new maxLevel = GetUpgradeMaxLevel(upgrade)
+			new maxLevel = UpgradeInfo[upgrade].SJUpgradeData_LevelsCount
 			if (currentLevel >= maxLevel - 1)
 			{
 				PlaySoundByIdToClient(client, UpgradeMaxLevelSoundId)
-			}				
+			}
 			if (PlayerCredits[client] > 0)
 			{
 				ShowUpgradeMenu(client);
