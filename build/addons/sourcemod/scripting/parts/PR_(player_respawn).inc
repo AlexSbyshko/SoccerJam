@@ -1,10 +1,10 @@
 public PR_Event_PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	new userId = GetEventInt(event, "userid")
+	int userId = GetEventInt(event, "userid")
 	CreateTimer(2.0, Timer_PlayerRespawn, userId)
 }
 
-public Action:Timer_PlayerRespawn(Handle:timer, any:userId)
+public Action Timer_PlayerRespawn(Handle timer, any userId)
 {
 	new client = GetClientOfUserId(userId)
 	if (client)
