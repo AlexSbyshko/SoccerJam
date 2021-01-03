@@ -11,9 +11,9 @@ void CreateWmCheckMenuDisplayer(UpgradeMenuDisplayer displayer, UpgradeMenuDispl
 static void ShowUpgradeMenu(int client, bool isResetEnabled)
 {
     if (GameRules_GetProp("m_bWarmupPeriod") == 1
-		&& !GetConVarBool(WarmupUpgradesEnabledConVar)) 
+      && !GetConVarBool(WarmupUpgradesEnabledConVar)) 
     {
-    	return
+      return
     }
 
     _decoratee.DisplayMenu(client, isResetEnabled)
