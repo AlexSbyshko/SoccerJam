@@ -29,11 +29,8 @@ public BK_OnPlayerRunCmd(client, &buttons)
 	{
 		if (buttons & IN_USE)
 		{
-			//KickBall(client)
 			if (!ChargingClients[client])
 			{
-				StartCharge(client)
-
 				SetEntData(client, ProgressBarDurationOffset, 1, 4, true)
 				SetEntDataFloat(client, ProgressBarStartTimeOffset, GetGameTime(), true)
 				ChargingClients[client] = true
@@ -67,12 +64,6 @@ public BK_OnPlayerRunCmd(client, &buttons)
 			ChargingClients[client] = false
 		}
 	}
-}
-
-static void StartCharge(client)
-{
-	GetPlayerUpgradeValue(client, KickStrengthUpgradeId)
-	PrintToChatAll("Stat charging")
 }
 
 KickBall(client, float kickStrength)
