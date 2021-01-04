@@ -37,7 +37,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/BE_(ball_explosion)"
 #include "parts/BR_(ball_receiving)"
 #include "parts/BT_(ball_trail)"
-#include "parts/CB_(curve_ball)"
 #include "parts/CM_(config_manager)"
 #include "parts/DZ_(death_zone)"
 #include "parts/FFI_(frags_for_interception)"
@@ -113,7 +112,6 @@ public OnPluginStart()
 	RegisterPart("BE") // Ball Explosion
 	RegisterPart("BR") // Ball Receiving
 	RegisterPart("BT") // Ball Trail
-	RegisterPart("CB") // Curve Ball
 	RegisterPart("CM") // Config Manager
 	RegisterPart("DZ") // Death Zone
 	RegisterPart("FFI") // Frags For Interception
