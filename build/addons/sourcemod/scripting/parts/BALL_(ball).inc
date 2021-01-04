@@ -228,15 +228,6 @@ SetBallCatchEffect()
 	PlaySoundByIdFromEntity(FastBallPickUpSoundId, g_Ball);
 }
 
-SetBallSmackEffect()
-{
-	decl Float:orig[3];
-	Entity_GetAbsOrigin(g_Ball, orig);
-	new Float:dir[3];
-	TE_SetupExplosion(orig, g_MiniExplosionSprite, 5.0, 1, 0, 50, 40, dir);
-	TE_SendToAll();
-}
-
 TeleportBallToClient(client)
 {
 	decl Float:clientOrigin[3];

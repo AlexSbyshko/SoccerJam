@@ -57,36 +57,6 @@ static CheckPlayerTouchBall(client)
 	}
 }
 
-static SmackPlayerOnBallSpeed(client, Float:ballSpeed)
-{
-	new Float:playerDexterity = GetPlayerCatchingPercent(client);
-	new Float:damage = ballSpeed / 16.0 - playerDexterity;
-	if (damage < 10.0)
-	{
-		damage = 10.0;
-	}
-	decl Float:ballVelovity[3];
-	Entity_GetLocalVelocity(g_Ball, ballVelovity);
-	Entity_Hurt(client, RoundFloat(damage), 0, DMG_SHOCK, "sj_ball")
-	if(!IsPlayerAlive(client))
-	{
-		PlaySoundByIdToAll(BallKickSoundId)
-	}
-	else
-	{
-		decl Float:pushVel[3]
-		pushVel[0] = ballVelovity[0]
-		pushVel[1] = ballVelovity[1]
-		pushVel[2] = ballVelovity[2] + ((ballVelovity[2] < 0) ? GetRandomFloat(-200.0,-50.0) : GetRandomFloat(50.0,200.0))
-		TeleportEntity(client, NULL_VECTOR, NULL_VECTOR, pushVel)
-	}
-	for (new i = 0; i < 3; i++)
-	{
-		ballVelovity[i] = ballVelovity[i] * GetRandomFloat(0.1,0.9)
-	}
-	TeleportEntity(g_Ball, NULL_VECTOR, NULL_VECTOR, ballVelovity)
-}
-
 stock bool:Entity_Hurt(entity, damage, attacker=0, damageType=DMG_GENERIC, const String:fakeClassName[]="")
 {
 	static point_hurt = INVALID_ENT_REFERENCE;

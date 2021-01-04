@@ -36,8 +36,3 @@ new Float:g_StartBallVelocity[3] = {0.0, 0.0, 100.0}
 //new Float:g_DeathZoneOrigins[TEAMS_COUNT][3]
 new Float:g_BallSpawnOrigin[3]
 new Float:g_BallDistOrigin[2][3]
-
-// PLAYERS
-
-new Float:g_PlayerSpeedMultiplier[MAXPLAYERS+1]
-new Float:g_PlayerGravityMultiplier[MAXPLAYERS+1]

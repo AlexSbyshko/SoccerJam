@@ -131,7 +131,7 @@ stock Entity_GetClassName(entity, String:buffer[], size)
 }
 
 
-GivePlayerWeapon(client)
+stock GivePlayerWeapon(client)
 {
 	Client_RemoveAllWeapons(client);
 	SetEntProp(client, Prop_Send, "m_ArmorValue", 0, 1);
@@ -201,10 +201,4 @@ MapFunctionPrefix(&Function:func, const String:prefix[], const String:functionNa
 	decl String:realFunctionName[MAX_FUNCTION_NAME_LENGTH]
 	Format(realFunctionName, sizeof(realFunctionName), "%s_%s", prefix, functionName)
 	func = GetFunctionByName(INVALID_HANDLE, realFunctionName)
-}
-
-bool:GetChance(Float:percent)
-{
-	new Float:random = GetRandomFloat(1.0, 100.0);
-	return percent >= random;
 }

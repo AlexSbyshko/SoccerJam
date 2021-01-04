@@ -24,7 +24,7 @@ Client_FixSpeed(client)
 	if (IsClientInGame(client))
 	{
 		new Float:speedMultiplier = 1.0 * (IsBallHolder(client) ? BallHolderSpeedMultiplier : 1.0)
-		new Float:gravityMultiplier = (1.0 / speedMultiplier) * g_PlayerGravityMultiplier[client]
+		new Float:gravityMultiplier = (1.0 / speedMultiplier) * 1.0
 		SetEntPropFloat(client, Prop_Data, "m_flLaggedMovementValue", speedMultiplier)
 		SetEntPropFloat(client, Prop_Data, "m_flGravity", gravityMultiplier)		
 	}
