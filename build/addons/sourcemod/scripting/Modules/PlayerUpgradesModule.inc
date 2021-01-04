@@ -1,19 +1,30 @@
 #include "Module"
 #include "PluginStarter"
+#include "PlayerCmdRunner"
 #include "Data/DisplayMenuData"
 #include "Data/Upgrade"
 
 static UpgradeMenuDisplayer _menuDisplayer
 static PluginStarter _pluginStarter
+static PlayerCmdRunner _playerCmdRunner
 
-void CreatePlayerUpgradesModule(Module result, PluginStarter pluginStarter, UpgradeMenuDisplayer menuDisplayer)
+void CreatePlayerUpgradesModule(
+	Module result,
+	PluginStarter pluginStarter,
+	PlayerCmdRunner playerCmdRunner,
+	UpgradeMenuDisplayer menuDisplayer
+	)
 {
-	_menuDisplayer = menuDisplayer
 	_pluginStarter = pluginStarter
-
 	pluginStarter.StartPluginFunc = DecorateStartPlugin
+
+	_playerCmdRunner = playerCmdRunner
+	playerCmdRunner.RunPlayerCmdFunc = DecorateRunPlayerCmd
+
+	_menuDisplayer = menuDisplayer
+
 	result.InitFunc = INVALID_FUNCTION
-	result.OnPlayerRunCmdFunc = OnRunCmd
+	result.OnPlayerRunCmdFunc = INVALID_FUNCTION
 	result.OnStartPublicFunc = OnStartPublic
 	result.OnStartMatchFunc = OnStartMatch
 }
@@ -73,11 +84,6 @@ static void DecorateStartPlugin()
 {
 	_pluginStarter.StartPlugin()
 
-	Init()
-}
-
-static void Init()
-{
 	CreateConfig("upgrades.cfg", "upgrades", OnReadConfig)
 	
 	UpgradeMaxLevelSoundId = CreateSound("upgrade_maxlevel")
@@ -92,8 +98,10 @@ static void Init()
 	RegisterCustomForward(OnGetClientUpgradeInfoForward, "OnGetUpgradeInfo")
 }
 
-static OnRunCmd(int client, int &buttons)
+static DecorateRunPlayerCmd(int client, int &buttons)
 {
+	_playerCmdRunner.RunPlayerCmd(client, buttons)
+
 	static bool:reloading[MAXPLAYERS+1]
 	
 	if (buttons & IN_RELOAD)

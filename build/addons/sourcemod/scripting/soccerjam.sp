@@ -38,6 +38,8 @@ SjEngine CurrentEngine
 Handle:WarmupUpgradesEnabledConVar
 
 #include "PluginStarter"
+#include "PlayerCmdRunner"
+
 #include "PlayerGreeter"
 #include "UpgradeMenuDisplayer"
 #include "UpgradeMenuDisplayers/CommonMenuDisplayer"
@@ -118,6 +120,7 @@ static OnStartMatchDel OnStartMatchFuncs[MAX_MODULES]
 static OnStartMatchFuncsCount
 
 static PlayerGreeter playerGreeter
+static PlayerCmdRunner _playerCmdRunner
 
 public OnPluginStart()
 {
@@ -192,6 +195,8 @@ public OnPluginStart()
 	PluginStarter pluginStarter
 	CreateDefaultPluginStarter(pluginStarter)
 
+	CreateDefaultPlayerCmdRunner(_playerCmdRunner)
+
 	// UpgradeMenuDisplayer
 	UpgradeMenuDisplayer upgradeMenuDisplayer
 	CreateCommonMenuDisplayer(upgradeMenuDisplayer)
@@ -204,7 +209,11 @@ public OnPluginStart()
 
 	// Player Upgrade Module
 	Module playerUpgradesModule
-	CreatePlayerUpgradesModule(playerUpgradesModule, pluginStarter, upgradeMenuDisplayer)
+	CreatePlayerUpgradesModule(
+		playerUpgradesModule,
+		pluginStarter, 
+		_playerCmdRunner,
+		upgradeMenuDisplayer)
 	RegisterModule(playerUpgradesModule)
 
 	InitModules()
@@ -296,6 +305,7 @@ static OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 
 public Action OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:angles[3], &weapon)
 {
+	_playerCmdRunner.RunPlayerCmd(client, buttons)
 	for (int i = 0; i < OnRunCmdFuncCount; i++)
 	{
 		Call_StartFunction(INVALID_HANDLE, OnRunCmdFuncs[i])
