@@ -62,6 +62,7 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/RBAH_(remove_bomb_and_hostages)"
 #include "parts/RTE_(round_time_extend)"
 #include "parts/RWOS_(remove_weapons_on_spawn)"
+#include "parts/SCPB_(shot_charge_progress_bar)"
 #include "parts/SG_(speed_and_gravity)"
 #include "parts/SJB_(sj_builder)"
 #include "parts/SJE_(sj_entities)"
@@ -137,6 +138,7 @@ public OnPluginStart()
 	RegisterPart("RBAH") // Remove Bomb And Hostages
 	RegisterPart("RTE") // Round Time Extend
 	RegisterPart("RWOS") // Remove Weapons On Spawn
+	RegisterPart("SCPB") // Shot Charge Progress Bar
 	RegisterPart("SG") // Speed and Gravity
 	RegisterPart("SJB") // SJ Builder
 	RegisterPart("SJE") // SJ Entities

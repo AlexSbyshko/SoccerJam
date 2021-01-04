@@ -1,24 +1,27 @@
 static Handle:OnBallKickedForward
-static KickSoundId
+static PrivateForward OnShotChargingStartedForward
+static PrivateForward OnShotChargindEndedForward
 
+static KickSoundId
 
 static Handle:KickDistanceConVar
 static bool ChargingClients[MAXPLAYERS+1]
 static float StartChargingTimes[MAXPLAYERS+1]
-static int ProgressBarStartTimeOffset
-static int ProgressBarDurationOffset
 
 public SHOT_Init()
 {
-	OnBallKickedForward = CreateForward(ET_Ignore, Param_Cell)
+	OnBallKickedForward = CreateForward(ET_Ignore, Param_Cell)	
 	RegisterCustomForward(OnBallKickedForward, "OnBallKicked")
+
+	OnShotChargingStartedForward = CreateForward(ET_Ignore, Param_Cell)
+	RegisterCustomForward(OnShotChargingStartedForward, "OnShotChargingStarted")
+
+	OnShotChargindEndedForward = CreateForward(ET_Ignore, Param_Cell)
+	RegisterCustomForward(OnShotChargindEndedForward, "OnShotChargindEnded")
 
 	KickSoundId = CreateSound("ball_kick")
 
 	KickDistanceConVar = CreateConVar("sj_kick_distance", "55", "Distance between the player and the ball in kick", 0, true, 1.0)
-
-	ProgressBarStartTimeOffset = FindSendPropInfo("CCSPlayer", "m_flProgressBarStartTime")
-	ProgressBarDurationOffset = FindSendPropInfo("CCSPlayer", "m_iProgressBarDuration")
 }
 
 public SHOT_OnPlayerRunCmd(client, &buttons)
@@ -29,10 +32,9 @@ public SHOT_OnPlayerRunCmd(client, &buttons)
 		{
 			if (!ChargingClients[client])
 			{
-				SetEntData(client, ProgressBarDurationOffset, 1, 4, true)
-				SetEntDataFloat(client, ProgressBarStartTimeOffset, GetGameTime(), true)
 				ChargingClients[client] = true
 				StartChargingTimes[client] = GetGameTime()
+				FireOnShotChargingStarted(client)
 			}
 			SetBallInFront(client)
 		}
@@ -48,8 +50,7 @@ public SHOT_OnPlayerRunCmd(client, &buttons)
 				float chargePerSecond = (maxStrength - minStrength) / maxTime
 				float strengthAddition = chargePerSecond * chargeDuration
 				float kickStrength = minStrength + strengthAddition
-				SetEntDataFloat(client, ProgressBarStartTimeOffset, 0.0, true);
-				SetEntData(client, ProgressBarDurationOffset, 0, 1, true);
+				FireOnShotChargindEnded(client)
 				ShotBall(client, kickStrength)
 			}
 			else
@@ -172,6 +173,20 @@ GetClientFrontBallOrigin(client, Float:distance, height, Float:destOrigin[3])
 static FireOnBallKicked(client)
 {
 	Call_StartForward(OnBallKickedForward)
+	Call_PushCell(client)
+	Call_Finish()
+}
+
+static void FireOnShotChargingStarted(int client)
+{
+	Call_StartForward(OnShotChargingStartedForward)
+	Call_PushCell(client)
+	Call_Finish()
+}
+
+static void FireOnShotChargindEnded(int client)
+{
+	Call_StartForward(OnShotChargindEndedForward)
 	Call_PushCell(client)
 	Call_Finish()
 }
