@@ -20,17 +20,7 @@ const INVALID_UPGRADE = -1
 #include "soccerjam/sjtools"
 #include "soccerjam/clients"
 
-#include "module"
-#include "Data/Upgrade"
 #include "Enums/SjEngine"
-
-int UpgradesCount
-int PlayerUpgrades[MAXPLAYERS+1][MAX_UPGRADES]
-int EnabledUpgrades[MAX_UPGRADES]
-int EnabledUpgradesCount
-float PlayerUpgradeValue[MAXPLAYERS+1][MAX_UPGRADES]
-SJUpgradeData UpgradeInfo[MAX_UPGRADES]
-int PlayerCredits[MAXPLAYERS+1]
 
 SjEngine CurrentEngine
 
@@ -92,20 +82,6 @@ public Plugin:myinfo =
 	version = SOCCERJAMSOURCE_VERSION,
 	url = SOCCERJAMSOURCE_URL
 }
-
-const int MAX_MODULES = 64
-
-static InitFuncDel InitFuncs[MAX_MODULES]
-static InitFuncsCount
-
-static OnPlayerRunCmdDel OnRunCmdFuncs[MAX_MODULES]
-static OnRunCmdFuncCount
-
-static OnStartPublicDel OnStartPublicFuncs[MAX_MODULES]
-static OnStartPublicFuncsCount
-
-static OnStartMatchDel OnStartMatchFuncs[MAX_MODULES]
-static OnStartMatchFuncsCount
 
 static PlayerGreeter playerGreeter
 
@@ -181,38 +157,6 @@ public OnPluginStart()
 	HookEventEx("player_activate", OnPlayerActivate)
 }
 
-static RegisterModule(Module module)
-{
-	if (module.InitFunc != INVALID_FUNCTION)
-	{
-		InitFuncs[InitFuncsCount++] = module.InitFunc
-	}
-	
-	if (module.OnPlayerRunCmdFunc != INVALID_FUNCTION)
-	{
-		OnRunCmdFuncs[OnRunCmdFuncCount++] = module.OnPlayerRunCmdFunc
-	}
-
-	if (module.OnStartPublicFunc != INVALID_FUNCTION)
-	{
-		OnStartPublicFuncs[OnStartPublicFuncsCount++] = module.OnStartPublicFunc
-	}
-
-	if (module.OnStartMatchFunc != INVALID_FUNCTION)
-	{
-		OnStartMatchFuncs[OnStartMatchFuncsCount++] = module.OnStartMatchFunc
-	}
-}
-
-static InitModules()
-{
-	for (int i = 0; i < InitFuncsCount; i++)
-	{
-		Call_StartFunction(INVALID_HANDLE, InitFuncs[i])
-		Call_Finish()
-	}
-}
-
 public OnMapStart()
 {
 	FireOnMapStart()
@@ -260,31 +204,5 @@ static OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 
 public Action OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:angles[3], &weapon)
 {
-	for (int i = 0; i < OnRunCmdFuncCount; i++)
-	{
-		Call_StartFunction(INVALID_HANDLE, OnRunCmdFuncs[i])
-		Call_PushCell(client)
-		Call_PushCellRef(buttons)
-		Call_Finish()
-	}
-
 	return FireOnPlayerRunCmd(client, buttons)
-}
-
-public OnStartPublic()
-{
-	for (int i = 0; i < OnStartPublicFuncsCount; i++)
-	{
-		Call_StartFunction(INVALID_HANDLE, OnStartPublicFuncs[i])
-		Call_Finish()
-	}
-}
-
-public OnStartMatch()
-{
-	for (int i = 0; i < OnStartMatchFuncsCount; i++)
-	{
-		Call_StartFunction(INVALID_HANDLE, OnStartMatchFuncs[i])
-		Call_Finish()
-	}
 }
