@@ -4,6 +4,8 @@ static KickSoundId
 
 
 static Handle:KickDistanceConVar
+static bool ChargingClients[MAXPLAYERS+1]
+static float StartChargingTimes[MAXPLAYERS+1]
 
 public BK_Init()
 {
@@ -20,18 +22,52 @@ public BK_OnPlayerRunCmd(client, &buttons)
 {
 	if (client == g_BallHolder)
 	{
-		if(buttons & IN_USE)
+		if (buttons & IN_USE)
 		{
-			KickBall(client)
+			//KickBall(client)
+			if (!ChargingClients[client])
+			{
+				StartCharge(client)
+				SetEntPropFloat(client, Prop_Send, "m_flProgressBarStartTime", GetGameTime())
+				SetEntProp(client, Prop_Send, "m_iProgressBarDuration", 1)
+				ChargingClients[client] = true
+				StartChargingTimes[client] = GetGameTime()
+			}
+			SetBallInFront(client)
 		}
 		else
 		{
-			SetBallInFront(client)
+			if (ChargingClients[client])
+			{
+				float maxTime = 1.0
+				float minStrength = 650.0
+				float maxStrength = 1000.0
+				float chargeDuration = GetGameTime() - StartChargingTimes[client]
+				chargeDuration = (chargeDuration > maxTime) ? maxTime : chargeDuration
+				float chargePerSecond = (maxStrength - minStrength) / maxTime
+				float strengthAddition = chargePerSecond * chargeDuration
+				float kickStrength = minStrength + strengthAddition
+
+				PrintToChatAll("kick str: %f, dur: %f", kickStrength, chargeDuration)
+				SetEntProp(client, Prop_Send, "m_iProgressBarDuration", 0)
+				KickBall(client, kickStrength)
+			}
+			else
+			{
+				SetBallInFront(client)
+			}
+			ChargingClients[client] = false
 		}
 	}
 }
 
-KickBall(client)
+static void StartCharge(client)
+{
+	GetPlayerUpgradeValue(client, KickStrengthUpgradeId)
+	PrintToChatAll("Stat charging")
+}
+
+KickBall(client, float kickStrength)
 {
 	new Float:kickDistance = GetConVarFloat(KickDistanceConVar)
 	if (IsInterferenceForKick(client, kickDistance))
@@ -44,7 +80,6 @@ KickBall(client)
 	decl Float:angleVectors[3];
 	GetAngleVectors(clientEyeAngles, angleVectors, NULL_VECTOR, NULL_VECTOR);
 	
-	new Float:kickStrength = GetPlayerUpgradeValue(client, KickStrengthUpgradeId)
 	decl Float:ballVelocity[3];
 	for (new i = 0; i < 3; i++)
 	{
