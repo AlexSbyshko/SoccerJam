@@ -37,8 +37,6 @@ SjEngine CurrentEngine
 
 Handle:WarmupUpgradesEnabledConVar
 
-#include "PlayerCmdRunner"
-
 #include "PlayerGreeter"
 #include "UpgradeMenuDisplayer"
 #include "UpgradeMenuDisplayers/CommonMenuDisplayer"
@@ -119,7 +117,6 @@ static OnStartMatchDel OnStartMatchFuncs[MAX_MODULES]
 static OnStartMatchFuncsCount
 
 static PlayerGreeter playerGreeter
-static PlayerCmdRunner _playerCmdRunner
 
 public OnPluginStart()
 {
@@ -166,9 +163,6 @@ public OnPluginStart()
 	RegisterPart("LJ") // Long Jump
 	RegisterPart("MM") // Model Manager
 	RegisterPart("MSM") // Match Stats Manager
-
-	
-	
 	RegisterPart("MTCH") // Match
 	RegisterPart("MVP") // MVP Stars
 	RegisterPart("NDAG") // No Damage After Goal
@@ -193,8 +187,6 @@ public OnPluginStart()
 	RegisterPart("TM") // Team Models
 	RegisterPart("TRB") // Turbo
 	RegisterPart("TU") // Team Upgrade
-
-	CreateDefaultPlayerCmdRunner(_playerCmdRunner)
 
 	// UpgradeMenuDisplayer
 	UpgradeMenuDisplayer upgradeMenuDisplayer
@@ -298,7 +290,6 @@ static OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 
 public Action OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:angles[3], &weapon)
 {
-	_playerCmdRunner.RunPlayerCmd(client, buttons)
 	for (int i = 0; i < OnRunCmdFuncCount; i++)
 	{
 		Call_StartFunction(INVALID_HANDLE, OnRunCmdFuncs[i])
