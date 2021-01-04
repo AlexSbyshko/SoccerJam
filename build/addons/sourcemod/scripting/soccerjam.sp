@@ -90,7 +90,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/TEST_(test)"
 #include "parts/TM_(team_models)"
 #include "parts/TRB_(turbo)"
-#include "parts/TU_(team_upgrade)"
 #include "Modules/PlayerUpgradesModule"
 
 public Plugin:myinfo = 
@@ -186,7 +185,6 @@ public OnPluginStart()
 	RegisterPart("TEST") // Sound Manager
 	RegisterPart("TM") // Team Models
 	RegisterPart("TRB") // Turbo
-	RegisterPart("TU") // Team Upgrade
 
 	// UpgradeMenuDisplayer
 	UpgradeMenuDisplayer upgradeMenuDisplayer
