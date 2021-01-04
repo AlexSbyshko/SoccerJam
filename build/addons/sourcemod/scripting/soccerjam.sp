@@ -35,7 +35,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/BBM_(ball_bounce_multiplier)"
 #include "parts/BBS_(ball_bounce_sound)"
 #include "parts/BE_(ball_explosion)"
-#include "parts/BK_(ball_kick)"
 #include "parts/BR_(ball_receiving)"
 #include "parts/BT_(ball_trail)"
 #include "parts/CB_(curve_ball)"
@@ -68,6 +67,7 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/SJB_(sj_builder)"
 #include "parts/SJE_(sj_entities)"
 #include "parts/SJT_(sj_timer)"
+#include "parts/SHOT_(shot).inc"
 #include "parts/SM_(sound_manager)"
 #include "parts/SSP_(swap_spawn_points)"
 #include "parts/TBHD_(teleport_ball_on_holder_death)"
@@ -111,7 +111,6 @@ public OnPluginStart()
 	RegisterPart("BBM") // Ball Bounce Multiplier
 	RegisterPart("BBS") // Ball Bounce Sound
 	RegisterPart("BE") // Ball Explosion
-	RegisterPart("BK") // Ball Kick
 	RegisterPart("BR") // Ball Receiving
 	RegisterPart("BT") // Ball Trail
 	RegisterPart("CB") // Curve Ball
@@ -144,6 +143,7 @@ public OnPluginStart()
 	RegisterPart("SJB") // SJ Builder
 	RegisterPart("SJE") // SJ Entities
 	RegisterPart("SJT") // SJ Timer	
+	RegisterPart("SHOT") // Shot
 	RegisterPart("SM") // Sound Manager
 	RegisterPart("SSP") // Swap Spawn Points
 	RegisterPart("TBHD") // Teleport Ball on Holder Death

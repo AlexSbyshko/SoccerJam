@@ -8,7 +8,7 @@ static float StartChargingTimes[MAXPLAYERS+1]
 static int ProgressBarStartTimeOffset
 static int ProgressBarDurationOffset
 
-public BK_Init()
+public SHOT_Init()
 {
 	OnBallKickedForward = CreateForward(ET_Ignore, Param_Cell)
 	RegisterCustomForward(OnBallKickedForward, "OnBallKicked")
@@ -21,7 +21,7 @@ public BK_Init()
 	ProgressBarDurationOffset = FindSendPropInfo("CCSPlayer", "m_iProgressBarDuration")
 }
 
-public BK_OnPlayerRunCmd(client, &buttons)
+public SHOT_OnPlayerRunCmd(client, &buttons)
 {
 	if (client == g_BallHolder)
 	{
