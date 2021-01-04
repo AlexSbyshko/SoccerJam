@@ -53,7 +53,7 @@ public SHOT_OnPlayerRunCmd(client, &buttons)
 
 				SetEntDataFloat(client, ProgressBarStartTimeOffset, 0.0, true);
 				SetEntData(client, ProgressBarDurationOffset, 0, 1, true);
-				KickBall(client, kickStrength)
+				ShotBall(client, kickStrength)
 			}
 			else
 			{
@@ -64,7 +64,7 @@ public SHOT_OnPlayerRunCmd(client, &buttons)
 	}
 }
 
-KickBall(client, float kickStrength)
+static void ShotBall(client, float kickStrength)
 {
 	new Float:kickDistance = GetConVarFloat(KickDistanceConVar)
 	if (IsInterferenceForKick(client, kickDistance))
