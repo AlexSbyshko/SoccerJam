@@ -209,13 +209,11 @@ SetBallOwner(client)
 SetBallFree()
 {
 	g_IsBallFree = true;
-//	SetEntitySolidForClients(g_Ball);
 }
 
 SetBallNotFree()
 {
 	g_IsBallFree = false;
-//	SetEntityNotSolidForClients(g_Ball);
 }
 
 SetBallCatchEffect()
