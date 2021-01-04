@@ -6,6 +6,8 @@ static KickSoundId
 static Handle:KickDistanceConVar
 static bool ChargingClients[MAXPLAYERS+1]
 static float StartChargingTimes[MAXPLAYERS+1]
+static int StartOffset
+static int DurectionOffset
 
 public BK_Init()
 {
@@ -16,6 +18,9 @@ public BK_Init()
 	KickSoundId = CreateSound("ball_kick")
 
 	KickDistanceConVar = CreateConVar("sj_kick_distance", "55", "Distance between the player and the ball in kick", 0, true, 1.0)
+
+	StartOffset = FindSendPropInfo("CCSPlayer", "m_flProgressBarStartTime")
+	DurectionOffset = FindSendPropInfo("CCSPlayer", "m_iProgressBarDuration")
 }
 
 public BK_OnPlayerRunCmd(client, &buttons)
@@ -28,8 +33,11 @@ public BK_OnPlayerRunCmd(client, &buttons)
 			if (!ChargingClients[client])
 			{
 				StartCharge(client)
-				SetEntPropFloat(client, Prop_Send, "m_flProgressBarStartTime", GetGameTime())
-				SetEntProp(client, Prop_Send, "m_iProgressBarDuration", 1)
+				//SetEntPropFloat(client, Prop_Send, "m_flProgressBarStartTime", GetGameTime())
+				//SetEntProp(client, Prop_Send, "m_iProgressBarDuration", 1)
+
+				SetEntData(client, DurectionOffset, 1, 4, true)
+				SetEntDataFloat(client, StartOffset, GetGameTime(), true)
 				ChargingClients[client] = true
 				StartChargingTimes[client] = GetGameTime()
 			}
@@ -49,7 +57,10 @@ public BK_OnPlayerRunCmd(client, &buttons)
 				float kickStrength = minStrength + strengthAddition
 
 				PrintToChatAll("kick str: %f, dur: %f", kickStrength, chargeDuration)
-				SetEntProp(client, Prop_Send, "m_iProgressBarDuration", 0)
+				//SetEntProp(client, Prop_Send, "m_iProgressBarDuration", 0)
+
+				SetEntDataFloat(client, StartOffset, 0.0, true);
+				SetEntData(client, DurectionOffset, 0, 1, true);
 				KickBall(client, kickStrength)
 			}
 			else
