@@ -1,17 +1,20 @@
 #include "Module"
 #include "PluginStarter"
 #include "PlayerCmdRunner"
+#include "PublicMatchStarter"
 #include "Data/DisplayMenuData"
 #include "Data/Upgrade"
 
 static UpgradeMenuDisplayer _menuDisplayer
 static PluginStarter _pluginStarter
 static PlayerCmdRunner _playerCmdRunner
+static PublicMatchStarter _publicMatchStarter
 
 void CreatePlayerUpgradesModule(
 	Module result,
 	PluginStarter pluginStarter,
 	PlayerCmdRunner playerCmdRunner,
+	PublicMatchStarter publicMatchStarter,
 	UpgradeMenuDisplayer menuDisplayer
 	)
 {
@@ -21,11 +24,14 @@ void CreatePlayerUpgradesModule(
 	_playerCmdRunner = playerCmdRunner
 	playerCmdRunner.RunPlayerCmdFunc = DecorateRunPlayerCmd
 
+	_publicMatchStarter = publicMatchStarter
+	publicMatchStarter.StartPublicMatchFunc = DecorateStartPublicMatch
+
 	_menuDisplayer = menuDisplayer
 
 	result.InitFunc = INVALID_FUNCTION
 	result.OnPlayerRunCmdFunc = INVALID_FUNCTION
-	result.OnStartPublicFunc = OnStartPublic
+	result.OnStartPublicFunc = INVALID_FUNCTION
 	result.OnStartMatchFunc = OnStartMatch
 }
 
@@ -118,8 +124,10 @@ static DecorateRunPlayerCmd(int client, int &buttons)
 	}
 }
 
-static OnStartPublic()
+static void DecorateStartPublicMatch()
 {
+	_publicMatchStarter.StartPublicMatch()
+	
 	ForEachClient(ClearClientUpgrades)
 }
 

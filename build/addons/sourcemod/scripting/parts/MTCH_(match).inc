@@ -51,13 +51,11 @@ static Handle:CvarGoalsToWin
 static MatchTimeIsUpSoundId
 
 static MatchState:CurrentState
-
 static PublicMatchStarter _publicMatchStarter
 
 void CreateMatchModule(PublicMatchStarter publicMatchStarter)
 {
 	_publicMatchStarter = publicMatchStarter
-	_publicMatchStarter.StartPublicMatchFunc = Match_Start
 }
 
 // API //
@@ -105,21 +103,22 @@ public MTCH_Init()
 
 public MTCH_OnMapStart()
 {
-	_publicMatchStarter.StartPublicMatch()
+	Match_Start()
 }
 
 public MTCH_Event_MatchEndRestart(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	_publicMatchStarter.StartPublicMatch()
+	Match_Start()
 }
 
-public Match_Start()
+static void Match_Start()
 {
 	CurrentState = MatchState_Public
 	ClearAllClients()
 	g_BallSpawnTeam = CS_TEAM_NONE
 	CS_TerminateRound(0.0, CSRoundEnd_GameStart)
 	FireOnStartPublic()
+	_publicMatchStarter.StartPublicMatch()
 }
 
 static Match_StartPreparing()
@@ -430,7 +429,7 @@ public Action:MTCH_Cmd_StartMatch(client, argc)
 
 public Action:MTCH_Cmd_StartPublic(client, argc) 
 {
-	_publicMatchStarter.StartPublicMatch()
+	Match_Start()
 	return Plugin_Handled
 }
 

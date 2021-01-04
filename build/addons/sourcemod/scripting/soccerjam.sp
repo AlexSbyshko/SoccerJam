@@ -169,8 +169,8 @@ public OnPluginStart()
 	RegisterPart("MM") // Model Manager
 	RegisterPart("MSM") // Match Stats Manager
 
-	PublicMatchStarter publicMatchStarter
-	CreateMatchModule(publicMatchStarter)
+	
+	
 	RegisterPart("MTCH") // Match
 	RegisterPart("MVP") // MVP Stars
 	RegisterPart("NDAG") // No Damage After Goal
@@ -201,6 +201,9 @@ public OnPluginStart()
 
 	CreateDefaultPlayerCmdRunner(_playerCmdRunner)
 
+	static PublicMatchStarter publicMatchStarter
+	CreateDefaultPublicMatchStarter(publicMatchStarter)
+
 	// UpgradeMenuDisplayer
 	UpgradeMenuDisplayer upgradeMenuDisplayer
 	CreateCommonMenuDisplayer(upgradeMenuDisplayer)
@@ -217,8 +220,11 @@ public OnPluginStart()
 		playerUpgradesModule,
 		pluginStarter, 
 		_playerCmdRunner,
+		publicMatchStarter,
 		upgradeMenuDisplayer)
 	RegisterModule(playerUpgradesModule)
+
+	CreateMatchModule(publicMatchStarter)
 
 	InitModules()
 	InitParts()

@@ -15,3 +15,13 @@ enum struct PublicMatchStarter
         Call_Finish()
     }
 }
+
+void CreateDefaultPublicMatchStarter(PublicMatchStarter publicMatchStarter)
+{
+    publicMatchStarter.StartPublicMatchFunc = EmptyStartPublicMatch
+}
+
+static void EmptyStartPublicMatch()
+{
+
+}
