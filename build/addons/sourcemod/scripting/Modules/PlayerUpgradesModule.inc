@@ -1,14 +1,18 @@
 #include "Module"
+#include "PluginStarter"
 #include "Data/DisplayMenuData"
 #include "Data/Upgrade"
 
 static UpgradeMenuDisplayer _menuDisplayer
+static PluginStarter _pluginStarter
 
-void CreatePlayerUpgradesModule(Module result, UpgradeMenuDisplayer menuDisplayer)
+void CreatePlayerUpgradesModule(Module result, PluginStarter pluginStarter, UpgradeMenuDisplayer menuDisplayer)
 {
 	_menuDisplayer = menuDisplayer
+	_pluginStarter = pluginStarter
 
-	result.InitFunc = Init
+	pluginStarter.StartPluginFunc = DecorateStartPlugin
+	result.InitFunc = INVALID_FUNCTION
 	result.OnPlayerRunCmdFunc = OnRunCmd
 	result.OnStartPublicFunc = OnStartPublic
 	result.OnStartMatchFunc = OnStartMatch
@@ -65,7 +69,14 @@ public ClearClientUpgrades(client)
 
 ////////////
 
-static Init()
+static void DecorateStartPlugin()
+{
+	_pluginStarter.StartPlugin()
+
+	Init()
+}
+
+static void Init()
 {
 	CreateConfig("upgrades.cfg", "upgrades", OnReadConfig)
 	
