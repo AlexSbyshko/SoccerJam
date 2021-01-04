@@ -48,9 +48,6 @@ public SHOT_OnPlayerRunCmd(client, &buttons)
 				float chargePerSecond = (maxStrength - minStrength) / maxTime
 				float strengthAddition = chargePerSecond * chargeDuration
 				float kickStrength = minStrength + strengthAddition
-
-				PrintToChatAll("kick str: %f, dur: %f", kickStrength, chargeDuration)
-
 				SetEntDataFloat(client, ProgressBarStartTimeOffset, 0.0, true);
 				SetEntData(client, ProgressBarDurationOffset, 0, 1, true);
 				ShotBall(client, kickStrength)
@@ -89,8 +86,6 @@ static void ShotBall(client, float kickStrength)
 	kickOrigin[0] = frontOrigin[0]
 	kickOrigin[1] = frontOrigin[1]
 	kickOrigin[2] = frontOrigin[2] + BALL_KICK_HEIGHT_ADDITION
-
-	RecreateBall()
 
 	TeleportEntity(g_Ball, kickOrigin, NULL_VECTOR, ballVelocity)
 	for (new i = 0; i < 3; i++)
