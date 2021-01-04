@@ -1,5 +1,4 @@
 #include "Module"
-#include "PluginStarter"
 #include "PlayerCmdRunner"
 #include "Data/DisplayMenuData"
 #include "Data/Upgrade"

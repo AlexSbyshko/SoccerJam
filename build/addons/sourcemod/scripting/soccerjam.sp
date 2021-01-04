@@ -37,7 +37,6 @@ SjEngine CurrentEngine
 
 Handle:WarmupUpgradesEnabledConVar
 
-#include "PluginStarter"
 #include "PlayerCmdRunner"
 
 #include "PlayerGreeter"
@@ -195,9 +194,6 @@ public OnPluginStart()
 	RegisterPart("TRB") // Turbo
 	RegisterPart("TU") // Team Upgrade
 
-	PluginStarter pluginStarter
-	CreateDefaultPluginStarter(pluginStarter)
-
 	CreateDefaultPlayerCmdRunner(_playerCmdRunner)
 
 	// UpgradeMenuDisplayer
@@ -221,8 +217,6 @@ public OnPluginStart()
 	LoadTranslations("soccerjam.phrases")
 
 	HookEventEx("player_activate", OnPlayerActivate)
-
-	pluginStarter.StartPlugin()
 }
 
 static RegisterModule(Module module)
