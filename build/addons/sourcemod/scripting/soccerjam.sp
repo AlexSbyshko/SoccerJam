@@ -38,9 +38,6 @@ SjEngine CurrentEngine
 Handle:WarmupUpgradesEnabledConVar
 
 #include "PlayerGreeter"
-#include "UpgradeMenuDisplayer"
-#include "UpgradeMenuDisplayers/CommonMenuDisplayer"
-#include "UpgradeMenuDisplayers/WarmupCheckMenuDisplayer"
 
 #include "parts"
 #include "parts/BALL_(ball)"
@@ -53,7 +50,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/BT_(ball_trail)"
 #include "parts/CB_(curve_ball)"
 #include "parts/CM_(config_manager)"
-#include "parts/DSRM_(disarm)"
 #include "parts/DZ_(death_zone)"
 #include "parts/FFI_(frags_for_interception)"
 #include "parts/GA_(goal_assist)"
@@ -64,7 +60,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/HLP_(help)"
 #include "parts/HLTH_(health)"
 #include "parts/KAS_(ka_soccer_maps_support)"
-#include "parts/LJ_(long_jump)"
 #include "parts/MM_(model_manager)"
 #include "parts/MSM_(match_stats_manager)"
 #include "parts/MTCH_(match)"
@@ -88,8 +83,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/TBHD_(teleport_ball_on_holder_death)"
 #include "parts/TEST_(test)"
 #include "parts/TM_(team_models)"
-#include "parts/TRB_(turbo)"
-#include "Modules/PlayerUpgradesModule"
 
 public Plugin:myinfo = 
 {
@@ -147,7 +140,6 @@ public OnPluginStart()
 	RegisterPart("BT") // Ball Trail
 	RegisterPart("CB") // Curve Ball
 	RegisterPart("CM") // Config Manager
-	RegisterPart("DSRM") // Disarm
 	RegisterPart("DZ") // Death Zone
 	RegisterPart("FFI") // Frags For Interception
 	RegisterPart("GA") // Goal Assist
@@ -158,7 +150,6 @@ public OnPluginStart()
 	RegisterPart("HLP") // Help
 	RegisterPart("HLTH") // Health
 	RegisterPart("KAS") // KA_Soccer maps support
-	RegisterPart("LJ") // Long Jump
 	RegisterPart("MM") // Model Manager
 	RegisterPart("MSM") // Match Stats Manager
 	RegisterPart("MTCH") // Match
@@ -182,24 +173,7 @@ public OnPluginStart()
 	RegisterPart("TBHD") // Teleport Ball on Holder Death
 	RegisterPart("TEST") // Sound Manager
 	RegisterPart("TM") // Team Models
-	RegisterPart("TRB") // Turbo
 
-	// UpgradeMenuDisplayer
-	UpgradeMenuDisplayer upgradeMenuDisplayer
-	CreateCommonMenuDisplayer(upgradeMenuDisplayer)
-
-	switch (CurrentEngine)
-	{
-		case SjEngine_Csgo:
-			CreateWmCheckMenuDisplayer(upgradeMenuDisplayer, upgradeMenuDisplayer)
-	}
-
-	// Player Upgrade Module
-	Module playerUpgradesModule
-	CreatePlayerUpgradesModule(playerUpgradesModule, upgradeMenuDisplayer)
-	RegisterModule(playerUpgradesModule)
-
-	InitModules()
 	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")

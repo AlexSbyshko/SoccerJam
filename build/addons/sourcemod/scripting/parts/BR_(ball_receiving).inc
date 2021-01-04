@@ -5,14 +5,11 @@ static BallPickUpSoundId
 static BallInterceptionSoundId
 
 static BallStealsStatsId
-static CatchingUpgradeId
 
 public BR_Init()
 {
 	OnBallReceivedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
 	RegisterCustomForward(OnBallReceivedForward, "OnBallReceived")
-
-	CatchingUpgradeId = CreateUpgrade("dexterity", 20.0, 90.0, 5, 1, "%")
 	
 	BallKickSoundId = CreateSound("ball_kill")
 	BallPickUpSoundId = CreateSound("ball_pickup")
@@ -55,27 +52,6 @@ public BR_OnBallKicked(client)
 static CheckPlayerTouchBall(client)
 {
 	if (IsPlayerAlive(client))
-	{
-		if (g_BallOwner == 0 || GetClientTeam(client) != GetClientTeam(g_BallOwner))
-		{		
-			CheckPlayerInterception(client);
-		}
-		else
-		{
-			SetBallHolder(client)
-		}
-	}
-}
-
-static CheckPlayerInterception(client)
-{
-	new Float:ballSpeed = GetBallSpeed();
-	if (IsClientSmacked(client, ballSpeed))
-	{
-		SmackPlayerOnBallSpeed(client, ballSpeed);
-		SetBallSmackEffect();
-	}
-	else
 	{
 		SetBallHolder(client)
 	}
@@ -206,25 +182,6 @@ stock Entity_SetName(entity, const String:name[], any:...)
 	DispatchKeyValue(entity, "targetname", format);
 }
 
-static bool:IsClientSmacked(client, Float:ballSpeed)
-{
-	if (ballSpeed < BALL_SPEED_FAST)
-	{
-		return false;
-	}
-	new buttons = GetClientButtons(client);
-	new Float:catchChancePercent = ((buttons & IN_USE) ? 10.0 : 0.0) + GetPlayerCatchingPercent(client);
-	if (Client_IsInTurboMode(client))
-	{
-		catchChancePercent += 5.0;
-	}	
-	if (GetChance(catchChancePercent))
-	{
-		return false;
-	}
-	return true;
-}
-
 SetBallHolder(client)
 {
 	if (client != g_BallHolder)
@@ -296,9 +253,4 @@ public Action:CMD_JoinTeam(client, const String:command[], argc)
 		RespawnBallWithNotify()
 	}
 	return Plugin_Continue;
-}
-
-Float:GetPlayerCatchingPercent(client)
-{
-	return GetPlayerUpgradeValue(client, CatchingUpgradeId)
 }

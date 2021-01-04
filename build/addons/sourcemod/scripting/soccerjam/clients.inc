@@ -31,7 +31,6 @@ ClearAllClients()
 
 public ClearClient(client)
 {
-	ClearClientUpgrades(client)	
 	if (IsClientInGame(client))
 	{
 		Client_SetScore(client, 0)
