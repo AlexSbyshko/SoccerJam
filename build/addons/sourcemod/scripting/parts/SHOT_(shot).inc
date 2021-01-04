@@ -25,7 +25,7 @@ public SHOT_OnPlayerRunCmd(client, &buttons)
 {
 	if (client == g_BallHolder)
 	{
-		if (buttons & IN_USE)
+		if (buttons & IN_ATTACK)
 		{
 			if (!ChargingClients[client])
 			{
