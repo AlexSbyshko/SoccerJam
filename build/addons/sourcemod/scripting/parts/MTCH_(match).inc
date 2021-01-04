@@ -1,3 +1,5 @@
+#include "PublicMatchStarter"
+
 enum MatchState
 {
 	MatchState_Preparing,
@@ -50,6 +52,14 @@ static MatchTimeIsUpSoundId
 
 static MatchState:CurrentState
 
+static PublicMatchStarter _publicMatchStarter
+
+void CreateMatchModule(PublicMatchStarter publicMatchStarter)
+{
+	_publicMatchStarter = publicMatchStarter
+	_publicMatchStarter.StartPublicMatchFunc = Match_Start
+}
+
 // API //
 
 public IsMatchPublic()
@@ -95,12 +105,12 @@ public MTCH_Init()
 
 public MTCH_OnMapStart()
 {
-	Match_Start()
+	_publicMatchStarter.StartPublicMatch()
 }
 
 public MTCH_Event_MatchEndRestart(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	Match_Start()
+	_publicMatchStarter.StartPublicMatch()
 }
 
 public Match_Start()
@@ -420,7 +430,7 @@ public Action:MTCH_Cmd_StartMatch(client, argc)
 
 public Action:MTCH_Cmd_StartPublic(client, argc) 
 {
-	Match_Start()
+	_publicMatchStarter.StartPublicMatch()
 	return Plugin_Handled
 }
 

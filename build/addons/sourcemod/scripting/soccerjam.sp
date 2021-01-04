@@ -40,6 +40,7 @@ Handle:WarmupUpgradesEnabledConVar
 #include "PluginStarter"
 #include "PlayerCmdRunner"
 
+#include "PublicMatchStarter"
 #include "PlayerGreeter"
 #include "UpgradeMenuDisplayer"
 #include "UpgradeMenuDisplayers/CommonMenuDisplayer"
@@ -167,6 +168,9 @@ public OnPluginStart()
 	RegisterPart("LJ") // Long Jump
 	RegisterPart("MM") // Model Manager
 	RegisterPart("MSM") // Match Stats Manager
+
+	PublicMatchStarter publicMatchStarter
+	CreateMatchModule(publicMatchStarter)
 	RegisterPart("MTCH") // Match
 	RegisterPart("MVP") // MVP Stars
 	RegisterPart("NDAG") // No Damage After Goal
