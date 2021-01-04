@@ -1,5 +1,3 @@
-#include "PublicMatchStarter"
-
 enum MatchState
 {
 	MatchState_Preparing,
@@ -51,12 +49,6 @@ static Handle:CvarGoalsToWin
 static MatchTimeIsUpSoundId
 
 static MatchState:CurrentState
-static PublicMatchStarter _publicMatchStarter
-
-void CreateMatchModule(PublicMatchStarter publicMatchStarter)
-{
-	_publicMatchStarter = publicMatchStarter
-}
 
 // API //
 
@@ -118,7 +110,6 @@ static void Match_Start()
 	g_BallSpawnTeam = CS_TEAM_NONE
 	CS_TerminateRound(0.0, CSRoundEnd_GameStart)
 	FireOnStartPublic()
-	_publicMatchStarter.StartPublicMatch()
 }
 
 static Match_StartPreparing()

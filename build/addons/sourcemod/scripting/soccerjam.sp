@@ -40,7 +40,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "PluginStarter"
 #include "PlayerCmdRunner"
 
-#include "PublicMatchStarter"
 #include "PlayerGreeter"
 #include "UpgradeMenuDisplayer"
 #include "UpgradeMenuDisplayers/CommonMenuDisplayer"
@@ -201,9 +200,6 @@ public OnPluginStart()
 
 	CreateDefaultPlayerCmdRunner(_playerCmdRunner)
 
-	static PublicMatchStarter publicMatchStarter
-	CreateDefaultPublicMatchStarter(publicMatchStarter)
-
 	// UpgradeMenuDisplayer
 	UpgradeMenuDisplayer upgradeMenuDisplayer
 	CreateCommonMenuDisplayer(upgradeMenuDisplayer)
@@ -216,15 +212,8 @@ public OnPluginStart()
 
 	// Player Upgrade Module
 	Module playerUpgradesModule
-	CreatePlayerUpgradesModule(
-		playerUpgradesModule,
-		pluginStarter, 
-		_playerCmdRunner,
-		publicMatchStarter,
-		upgradeMenuDisplayer)
+	CreatePlayerUpgradesModule(playerUpgradesModule, upgradeMenuDisplayer)
 	RegisterModule(playerUpgradesModule)
-
-	CreateMatchModule(publicMatchStarter)
 
 	InitModules()
 	InitParts()

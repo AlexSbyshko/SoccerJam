@@ -1,37 +1,21 @@
 #include "Module"
 #include "PluginStarter"
 #include "PlayerCmdRunner"
-#include "PublicMatchStarter"
 #include "Data/DisplayMenuData"
 #include "Data/Upgrade"
 
 static UpgradeMenuDisplayer _menuDisplayer
-static PluginStarter _pluginStarter
-static PlayerCmdRunner _playerCmdRunner
-static PublicMatchStarter _publicMatchStarter
 
 void CreatePlayerUpgradesModule(
 	Module result,
-	PluginStarter pluginStarter,
-	PlayerCmdRunner playerCmdRunner,
-	PublicMatchStarter publicMatchStarter,
-	UpgradeMenuDisplayer menuDisplayer
+	const UpgradeMenuDisplayer menuDisplayer
 	)
 {
-	_pluginStarter = pluginStarter
-	pluginStarter.StartPluginFunc = DecorateStartPlugin
-
-	_playerCmdRunner = playerCmdRunner
-	playerCmdRunner.RunPlayerCmdFunc = DecorateRunPlayerCmd
-
-	_publicMatchStarter = publicMatchStarter
-	publicMatchStarter.StartPublicMatchFunc = DecorateStartPublicMatch
-
 	_menuDisplayer = menuDisplayer
 
-	result.InitFunc = INVALID_FUNCTION
-	result.OnPlayerRunCmdFunc = INVALID_FUNCTION
-	result.OnStartPublicFunc = INVALID_FUNCTION
+	result.InitFunc = Init
+	result.OnPlayerRunCmdFunc = OnRunCmd
+	result.OnStartPublicFunc = OnStartPublicMatch
 	result.OnStartMatchFunc = OnStartMatch
 }
 
@@ -86,10 +70,8 @@ public ClearClientUpgrades(client)
 
 ////////////
 
-static void DecorateStartPlugin()
+static void Init()
 {
-	_pluginStarter.StartPlugin()
-
 	CreateConfig("upgrades.cfg", "upgrades", OnReadConfig)
 	
 	UpgradeMaxLevelSoundId = CreateSound("upgrade_maxlevel")
@@ -104,10 +86,8 @@ static void DecorateStartPlugin()
 	RegisterCustomForward(OnGetClientUpgradeInfoForward, "OnGetUpgradeInfo")
 }
 
-static DecorateRunPlayerCmd(int client, int &buttons)
+static OnRunCmd(int client, int &buttons)
 {
-	_playerCmdRunner.RunPlayerCmd(client, buttons)
-
 	static bool:reloading[MAXPLAYERS+1]
 	
 	if (buttons & IN_RELOAD)
@@ -124,10 +104,8 @@ static DecorateRunPlayerCmd(int client, int &buttons)
 	}
 }
 
-static void DecorateStartPublicMatch()
+static void OnStartPublicMatch()
 {
-	_publicMatchStarter.StartPublicMatch()
-	
 	ForEachClient(ClearClientUpgrades)
 }
 
