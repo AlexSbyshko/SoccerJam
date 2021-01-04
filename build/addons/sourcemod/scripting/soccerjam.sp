@@ -77,7 +77,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/PAC_(player_attack_check)"
 #include "parts/PR_(player_respawn)"
 #include "parts/RBAH_(remove_bomb_and_hostages)"
-#include "parts/RS_(reward_system)"
 #include "parts/RTE_(round_time_extend)"
 #include "parts/RWOS_(remove_weapons_on_spawn)"
 #include "parts/SG_(speed_and_gravity)"
@@ -172,7 +171,6 @@ public OnPluginStart()
 	RegisterPart("PAC") // Player Attack Check
 	RegisterPart("PR") // Player Respawn
 	RegisterPart("RBAH") // Remove Bomb And Hostages
-	RegisterPart("RS") // Reward System
 	RegisterPart("RTE") // Round Time Extend
 	RegisterPart("RWOS") // Remove Weapons On Spawn
 	RegisterPart("SG") // Speed and Gravity
