@@ -1,6 +1,7 @@
 static Handle:BallSpawnCenterConVar
 static Handle:OnBallSpawnedForward
 static Handle:OnBallCreatedForward
+static PrivateForward OnBallLostForward
 static bool:IsSpawnExists
 static BallModelId
 static FastBallPickUpSoundId
@@ -29,6 +30,8 @@ public BALL_Init()
 	RegisterCustomForward(OnBallSpawnedForward, "OnBallSpawned")
 	OnBallCreatedForward = CreateForward(ET_Ignore, Param_Cell)
 	RegisterCustomForward(OnBallCreatedForward, "OnBallCreated")
+	OnBallLostForward = CreateForward(ET_Ignore, Param_Cell)
+	RegisterCustomForward(OnBallLostForward, "OnBallLost")
 
 	BallModelId = CreateModel("ball")
 	FastBallPickUpSoundId = CreateSound("fastball_pickup")
@@ -177,8 +180,12 @@ RespawnBallNearTeam(team)
 
 RemoveBallHolder()
 {
-	g_BallHolder = 0;
-	SetBallFree();
+	if (g_BallHolder > 0)
+	{
+		FireOnBallLost(g_BallHolder)
+		g_BallHolder = 0;
+		SetBallFree();
+	}
 }
 
 ClearBall()
@@ -267,5 +274,12 @@ FireOnBallCreated(ballEntity)
 {	
 	Call_StartForward(OnBallCreatedForward)
 	Call_PushCell(ballEntity)
+	Call_Finish()
+}
+
+static void FireOnBallLost(int client)
+{
+	Call_StartForward(OnBallLostForward)
+	Call_PushCell(client)
 	Call_Finish()
 }

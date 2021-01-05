@@ -60,6 +60,7 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/PAC_(player_attack_check)"
 #include "parts/PR_(player_respawn)"
 #include "parts/RBAH_(remove_bomb_and_hostages)"
+#include "parts/RBHW_(remove_ball_holder_weapon)"
 #include "parts/RDW_(remove_dropped_weapons)"
 #include "parts/RTE_(round_time_extend)"
 #include "parts/RWOS_(remove_weapons_on_spawn)"
@@ -137,6 +138,7 @@ public OnPluginStart()
 	RegisterPart("PAC") // Player Attack Check
 	RegisterPart("PR") // Player Respawn
 	RegisterPart("RBAH") // Remove Bomb And Hostages
+	RegisterPart("RBHW") // Remove Ball Holder's Weapon
 	RegisterPart("RDW") // Remove Dropped Weapon
 	RegisterPart("RTE") // Round Time Extend
 	RegisterPart("RWOS") // Remove Weapons On Spawn
