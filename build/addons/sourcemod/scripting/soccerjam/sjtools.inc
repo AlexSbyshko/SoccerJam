@@ -27,7 +27,7 @@ stock Client_RemoveAllWeapons(client, const String:exclude[]="", bool:clearAmmo=
 		}
 
 		if (RemovePlayerItem(client, weapon)) {
-			Entity_Kill(weapon);
+			RemoveEntity(weapon);
 		}
 
 		numWeaponsRemoved++;
@@ -108,17 +108,6 @@ stock Client_SetWeaponPlayerAmmoEx(client, weapon, primaryAmmo=-1, secondaryAmmo
 	}
 }
 
-stock bool:Entity_Kill(kenny)
-{
-	if (Entity_IsPlayer(kenny)) {
-		// Oh My God! They Killed Kenny!!
-		ForcePlayerSuicide(kenny);
-		return true;
-	}
-	
-	return AcceptEntityInput(kenny, "kill");
-}
-
 stock Entity_GetClassName(entity, String:buffer[], size)
 {
 	GetEntPropString(entity, Prop_Data, "m_iClassname", buffer, size);
@@ -129,7 +118,6 @@ stock Entity_GetClassName(entity, String:buffer[], size)
 	
 	return true;
 }
-
 
 stock GivePlayerWeapon(client)
 {

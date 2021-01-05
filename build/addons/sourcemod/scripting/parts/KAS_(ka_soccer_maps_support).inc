@@ -27,7 +27,7 @@ FindKaBallSpawn()
 		Entity_GetAbsOrigin(kaBallEntity, ballSpawnPoint);
 		SetBallSpawnPoint(ballSpawnPoint);
 		
-		Entity_Kill(kaBallEntity);
+		RemoveEntity(kaBallEntity);
 	}
 }
 

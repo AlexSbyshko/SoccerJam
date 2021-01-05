@@ -14,7 +14,7 @@ stock Entity_KillAllByClassName(const String:className[])
 
 	new entity = INVALID_ENT_REFERENCE;
 	while ((entity = FindEntityByClassname(entity, className)) != INVALID_ENT_REFERENCE) {
-		AcceptEntityInput(entity, "kill");
+		RemoveEntity(entity);
 		x++;
 	}
 	

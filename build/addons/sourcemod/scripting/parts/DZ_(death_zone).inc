@@ -133,7 +133,7 @@ stock bool:Effect_DissolveEntity(entity, DissolveType:dissolveType=DISSOLVE_NORM
 	Entity_PointAtTarget(env_entity_dissolver, entity);
 	SetEntProp(env_entity_dissolver, Prop_Send, "m_nDissolveType", _:dissolveType);
 	AcceptEntityInput(env_entity_dissolver,	"Dissolve");
-	Entity_Kill(env_entity_dissolver);
+	RemoveEntity(env_entity_dissolver);
 
 	return true;
 }

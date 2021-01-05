@@ -7,7 +7,6 @@ public RWOS_Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadc
 
 public Action:RWOS_OnWeaponDrop(client, weaponIndex)
 {
-	PrintToChatAll("drop")
-	Entity_Kill(weaponIndex)
+	RemoveEntity(weaponIndex)
 	return Plugin_Continue
 }
