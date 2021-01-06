@@ -164,7 +164,7 @@ public OnPluginStart()
 	_mapStartedEvent = new MapStartedEvent()
 
 	ManageConfigs(_mapStartedEvent)
-	AutoReturnBall(_mapStartedEvent)
+	BallAutoReturning(_mapStartedEvent)
 	StartHalf(_mapStartedEvent)
 	MatchProcessing(_mapStartedEvent)
 	BombAndHostagesRemoving(_mapStartedEvent)

@@ -1,7 +1,7 @@
 static Handle:CvarBallAutoRespawn
 static Handle:TmrBallRespawn
 
-void AutoReturnBall(MapStartedEvent mapStartedEvent)
+void BallAutoReturning(MapStartedEvent mapStartedEvent)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
 
