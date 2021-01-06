@@ -1,7 +1,14 @@
 #include "Services/RemovePlayerWeapons"
 #include "Services/GivePlayerDefaultWeapon"
 
-public RBHW_OnBallReceived(int ballHolder, int oldBallHolder)
+void RemoveBallHolderWeapon(
+	const BallReceivedEvent ballReceivedEvent
+	)
+{
+	ballReceivedEvent.Subscribe(OnBallReceived)
+}
+
+static OnBallReceived(int ballHolder, int oldBallHolder)
 {
 	RemovePlayerWeapons(ballHolder)
 }

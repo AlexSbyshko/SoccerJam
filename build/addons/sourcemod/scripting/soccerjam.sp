@@ -27,7 +27,7 @@ SjEngine CurrentEngine
 
 Handle:WarmupUpgradesEnabledConVar
 
-#include "Events/OnBallReceived"
+#include "Events/BallReceived"
 
 #include "PlayerGreeter"
 
@@ -157,6 +157,11 @@ public OnPluginStart()
 	RegisterPart("TM") // Team Models
 
 	InitParts()
+
+	BallReceivedEvent ballReceivedEvent = new BallReceivedEvent()
+	ReceiveBallOnTouch(ballReceivedEvent)
+
+	RemoveBallHolderWeapon(ballReceivedEvent)
 	
 	LoadTranslations("soccerjam.phrases")
 

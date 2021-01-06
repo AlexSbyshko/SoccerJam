@@ -6,6 +6,15 @@ static BallInterceptionSoundId
 
 static BallStealsStatsId
 
+static BallReceivedEvent _ballReceivedEvent
+
+void ReceiveBallOnTouch(
+	const BallReceivedEvent ballReceivedEvent
+	)
+{
+	_ballReceivedEvent = ballReceivedEvent
+}
+
 public BR_Init()
 {
 	OnBallReceivedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
@@ -174,6 +183,7 @@ SetBallHolder(client)
 		SetBallOwner(client)
 		GetClientName(client, g_BallOwnerName, sizeof(g_BallOwnerName))
 		SetBallNotFree()
+		_ballReceivedEvent.Raise(client, oldBallOwner)
 		FireOnBallReceived(client, oldBallOwner)
 	}
 }
