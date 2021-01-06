@@ -25,9 +25,11 @@ enum SolidFlags_t
 
 static BallLostEvent _ballLostEvent
 
-void SpawnBall(BallLostEvent ballLostEvent)
+void SpawnBall(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent)
 {
 	_ballLostEvent = ballLostEvent
+
+	mapStartedEvent.Subscribe(OnMapStart)
 }
 
 public BALL_Init()
@@ -47,7 +49,7 @@ public BALL_Init()
 	RegAdminCmd("sj_respawn_ball", CMD_RespawnBall, ADMFLAG_CHANGEMAP)
 }
 
-public BALL_OnMapStart()
+static OnMapStart()
 {
 	ClearBallSpawnPoint()
 }

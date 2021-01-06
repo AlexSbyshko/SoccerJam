@@ -162,7 +162,7 @@ public OnPluginStart()
 	_mapStartedEvent = new MapStartedEvent()
 
 	BallLostEvent ballLostEvent = new BallLostEvent()
-	SpawnBall(ballLostEvent)
+	SpawnBall(ballLostEvent, _mapStartedEvent)
 
 	BallReceivedEvent ballReceivedEvent = new BallReceivedEvent()
 	ReceiveBallOnTouch(ballReceivedEvent)
