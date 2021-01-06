@@ -163,6 +163,8 @@ public OnPluginStart()
 
 	_mapStartedEvent = new MapStartedEvent()
 
+	BallBouncing()
+
 	ManageConfigs(_mapStartedEvent)
 	BallAutoReturning(_mapStartedEvent)
 	StartHalf(_mapStartedEvent)
