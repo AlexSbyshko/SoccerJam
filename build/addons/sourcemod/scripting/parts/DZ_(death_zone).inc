@@ -11,7 +11,7 @@ enum DissolveType
 	DISSOLVE_CORE
 };
 
-public DZ_Init()
+void DeathZoneProcessing()
 {
 	DeathZoneRadiusConVar = CreateConVar("sj_death_zone_radius", "650", "Radius of death zone that does damage to enemy", 0, true, 0.0)
 	DeathZoneDamageMinConVar = CreateConVar("sj_death_zone_damage_min", "5", "Min damage of death zone", 0, true, 0.0)

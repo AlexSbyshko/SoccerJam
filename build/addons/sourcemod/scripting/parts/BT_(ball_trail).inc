@@ -1,7 +1,7 @@
 I_void_void CreateBallTrailProc
 new g_BallSpriteTrail
 
-public BT_Init()
+void BallTrailShowing()
 {
 	InitGame()
 	MapFunction(CreateBallTrailProc, "CreateBallTrail")

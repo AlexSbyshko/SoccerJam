@@ -167,7 +167,11 @@ public OnPluginStart()
 
 	BallExplosion()
 
+	BallTrailShowing()
+
 	BallBounceSoundPlaying()
+
+	DeathZoneProcessing()
 
 	ManageConfigs(_mapStartedEvent)
 
