@@ -37,6 +37,7 @@ CreateGameForwards()
 
 RegisterCustomForward(Handle:fwd, const String:postfix[])
 {
+	PrintToServer("Register custom forw: %s", postfix)
 	PushArrayCell(CustomForwardsArray, fwd)
 	PushArrayString(CustomForwardNamesArray, postfix)
 	new Function:func = GetFunctionByName(INVALID_HANDLE, postfix)
@@ -103,6 +104,7 @@ HookPartForward(Handle:fwd, const String:partName[PART_NAME_LENGTH], const Strin
 	new Function:partFunction = GetFunctionByName(INVALID_HANDLE, partFunctionName)
 	if (partFunction != INVALID_FUNCTION)
 	{
+		PrintToServer("Hook forward: %s", partFunctionName)
 		AddToForward(fwd, INVALID_HANDLE, partFunction);
 	}
 }

@@ -185,9 +185,10 @@ RemoveBallHolder()
 {
 	if (g_BallHolder > 0)
 	{
+		int ballHolder = g_BallHolder
 		g_BallHolder = 0;
 		SetBallFree()
-		_ballLostEvent.Raise(g_BallHolder)
+		_ballLostEvent.Raise(ballHolder)
 	}
 }
 

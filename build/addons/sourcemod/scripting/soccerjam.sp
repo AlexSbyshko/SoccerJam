@@ -157,12 +157,14 @@ public OnPluginStart()
 	RegisterPart("TEST") // Sound Manager
 	RegisterPart("TM") // Team Models
 
-	InitParts()
+	
+
+
 
 	_mapStartedEvent = new MapStartedEvent()
 
-	AutoReturnBall(_mapStartedEvent)
 	ManageConfigs(_mapStartedEvent)
+	AutoReturnBall(_mapStartedEvent)
 	StartHalf(_mapStartedEvent)
 	MatchProcessing(_mapStartedEvent)
 	BombAndHostagesRemoving(_mapStartedEvent)
@@ -176,6 +178,8 @@ public OnPluginStart()
 	ReceiveBallOnTouch(ballReceivedEvent)
 
 	RemoveBallHolderWeapon(ballReceivedEvent, ballLostEvent)
+
+	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
 
