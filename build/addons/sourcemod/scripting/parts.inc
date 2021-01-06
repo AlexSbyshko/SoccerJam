@@ -35,7 +35,6 @@ CreateGameForwards()
 
 RegisterCustomForward(Handle:fwd, const String:postfix[])
 {
-	PrintToServer("Register custom forw: %s", postfix)
 	PushArrayCell(CustomForwardsArray, fwd)
 	PushArrayString(CustomForwardNamesArray, postfix)
 	new Function:func = GetFunctionByName(INVALID_HANDLE, postfix)
