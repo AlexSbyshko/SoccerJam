@@ -190,11 +190,17 @@ public OnPluginStart()
 
 	MatchProcessing(_mapStartedEvent)
 
+	ModelManaging()
+
 	BombAndHostagesRemoving(_mapStartedEvent)
 
 	GoalSpawning(_mapStartedEvent)
 
 	SpawnPointsSwapping(_mapStartedEvent)
+
+	KaMapsSupport()
+
+	PlayerAttackChecking()
 
 	BallLostEvent ballLostEvent = new BallLostEvent()
 	BallSpawning(ballLostEvent, _mapStartedEvent)

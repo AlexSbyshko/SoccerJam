@@ -4,7 +4,7 @@ static String:ModelNames[MAX_MODELS][MAX_NAME_LENGTH]
 static String:ModePaths[MAX_MODELS][PLATFORM_MAX_PATH]
 static ModelCaches[MAX_MODELS]
 
-public MM_Init()
+void ModelManaging()
 {
 	CreateConfig("models.cfg", "models", MM_ReadConfig)
 }

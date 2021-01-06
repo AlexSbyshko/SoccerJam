@@ -1,4 +1,4 @@
-public KAS_Init()
+void KaMapsSupport()
 {
 }
 
