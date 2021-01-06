@@ -173,6 +173,10 @@ public OnPluginStart()
 
 	DeathZoneProcessing()
 
+	GoalAssistProcessing()
+
+	GoalDistanceCounting()
+
 	ManageConfigs(_mapStartedEvent)
 
 	BallAutoReturning(_mapStartedEvent)

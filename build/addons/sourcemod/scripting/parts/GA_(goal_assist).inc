@@ -6,7 +6,7 @@ static Handle:AssistantsArray
 
 static AssistCountStatsId
 
-public GA_Init()
+void GoalAssistProcessing()
 {
 	AssistantsArray = CreateArray()
 

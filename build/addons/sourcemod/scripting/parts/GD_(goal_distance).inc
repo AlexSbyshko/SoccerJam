@@ -4,7 +4,7 @@ static Float:LastShotOrigin[3]
 
 static LongestGoalStatsId
 
-public GD_Init()
+void GoalDistanceCounting()
 {
 	LongestGoalStatsId = CreateMatchStats("Longest goal (m)")
 }
