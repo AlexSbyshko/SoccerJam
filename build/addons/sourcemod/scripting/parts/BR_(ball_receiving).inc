@@ -8,15 +8,10 @@ static BallStealsStatsId
 
 static BallReceivedEvent _ballReceivedEvent
 
-void ReceiveBallOnTouch(
-	const BallReceivedEvent ballReceivedEvent
-	)
+void BallReceiving(const BallReceivedEvent ballReceivedEvent)
 {
 	_ballReceivedEvent = ballReceivedEvent
-}
 
-public BR_Init()
-{
 	OnBallReceivedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
 	RegisterCustomForward(OnBallReceivedForward, "OnBallReceived")
 	

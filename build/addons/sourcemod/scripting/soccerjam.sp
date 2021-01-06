@@ -187,7 +187,7 @@ public OnPluginStart()
 	BallSpawning(ballLostEvent, _mapStartedEvent)
 
 	BallReceivedEvent ballReceivedEvent = new BallReceivedEvent()
-	ReceiveBallOnTouch(ballReceivedEvent)
+	BallReceiving(ballReceivedEvent)
 
 	RemoveBallHolderWeapon(ballReceivedEvent, ballLostEvent)
 
