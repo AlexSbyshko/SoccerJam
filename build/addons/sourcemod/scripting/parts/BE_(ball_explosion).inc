@@ -1,7 +1,7 @@
 static ParticleSystemSpecificId
 static BallExplosionSoundId
 
-public BE_Init()
+void BallExplosion()
 {
 	ParticleSystemSpecificId = CreateSpecificString("explosion_particle_system")
 	BallExplosionSoundId = CreateSound("ball_explosion")
