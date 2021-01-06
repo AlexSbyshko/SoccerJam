@@ -1,6 +1,6 @@
 static bool:IsNewPlayer[MAXPLAYERS + 1]
 
-public HLP_Init()
+void HelpShowing()
 {
 	AddCommandListener(HLP_Cmd_Say, "say")
 	AddCommandListener(HLP_Cmd_Say, "say_team")

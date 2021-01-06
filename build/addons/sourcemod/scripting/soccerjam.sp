@@ -157,9 +157,6 @@ public OnPluginStart()
 	RegisterPart("TEST") // Sound Manager
 	RegisterPart("TM") // Team Models
 
-	
-
-
 
 	_mapStartedEvent = new MapStartedEvent()
 
@@ -176,6 +173,14 @@ public OnPluginStart()
 	GoalAssistProcessing()
 
 	GoalDistanceCounting()
+
+	GameSpecificConfigManaging()
+
+	GoalScoring()
+
+	HelpShowing()
+
+	SpawnHealthSetting()
 
 	ManageConfigs(_mapStartedEvent)
 

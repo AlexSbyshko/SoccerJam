@@ -3,7 +3,7 @@ static SpecificCount
 static String:SpecificNames[MAX_SPECIFICS][MAX_NAME_LENGTH]
 static String:SpecificStrings[MAX_SPECIFICS][PLATFORM_MAX_PATH]
 
-public GSM_Init()
+void GameSpecificConfigManaging()
 {
 	CreateConfig("game_specific.cfg", "specific", GSM_ReadConfig)
 }

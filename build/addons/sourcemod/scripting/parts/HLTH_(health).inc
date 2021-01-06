@@ -1,6 +1,6 @@
 static ConVar PlayerHealthConVar
 
-public HLTH_Init()
+void SpawnHealthSetting()
 {
 	PlayerHealthConVar = CreateConVar("sj_player_health", "70", "Default player's health", 0, true, 0.0)
 }

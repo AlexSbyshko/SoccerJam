@@ -3,7 +3,7 @@ static Handle:OnGoalForward
 static GoalSoundId
 static GoalSirenSoundId
 
-public GOAL_Init()
+void GoalScoring()
 {
 	OnGoalForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
 	RegisterCustomForward(OnGoalForward, "OnGoal")
