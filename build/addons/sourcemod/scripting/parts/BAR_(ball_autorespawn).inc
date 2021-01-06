@@ -3,7 +3,7 @@ static Handle:TmrBallRespawn
 
 void AutoReturnBall(MapStartedEvent mapStartedEvent)
 {
-	mapStartedEvent.Subscribe(OnMapStart)
+	mapStartedEvent.Subscribe(OnMapStarted)
 }
 
 public BAR_Init()
@@ -60,7 +60,7 @@ StartBallRespawnTimer()
 	}
 }
 
-static OnMapStart()
+static OnMapStarted()
 {
 	TmrBallRespawn = INVALID_HANDLE
 }

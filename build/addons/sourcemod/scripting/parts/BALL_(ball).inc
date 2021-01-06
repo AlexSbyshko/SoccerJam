@@ -29,7 +29,7 @@ void SpawnBall(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent)
 {
 	_ballLostEvent = ballLostEvent
 
-	mapStartedEvent.Subscribe(OnMapStart)
+	mapStartedEvent.Subscribe(OnMapStarted)
 }
 
 public BALL_Init()
@@ -49,7 +49,7 @@ public BALL_Init()
 	RegAdminCmd("sj_respawn_ball", CMD_RespawnBall, ADMFLAG_CHANGEMAP)
 }
 
-static OnMapStart()
+static OnMapStarted()
 {
 	ClearBallSpawnPoint()
 }
