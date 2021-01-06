@@ -189,7 +189,6 @@ public OnPluginStart()
 public OnMapStart()
 {
 	_mapStartedEvent.Raise()
-	FireOnMapStart()
 }
 
 public Action:CS_OnTerminateRound(&Float:delay, &CSRoundEndReason:reason)
