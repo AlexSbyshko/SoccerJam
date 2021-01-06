@@ -14,10 +14,7 @@ static ConfigProcessingFunc:processingFunctions[MAX_CONFIGS]
 void ManageConfigs(MapStartedEvent mapStartedEvent)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
-}
 
-public CM_Init()
-{
 	OnSjConfigLoadedForward = CreateForward(ET_Ignore)
 	RegisterCustomForward(OnSjConfigLoadedForward, "OnSjConfigLoaded")
 }

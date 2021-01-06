@@ -4,8 +4,10 @@ static Handle:HalfDurationConVar
 static Handle:OnHalfEndForward
 static Handle:OnHalfStartForward
 
-public HLF_Init()
+void StartHalf(MapStartedEvent mapStartedEvent)
 {
+	mapStartedEvent.Subscribe(OnMapStarted)
+
 	RoundTimeConVar = FindConVar("mp_roundtime")
 	HookConVarChange(RoundTimeConVar, OnCVRoundTimeChanged)
 	HalfDurationConVar = CreateConVar("sj_half_duration", "15", "Half duration in minutes", 0, true, 1.0, true, 60.0)	
@@ -18,7 +20,7 @@ public HLF_Init()
 	RegisterCustomForward(OnHalfEndForward, "OnHalfEnd")
 }
 
-public HLF_OnMapStart()
+static void OnMapStarted()
 {
 	TimeUpTimer = INVALID_HANDLE
 }

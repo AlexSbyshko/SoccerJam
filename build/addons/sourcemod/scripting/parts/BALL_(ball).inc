@@ -30,10 +30,7 @@ void SpawnBall(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent)
 	_ballLostEvent = ballLostEvent
 
 	mapStartedEvent.Subscribe(OnMapStarted)
-}
 
-public BALL_Init()
-{
 	OnBallSpawnedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
 	RegisterCustomForward(OnBallSpawnedForward, "OnBallSpawned")
 	OnBallCreatedForward = CreateForward(ET_Ignore, Param_Cell)
