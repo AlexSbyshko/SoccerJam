@@ -29,6 +29,8 @@ Handle:WarmupUpgradesEnabledConVar
 
 #include "Events/BallReceived"
 
+#include "Modules/RemoveBallHolderWeapon"
+
 #include "PlayerGreeter"
 
 #include "parts"
@@ -62,7 +64,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/PAC_(player_attack_check)"
 #include "parts/PR_(player_respawn)"
 #include "parts/RBAH_(remove_bomb_and_hostages)"
-#include "parts/RBHW_(remove_ball_holder_weapon)"
 #include "parts/RDW_(remove_dropped_weapons)"
 #include "parts/RTE_(round_time_extend)"
 #include "parts/RWOS_(remove_weapons_on_spawn)"
