@@ -167,6 +167,7 @@ public OnPluginStart()
 	MatchProcessing(_mapStartedEvent)
 	BombAndHostagesRemoving(_mapStartedEvent)
 	GoalSpawning(_mapStartedEvent)
+	SpawnPointsSwapping(_mapStartedEvent)
 
 	BallLostEvent ballLostEvent = new BallLostEvent()
 	SpawnBall(ballLostEvent, _mapStartedEvent)

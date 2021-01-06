@@ -8,7 +8,13 @@ static Float:CtSpawnPointAngles[32][3]
 static CtSpawnsCount
 static SwapsCount
 
-public SSP_OnMapStart()
+
+void SpawnPointsSwapping(MapStartedEvent mapStartedEvent)
+{
+	mapStartedEvent.Subscribe(OnMapStarted)
+}
+
+static void OnMapStarted()
 {
 	SwapsCount = 0
 	TSpawnsCount = 0
