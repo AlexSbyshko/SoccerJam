@@ -29,6 +29,7 @@ Handle:WarmupUpgradesEnabledConVar
 
 #include "Events/BallLost"
 #include "Events/BallReceived"
+#include "Events/MapStarted"
 
 #include "Modules/RemoveBallHolderWeapon"
 
@@ -89,6 +90,7 @@ public Plugin:myinfo =
 }
 
 static PlayerGreeter playerGreeter
+static MapStartedEvent _mapStartedEvent
 
 public OnPluginStart()
 {
@@ -157,6 +159,8 @@ public OnPluginStart()
 
 	InitParts()
 
+	_mapStartedEvent = new MapStartedEvent()
+
 	BallLostEvent ballLostEvent = new BallLostEvent()
 	SpawnBall(ballLostEvent)
 
@@ -172,6 +176,7 @@ public OnPluginStart()
 
 public OnMapStart()
 {
+	_mapStartedEvent.Raise()
 	FireOnMapStart()
 }
 
