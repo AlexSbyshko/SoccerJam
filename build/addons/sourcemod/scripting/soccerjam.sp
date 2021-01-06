@@ -165,12 +165,20 @@ public OnPluginStart()
 
 	BallBouncing()
 
+	BallBounceSoundPlaying()
+
 	ManageConfigs(_mapStartedEvent)
+
 	BallAutoReturning(_mapStartedEvent)
+
 	StartHalf(_mapStartedEvent)
+
 	MatchProcessing(_mapStartedEvent)
+
 	BombAndHostagesRemoving(_mapStartedEvent)
+
 	GoalSpawning(_mapStartedEvent)
+	
 	SpawnPointsSwapping(_mapStartedEvent)
 
 	BallLostEvent ballLostEvent = new BallLostEvent()

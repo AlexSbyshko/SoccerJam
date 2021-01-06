@@ -2,7 +2,7 @@ static HeBounceSoundSpecificId
 static BallBounceSoundId
 static String:BallBounceSoundPath[PLATFORM_MAX_PATH]
 
-public BBS_Init()
+void BallBounceSoundPlaying()
 {
 	AddNormalSoundHook(BBS_Event_SoundPlayed)
 	HeBounceSoundSpecificId = CreateSpecificString("he_bounce_sound")
