@@ -1,4 +1,9 @@
-public RBAH_OnMapStart()
+void BombAndHostagesRemoving(MapStartedEvent mapStartedEvent)
+{
+	mapStartedEvent.Subscribe(OnMapStarted)
+}
+
+static void OnMapStarted()
 {
 	Entity_KillAllByClassName("func_bomb_target")
 }
