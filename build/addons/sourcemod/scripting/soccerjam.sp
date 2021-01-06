@@ -172,7 +172,7 @@ public OnPluginStart()
 	SpawnPointsSwapping(_mapStartedEvent)
 
 	BallLostEvent ballLostEvent = new BallLostEvent()
-	SpawnBall(ballLostEvent, _mapStartedEvent)
+	BallSpawning(ballLostEvent, _mapStartedEvent)
 
 	BallReceivedEvent ballReceivedEvent = new BallReceivedEvent()
 	ReceiveBallOnTouch(ballReceivedEvent)

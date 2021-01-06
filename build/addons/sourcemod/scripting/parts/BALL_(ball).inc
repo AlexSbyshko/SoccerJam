@@ -25,7 +25,7 @@ enum SolidFlags_t
 
 static BallLostEvent _ballLostEvent
 
-void SpawnBall(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent)
+void BallSpawning(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent)
 {
 	_ballLostEvent = ballLostEvent
 
