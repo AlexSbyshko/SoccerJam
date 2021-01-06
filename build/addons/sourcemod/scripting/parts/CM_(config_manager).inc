@@ -11,6 +11,11 @@ static String:FileNames[MAX_CONFIGS][MAX_NAME_LENGTH]
 static String:RootNames[MAX_CONFIGS][MAX_NAME_LENGTH]
 static ConfigProcessingFunc:processingFunctions[MAX_CONFIGS]
 
+void ManageConfigs(MapStartedEvent mapStartedEvent)
+{
+	mapStartedEvent.Subscribe(OnMapStarted)
+}
+
 public CM_Init()
 {
 	OnSjConfigLoadedForward = CreateForward(ET_Ignore)
@@ -26,7 +31,7 @@ CreateConfig(const String:fileName[], const String:rootSectionName[], ConfigProc
 	return ConfigsCount - 1
 }
 
-public CM_OnMapStart()
+static void OnMapStarted()
 {
 	LoadMainConfig()
 	LoadDownloadList("downloads.txt")

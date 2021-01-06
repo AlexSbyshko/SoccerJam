@@ -49,7 +49,7 @@ public BALL_Init()
 	RegAdminCmd("sj_respawn_ball", CMD_RespawnBall, ADMFLAG_CHANGEMAP)
 }
 
-static OnMapStarted()
+static void OnMapStarted()
 {
 	ClearBallSpawnPoint()
 }

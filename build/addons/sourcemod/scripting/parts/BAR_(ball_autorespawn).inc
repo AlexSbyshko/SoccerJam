@@ -4,10 +4,7 @@ static Handle:TmrBallRespawn
 void AutoReturnBall(MapStartedEvent mapStartedEvent)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
-}
 
-public BAR_Init()
-{
 	CvarBallAutoRespawn = CreateConVar("sj_ball_respawn_time", "30", "Time after which the ball respawn (if no ball holder)", 0, true, 1.0)
 }
 
@@ -60,7 +57,7 @@ StartBallRespawnTimer()
 	}
 }
 
-static OnMapStarted()
+static void OnMapStarted()
 {
 	TmrBallRespawn = INVALID_HANDLE
 }

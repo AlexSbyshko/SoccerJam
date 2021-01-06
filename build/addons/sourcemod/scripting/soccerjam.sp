@@ -162,6 +162,7 @@ public OnPluginStart()
 	_mapStartedEvent = new MapStartedEvent()
 
 	AutoReturnBall(_mapStartedEvent)
+	ManageConfigs(_mapStartedEvent)
 
 	BallLostEvent ballLostEvent = new BallLostEvent()
 	SpawnBall(ballLostEvent, _mapStartedEvent)
