@@ -27,6 +27,8 @@ SjEngine CurrentEngine
 
 Handle:WarmupUpgradesEnabledConVar
 
+#include "Events/OnBallReceived"
+
 #include "PlayerGreeter"
 
 #include "parts"
