@@ -1,11 +1,13 @@
 static GoalOverrideModelId
 
-public SJB_Init()
+void GoalSpawning(MapStartedEvent mapStartedEvent)
 {
+	mapStartedEvent.Subscribe(OnMapStarted)
+
 	GoalOverrideModelId = CreateModel("goal_override")
 }
 
-public SJB_OnMapStart()
+static void OnMapStarted()
 {
 	SetGoalEntity(CS_TEAM_T, INVALID_ENT_REFERENCE)
 	SetGoalEntity(CS_TEAM_CT, INVALID_ENT_REFERENCE)
