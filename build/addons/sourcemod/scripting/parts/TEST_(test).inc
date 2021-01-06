@@ -4,8 +4,7 @@ static MatchStats3Id
 static MatchStats4Id
 static MatchStats5Id
 
-
-public TEST_Init()
+void Testing()
 {
 	MatchStats1Id = CreateMatchStats("stats1")
 	MatchStats2Id = CreateMatchStats("stats2")

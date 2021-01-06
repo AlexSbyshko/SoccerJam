@@ -1,6 +1,6 @@
 static Handle:OnBallHolderDeathForward
 
-public TBHD_Init()
+void BallTeleportingOnHolderDeath()
 {
 	OnBallHolderDeathForward = CreateForward(ET_Ignore, Param_Cell)
 	RegisterCustomForward(OnBallHolderDeathForward, "OnBallHolderDeath")

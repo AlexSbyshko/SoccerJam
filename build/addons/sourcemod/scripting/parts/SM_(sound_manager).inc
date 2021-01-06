@@ -8,7 +8,7 @@ static String:SoundGroupNames[MAX_SOUNDS][MAX_NAME_LENGTH]
 static String:SoundPaths[MAX_SOUND_GROUPS][MAX_SOUNDS][PLATFORM_MAX_PATH]
 
 
-public SM_Init()
+void SoundManaging()
 {
 	CreateConfig("sounds.cfg", "sounds", SM_ReadConfig)
 }

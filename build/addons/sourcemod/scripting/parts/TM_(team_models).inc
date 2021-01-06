@@ -1,7 +1,7 @@
 static CtModelId
 static TModelId
 
-public TM_Init()
+void TeamModelSetting()
 {
 	TModelId = CreateModel("team_red")
 	CtModelId = CreateModel("team_blue")

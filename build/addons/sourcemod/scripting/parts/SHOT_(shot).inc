@@ -8,7 +8,7 @@ static Handle:KickDistanceConVar
 static bool ChargingClients[MAXPLAYERS+1]
 static float StartChargingTimes[MAXPLAYERS+1]
 
-public SHOT_Init()
+void BallShooting()
 {
 	OnBallKickedForward = CreateForward(ET_Ignore, Param_Cell)	
 	RegisterCustomForward(OnBallKickedForward, "OnBallKicked")

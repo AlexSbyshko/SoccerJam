@@ -1,7 +1,7 @@
 static int ProgressBarStartTimeOffset
 static int ProgressBarDurationOffset
 
-public void SCPB_Init()
+void ShotChargeProgressBarShowing()
 {
 	ProgressBarStartTimeOffset = FindSendPropInfo("CCSPlayer", "m_flProgressBarStartTime")
 	ProgressBarDurationOffset = FindSendPropInfo("CCSPlayer", "m_iProgressBarDuration")

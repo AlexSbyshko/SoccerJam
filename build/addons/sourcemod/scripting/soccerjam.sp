@@ -182,6 +182,8 @@ public OnPluginStart()
 
 	SpawnHealthSetting()
 
+	BallShooting()
+
 	ManageConfigs(_mapStartedEvent)
 
 	BallAutoReturning(_mapStartedEvent)
@@ -190,7 +192,11 @@ public OnPluginStart()
 
 	MatchProcessing(_mapStartedEvent)
 
+	RoundTimeExtending()
+
 	ModelManaging()
+
+	TimeCounting()
 
 	BombAndHostagesRemoving(_mapStartedEvent)
 
@@ -198,9 +204,21 @@ public OnPluginStart()
 
 	SpawnPointsSwapping(_mapStartedEvent)
 
+	SoundManaging()
+
+	BallTeleportingOnHolderDeath()
+
 	KaMapsSupport()
 
 	PlayerAttackChecking()
+
+	SpeedAndGravityManaging()
+
+	ShotChargeProgressBarShowing()
+
+	TeamModelSetting()
+
+	Testing()
 
 	BallLostEvent ballLostEvent = new BallLostEvent()
 	BallSpawning(ballLostEvent, _mapStartedEvent)

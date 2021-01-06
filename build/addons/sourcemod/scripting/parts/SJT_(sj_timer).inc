@@ -5,7 +5,7 @@ static String:Message[MAX_MESSAGE_LENGTH]
 static IsSoundNotifyEnabled
 static TimerTickSoundId
 
-public SJT_Init()
+void TimeCounting()
 {
 	TimerTickSoundId = CreateSound("timer_tick")
 	CreateTimer(1.0, Timer_CheckSjTimer, _, TIMER_REPEAT)
