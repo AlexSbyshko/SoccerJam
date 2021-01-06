@@ -24,6 +24,13 @@ enum SolidFlags_t
 	FSOLID_MAX_BITS	= 10
 };
 
+static BallLostEvent _ballLostEvent
+
+void SpawnBall(BallLostEvent ballLostEvent)
+{
+	_ballLostEvent = ballLostEvent
+}
+
 public BALL_Init()
 {
 	OnBallSpawnedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
@@ -182,6 +189,7 @@ RemoveBallHolder()
 {
 	if (g_BallHolder > 0)
 	{
+		_ballLostEvent.Raise(g_BallHolder)
 		FireOnBallLost(g_BallHolder)
 		g_BallHolder = 0;
 		SetBallFree();

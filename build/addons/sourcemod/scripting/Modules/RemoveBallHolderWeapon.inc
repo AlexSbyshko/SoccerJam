@@ -2,10 +2,12 @@
 #include "Services/GivePlayerDefaultWeapon"
 
 void RemoveBallHolderWeapon(
-	const BallReceivedEvent ballReceivedEvent
+	const BallReceivedEvent ballReceivedEvent,
+	const BallLostEvent ballLostEvent
 	)
 {
 	ballReceivedEvent.Subscribe(OnBallReceived)
+	ballLostEvent.Subscribe(OnBallLost)
 }
 
 static OnBallReceived(int ballHolder, int oldBallHolder)
@@ -13,7 +15,7 @@ static OnBallReceived(int ballHolder, int oldBallHolder)
 	RemovePlayerWeapons(ballHolder)
 }
 
-public RBHW_OnBallLost(int client)
+static OnBallLost(int client)
 {
 	GivePlayerDefaultWeapon(client)
 }

@@ -27,6 +27,7 @@ SjEngine CurrentEngine
 
 Handle:WarmupUpgradesEnabledConVar
 
+#include "Events/BallLost"
 #include "Events/BallReceived"
 
 #include "Modules/RemoveBallHolderWeapon"
@@ -159,10 +160,13 @@ public OnPluginStart()
 
 	InitParts()
 
+	BallLostEvent ballLostEvent = new BallLostEvent()
+	SpawnBall(ballLostEvent)
+
 	BallReceivedEvent ballReceivedEvent = new BallReceivedEvent()
 	ReceiveBallOnTouch(ballReceivedEvent)
 
-	RemoveBallHolderWeapon(ballReceivedEvent)
+	RemoveBallHolderWeapon(ballReceivedEvent, ballLostEvent)
 	
 	LoadTranslations("soccerjam.phrases")
 
