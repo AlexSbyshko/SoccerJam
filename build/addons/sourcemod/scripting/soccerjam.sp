@@ -65,7 +65,6 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/PAC_(player_attack_check)"
 #include "parts/PR_(player_respawn)"
 #include "parts/RBAH_(remove_bomb_and_hostages)"
-#include "parts/RDW_(remove_dropped_weapons)"
 #include "parts/RTE_(round_time_extend)"
 #include "parts/RWOS_(remove_weapons_on_spawn)"
 #include "parts/SCPB_(shot_charge_progress_bar)"
@@ -142,8 +141,6 @@ public OnPluginStart()
 	RegisterPart("PAC") // Player Attack Check
 	RegisterPart("PR") // Player Respawn
 	RegisterPart("RBAH") // Remove Bomb And Hostages
-	RegisterPart("RBHW") // Remove Ball Holder's Weapon
-	RegisterPart("RDW") // Remove Dropped Weapon
 	RegisterPart("RTE") // Round Time Extend
 	RegisterPart("RWOS") // Remove Weapons On Spawn
 	RegisterPart("SCPB") // Shot Charge Progress Bar
@@ -191,16 +188,6 @@ public Action:CS_OnTerminateRound(&Float:delay, &CSRoundEndReason:reason)
 public OnEntityCreated(entity, const String:classname[])
 {
 	FireOnEntityCreated(entity, classname)
-}
-
-public void OnClientPutInServer(int client)
-{
-	SDKHook(client, SDKHook_WeaponDrop, OnWeaponDrop)
-}
-
-Action OnWeaponDrop(int client, int weapon)
-{
-	return FireOnWeaponDrop(client, weapon);
 }
 
 public OnClientDisconnect(client)
