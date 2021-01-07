@@ -24,9 +24,6 @@ const INVALID_UPGRADE = -1
 
 SjEngine CurrentEngine
 
-
-Handle:WarmupUpgradesEnabledConVar
-
 #include "Events/BallLost"
 #include "Events/BallReceived"
 #include "Events/EntityCreated"
@@ -112,7 +109,6 @@ public OnPluginStart()
 
 	CreateConVar("soccerjamsource_version", SOCCERJAMSOURCE_VERSION, "SoccerJam: Source Version", FCVAR_SPONLY|FCVAR_UNLOGGED|FCVAR_DONTRECORD|FCVAR_REPLICATED|FCVAR_NOTIFY)
 	
-	WarmupUpgradesEnabledConVar = CreateConVar("sj_warmup_upgrades_enabled", "0", "Enable upgrades during Warmup", 0, true, 0.0, true, 1.0)
 	InitPartSystem()
 
 	RegisterPart("BALL") // Ball
