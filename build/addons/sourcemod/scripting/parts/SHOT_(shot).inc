@@ -8,8 +8,10 @@ static Handle:KickDistanceConVar
 static bool ChargingClients[MAXPLAYERS+1]
 static float StartChargingTimes[MAXPLAYERS+1]
 
-void BallShooting()
+void BallShooting(PlayerCmdRunEvent playerCmdRunEvent)
 {
+	playerCmdRunEvent.Subscribe(OnPlayerCmdRun)
+
 	OnBallKickedForward = CreateForward(ET_Ignore, Param_Cell)	
 	RegisterCustomForward(OnBallKickedForward, "OnBallKicked")
 
@@ -24,7 +26,7 @@ void BallShooting()
 	KickDistanceConVar = CreateConVar("sj_kick_distance", "55", "Distance between the player and the ball in kick", 0, true, 1.0)
 }
 
-public SHOT_OnPlayerRunCmd(client, &buttons)
+static Action OnPlayerCmdRun(int client, int& buttons)
 {
 	if (client == g_BallHolder)
 	{
@@ -51,7 +53,7 @@ public SHOT_OnPlayerRunCmd(client, &buttons)
 				float strengthAddition = chargePerSecond * chargeDuration
 				float kickStrength = minStrength + strengthAddition
 				FireOnShotChargindEnded(client)
-				ShotBall(client, kickStrength)
+				ShootBall(client, kickStrength)
 			}
 			else
 			{
@@ -60,9 +62,11 @@ public SHOT_OnPlayerRunCmd(client, &buttons)
 			ChargingClients[client] = false
 		}
 	}
+
+	return Plugin_Continue
 }
 
-static void ShotBall(client, float kickStrength)
+static void ShootBall(client, float kickStrength)
 {
 	new Float:kickDistance = GetConVarFloat(KickDistanceConVar)
 	if (IsInterferenceForKick(client, kickDistance))

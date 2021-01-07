@@ -188,7 +188,7 @@ public OnPluginStart()
 
 	SpawnHealthSetting()
 
-	BallShooting()
+	BallShooting(_playerCmdRunEvent)
 
 	ManageConfigs(_mapStartedEvent)
 
