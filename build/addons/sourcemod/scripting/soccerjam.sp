@@ -226,7 +226,7 @@ public OnPluginStart()
 
 	PlayerAttackChecking(_clientActivatedEvent)
 
-	SpeedAndGravityManaging()
+	SpeedAndGravityManaging(_clientActivatedEvent)
 
 	ShotChargeProgressBarShowing()
 

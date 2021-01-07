@@ -1,16 +1,17 @@
 static Handle:BHSpeedMultiplierConVar
 static Float:BallHolderSpeedMultiplier
 
-void SpeedAndGravityManaging()
+void SpeedAndGravityManaging(ClientActivatedEvent clientActivatedEvent)
 {
+	clientActivatedEvent.Subscribe(OnClientActivated)
+
 	BHSpeedMultiplierConVar = CreateConVar("sj_ball_holder_speed_multiplier", "0.9", "Ball holder speed multiplier", 0, true, 0.0, true, 1.0)
 	HookConVarChange(BHSpeedMultiplierConVar, OnCVBHSpeedMultiplierChanged)
 	BallHolderSpeedMultiplier = GetConVarFloat(BHSpeedMultiplierConVar)
 }
 
-public SG_Event_PlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnClientActivated(int client)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))
 	SDKHook(client, SDKHook_PreThink, SG_OnClientThink)
 }
 
@@ -19,7 +20,7 @@ public SG_OnClientThink(client)
 	Client_FixSpeed(client)
 }
 
-Client_FixSpeed(client)
+static void Client_FixSpeed(client)
 {
 	if (IsClientInGame(client))
 	{
