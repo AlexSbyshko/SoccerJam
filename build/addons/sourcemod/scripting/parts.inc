@@ -28,7 +28,6 @@ RegisterPart(const String:partName[PART_NAME_LENGTH])
 {
 	PushArrayString(PartsNamesArray, partName)
 
-	HookPartEvent("cs_win_panel_round", partName, "WinPanelRound")
 	HookPartEvent("player_activate", partName, "PlayerActivate")
 	HookPartEvent("player_hurt", partName, "PlayerHurt")
 	HookPartEvent("player_spawn", partName, "PlayerSpawn")

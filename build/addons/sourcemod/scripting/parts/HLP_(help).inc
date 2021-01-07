@@ -1,14 +1,15 @@
 static bool:IsNewPlayer[MAXPLAYERS + 1]
 
-void HelpShowing()
+void HelpShowing(ClientActivatedEvent clientActivatedEvent)
 {
+	clientActivatedEvent.Subscribe(OnClientActivated)
+
 	AddCommandListener(HLP_Cmd_Say, "say")
 	AddCommandListener(HLP_Cmd_Say, "say_team")
 }
 
-public HLP_Event_PlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnClientActivated(int client)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))
 	IsNewPlayer[client] = true
 }
 

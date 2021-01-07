@@ -26,6 +26,7 @@ SjEngine CurrentEngine
 
 #include "Events/BallLost"
 #include "Events/BallReceived"
+#include "Events/ClientActivated"
 #include "Events/ClientDisconnecting"
 #include "Events/EntityCreated"
 #include "Events/MapStarted"
@@ -93,6 +94,7 @@ public Plugin:myinfo =
 
 static PlayerGreeter playerGreeter
 
+static ClientActivatedEvent _clientActivatedEvent
 static ClientDisconnectingEvent _clientDisconnectingEvent
 static EntityCreatedEvent _entityCreatedEvent
 static MapStartedEvent _mapStartedEvent
@@ -164,7 +166,7 @@ public OnPluginStart()
 	RegisterPart("TEST") // Sound Manager
 	RegisterPart("TM") // Team Models
 
-
+	_clientActivatedEvent = new ClientActivatedEvent()
 	_clientDisconnectingEvent = new ClientDisconnectingEvent()
 	_mapStartedEvent = new MapStartedEvent()
 	_entityCreatedEvent = new EntityCreatedEvent()
@@ -190,7 +192,7 @@ public OnPluginStart()
 
 	GoalScoring()
 
-	HelpShowing()
+	HelpShowing(_clientActivatedEvent)
 
 	SpawnHealthSetting()
 
@@ -295,8 +297,10 @@ public OnClientDisconnect(client)
 static void OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	new userId = GetEventInt(event, "userid")
+	int client = GetClientOfUserId(userId)
 
 	playerGreeter.GreetPlayer(userId)
+	_clientActivatedEvent.Raise(client)
 }
 
 public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int &weapon)
