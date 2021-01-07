@@ -1,6 +1,10 @@
-public NDAG_Event_PlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
+void DisablingDamageAfterGoal(ClientActivatedEvent clientActivatedEvent)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))
+	clientActivatedEvent.Subscribe(OnClientActivated)
+}
+
+static void OnClientActivated(int client)
+{
 	SDKHook(client, SDKHook_OnTakeDamage, NDAG_OnTakeDamage)
 }
 

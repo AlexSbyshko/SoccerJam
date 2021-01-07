@@ -234,6 +234,8 @@ public OnPluginStart()
 
 	Testing()
 
+	DisablingDamageAfterGoal(_clientActivatedEvent)
+
 	SjEntitiesFinding(_entityCreatedEvent)
 
 	DrawDisabling(_roundTerminatedEvent)
