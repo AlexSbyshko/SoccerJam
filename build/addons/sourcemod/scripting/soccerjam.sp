@@ -26,6 +26,7 @@ SjEngine CurrentEngine
 
 #include "Events/BallLost"
 #include "Events/BallReceived"
+#include "Events/ClientDisconnecting"
 #include "Events/EntityCreated"
 #include "Events/MapStarted"
 #include "Events/PlayerCmdRun"
@@ -91,6 +92,7 @@ public Plugin:myinfo =
 
 static PlayerGreeter playerGreeter
 
+static ClientDisconnectingEvent _clientDisconnectingEvent
 static EntityCreatedEvent _entityCreatedEvent
 static MapStartedEvent _mapStartedEvent
 static PlayerCmdRunEvent _playerCmdRunEvent
@@ -161,6 +163,7 @@ public OnPluginStart()
 	RegisterPart("TM") // Team Models
 
 
+	_clientDisconnectingEvent = new ClientDisconnectingEvent()
 	_mapStartedEvent = new MapStartedEvent()
 	_entityCreatedEvent = new EntityCreatedEvent()
 	_roundTerminatedEvent = new RoundTerminatedEvent()
@@ -238,6 +241,8 @@ public OnPluginStart()
 
 	RemoveBallHolderWeapon(ballReceivedEvent, ballLostEvent)
 
+	MatchStatsManaging(_clientDisconnectingEvent)
+
 	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
@@ -267,6 +272,7 @@ public OnEntityCreated(entity, const String:classname[])
 
 public OnClientDisconnect(client)
 {
+	_clientDisconnectingEvent.Raise(client)
 	FireOnClientDisconnect(client)
 	if (IsClientInGame(client))
 	{

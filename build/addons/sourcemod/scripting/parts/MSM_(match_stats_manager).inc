@@ -6,6 +6,11 @@ static PlayerStats[MAXPLAYERS+1][MAX_MATCH_STATS]
 
 static String:StatsNames[MAX_MATCH_STATS][STATS_NAME_LENGTH]
 
+void MatchStatsManaging(ClientDisconnectingEvent clientDisconnectingEvent)
+{
+	clientDisconnectingEvent.Subscribe(OnClientDisconnecting)
+}
+
 public MSM_OnStartPublic()
 {
 	ResetAllClientsMatchStats()
@@ -16,7 +21,7 @@ public MSM_OnStartMatch()
 	ResetAllClientsMatchStats()
 }
 
-public MSM_OnClientDisconnect(client)
+public OnClientDisconnecting(client)
 {
 	ResetClientMatchStats(client)
 }
