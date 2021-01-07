@@ -27,6 +27,7 @@ SjEngine CurrentEngine
 #include "Events/BallLost"
 #include "Events/BallReceived"
 #include "Events/ClientActivated"
+#include "Events/ClientSpawned"
 #include "Events/ClientDisconnecting"
 #include "Events/EntityCreated"
 #include "Events/MapStarted"
@@ -96,6 +97,7 @@ static PlayerGreeter playerGreeter
 
 static ClientActivatedEvent _clientActivatedEvent
 static ClientDisconnectingEvent _clientDisconnectingEvent
+static ClientSpawnedEvent _clientSpawnedEvent
 static EntityCreatedEvent _entityCreatedEvent
 static MapStartedEvent _mapStartedEvent
 static MatchRestartedEvent _matchRestartedEvent
@@ -168,6 +170,7 @@ public OnPluginStart()
 
 	_clientActivatedEvent = new ClientActivatedEvent()
 	_clientDisconnectingEvent = new ClientDisconnectingEvent()
+	_clientSpawnedEvent = new ClientSpawnedEvent()
 	_mapStartedEvent = new MapStartedEvent()
 	_entityCreatedEvent = new EntityCreatedEvent()
 	_roundTerminatedEvent = new RoundTerminatedEvent()
@@ -204,7 +207,7 @@ public OnPluginStart()
 
 	StartHalf(_mapStartedEvent)
 
-	MatchProcessing(_mapStartedEvent, _matchRestartedEvent)
+	MatchProcessing(_mapStartedEvent, _matchRestartedEvent, _clientSpawnedEvent)
 
 	RoundTimeExtending()
 
@@ -257,6 +260,7 @@ public OnPluginStart()
 	LoadTranslations("soccerjam.phrases")
 
 	HookEventEx("player_activate", OnPlayerActivate)
+	HookEventEx("player_spawn", OnPlayerSpawn)
 	HookEventEx("cs_match_end_restart", OnMatchEndRestart)
 }
 
@@ -315,4 +319,11 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 static void OnMatchEndRestart(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	_matchRestartedEvent.Raise()
+}
+
+static void OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	int client = GetClientOfUserId(GetEventInt(event, "userid"))
+
+	_clientSpawnedEvent.Raise(client)
 }

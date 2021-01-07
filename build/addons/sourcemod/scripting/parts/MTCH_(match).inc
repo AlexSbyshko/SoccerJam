@@ -64,10 +64,15 @@ public GetWinLimit()
 
 /////////
 
-void MatchProcessing(MapStartedEvent mapStartedEvent, MatchRestartedEvent matchRestartedEvent)
+void MatchProcessing(
+	MapStartedEvent mapStartedEvent,
+	MatchRestartedEvent matchRestartedEvent,
+	ClientSpawnedEvent clientSpawnedEvent
+	)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
 	matchRestartedEvent.Subscribe(OnMatchRestarted)
+	clientSpawnedEvent.Subscribe(OnClientSpawned)
 
 	RegAdminCmd("sj_match_start", MTCH_Cmd_StartMatch, ADMFLAG_CHANGEMAP)
 	RegAdminCmd("sj_public_start", MTCH_Cmd_StartPublic, ADMFLAG_CHANGEMAP)
@@ -223,7 +228,7 @@ FireMvpEvent(client)
 	FireEvent(event)
 }
 
-public MTCH_Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnClientSpawned(int client)
 {	
 	CheckForStartMatch()
 }
