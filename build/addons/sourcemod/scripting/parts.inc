@@ -2,11 +2,7 @@
 static Handle:CustomForwardsArray
 static Handle:CustomForwardNamesArray
 
-static Handle:OnPlayerRunCmdForward
 static Handle:OnClientDisconnectForward
-
-// SJ
-
 
 #define PART_NAME_LENGTH 16
 
@@ -23,7 +19,6 @@ InitPartSystem()
 
 CreateGameForwards()
 {
-	OnPlayerRunCmdForward = CreateForward(ET_Event, Param_Cell, Param_CellByRef)
 	OnClientDisconnectForward = CreateForward(ET_Ignore, Param_Cell)
 }
 
@@ -41,7 +36,6 @@ RegisterCustomForward(Handle:fwd, const String:postfix[])
 RegisterPart(const String:partName[PART_NAME_LENGTH])
 {
 	PushArrayString(PartsNamesArray, partName)
-	HookPartForward(OnPlayerRunCmdForward, partName, "OnPlayerRunCmd")
 	HookPartForward(OnClientDisconnectForward, partName, "OnClientDisconnect")
 
 	HookPartEvent("cs_match_end_restart", partName, "MatchEndRestart")
@@ -110,16 +104,6 @@ HookPartEvent(const String:hookName[], const String:partName[PART_NAME_LENGTH], 
 	{
 		HookEventEx(hookName, preFunction, EventHookMode_Pre)
 	}
-}
-
-stock Action:FireOnPlayerRunCmd(client, &buttons)
-{
-	Call_StartForward(OnPlayerRunCmdForward)
-	Call_PushCell(client);
-	Call_PushCellRef(buttons)
-	new Action:result
-	Call_Finish(result)
-	return result
 }
 
 stock FireOnClientDisconnect(client)
