@@ -2,7 +2,6 @@
 static Handle:CustomForwardsArray
 static Handle:CustomForwardNamesArray
 
-static Handle:OnEntityCreatedForward
 static Handle:OnTerminateRoundForward
 static Handle:OnPlayerRunCmdForward
 static Handle:OnClientDisconnectForward
@@ -25,7 +24,6 @@ InitPartSystem()
 
 CreateGameForwards()
 {
-	OnEntityCreatedForward = CreateForward(ET_Ignore, Param_Cell, Param_String)
 	OnTerminateRoundForward = CreateForward(ET_Event, Param_FloatByRef, Param_CellByRef)
 	OnPlayerRunCmdForward = CreateForward(ET_Event, Param_Cell, Param_CellByRef)
 	OnClientDisconnectForward = CreateForward(ET_Ignore, Param_Cell)
@@ -45,7 +43,6 @@ RegisterCustomForward(Handle:fwd, const String:postfix[])
 RegisterPart(const String:partName[PART_NAME_LENGTH])
 {
 	PushArrayString(PartsNamesArray, partName)
-	HookPartForward(OnEntityCreatedForward, partName, "OnEntityCreated")
 	HookPartForward(OnTerminateRoundForward, partName, "OnTerminateRound")
 	HookPartForward(OnPlayerRunCmdForward, partName, "OnPlayerRunCmd")
 	HookPartForward(OnClientDisconnectForward, partName, "OnClientDisconnect")
@@ -116,14 +113,6 @@ HookPartEvent(const String:hookName[], const String:partName[PART_NAME_LENGTH], 
 	{
 		HookEventEx(hookName, preFunction, EventHookMode_Pre)
 	}
-}
-
-stock FireOnEntityCreated(entity, const String:classname[])
-{
-	Call_StartForward(OnEntityCreatedForward)
-	Call_PushCell(entity)
-	Call_PushString(classname)
-	Call_Finish()
 }
 
 stock Action:FireOnTerminateRound(&Float:delay, &CSRoundEndReason:reason)

@@ -258,7 +258,6 @@ public Action:CS_OnTerminateRound(&Float:delay, &CSRoundEndReason:reason)
 public OnEntityCreated(entity, const String:classname[])
 {
 	_entityCreatedEvent.Raise(entity, classname)
-	FireOnEntityCreated(entity, classname)
 }
 
 public OnClientDisconnect(client)
