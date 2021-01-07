@@ -1,13 +1,14 @@
 static Handle:FightRadiusConVar = INVALID_HANDLE
 
-void PlayerAttackChecking()
+void PlayerAttackChecking(ClientActivatedEvent clientActivatedEvent)
 {
+	clientActivatedEvent.Subscribe(OnClientActivated)
+
 	FightRadiusConVar = CreateConVar("sj_fight_radius", "0", "The possibility of attack players.\n-1 = Everyone can attack all\n0 = Possible only attack ball holder, ball holder can attack all\n> 0 = Radius around the ball, where everyone can attack each", 0, true, -1.0)
 }
 
-public PAC_Event_PlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnClientActivated(int client)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))
 	SDKHook(client, SDKHook_OnTakeDamage, PAC_OnTakeDamage)
 }
 

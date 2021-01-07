@@ -224,7 +224,7 @@ public OnPluginStart()
 
 	KaMapsSupport()
 
-	PlayerAttackChecking()
+	PlayerAttackChecking(_clientActivatedEvent)
 
 	SpeedAndGravityManaging()
 
