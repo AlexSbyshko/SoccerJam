@@ -29,6 +29,7 @@ SjEngine CurrentEngine
 #include "Events/ClientDisconnecting"
 #include "Events/EntityCreated"
 #include "Events/MapStarted"
+#include "Events/MatchRestarted"
 #include "Events/PlayerCmdRun"
 #include "Events/RoundTerminated"
 
@@ -95,6 +96,7 @@ static PlayerGreeter playerGreeter
 static ClientDisconnectingEvent _clientDisconnectingEvent
 static EntityCreatedEvent _entityCreatedEvent
 static MapStartedEvent _mapStartedEvent
+static MatchRestartedEvent _matchRestartedEvent
 static PlayerCmdRunEvent _playerCmdRunEvent
 static RoundTerminatedEvent _roundTerminatedEvent
 
@@ -168,6 +170,7 @@ public OnPluginStart()
 	_entityCreatedEvent = new EntityCreatedEvent()
 	_roundTerminatedEvent = new RoundTerminatedEvent()
 	_playerCmdRunEvent = new PlayerCmdRunEvent()
+	_matchRestartedEvent = new MatchRestartedEvent()
 
 	BallBouncing()
 
@@ -199,7 +202,7 @@ public OnPluginStart()
 
 	StartHalf(_mapStartedEvent)
 
-	MatchProcessing(_mapStartedEvent)
+	MatchProcessing(_mapStartedEvent, _matchRestartedEvent)
 
 	RoundTimeExtending()
 
@@ -248,6 +251,7 @@ public OnPluginStart()
 	LoadTranslations("soccerjam.phrases")
 
 	HookEventEx("player_activate", OnPlayerActivate)
+	HookEventEx("cs_match_end_restart", OnMatchEndRestart)
 }
 
 public OnMapStart()
@@ -288,7 +292,7 @@ public OnClientDisconnect(client)
 	}
 }
 
-static OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	new userId = GetEventInt(event, "userid")
 
@@ -298,4 +302,9 @@ static OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int &weapon)
 {
 	return _playerCmdRunEvent.Raise(client, buttons)
+}
+
+static void OnMatchEndRestart(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	_matchRestartedEvent.Raise()
 }

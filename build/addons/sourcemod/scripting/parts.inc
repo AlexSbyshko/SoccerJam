@@ -28,7 +28,6 @@ RegisterPart(const String:partName[PART_NAME_LENGTH])
 {
 	PushArrayString(PartsNamesArray, partName)
 
-	HookPartEvent("cs_match_end_restart", partName, "MatchEndRestart")
 	HookPartEvent("cs_win_panel_round", partName, "WinPanelRound")
 	HookPartEvent("player_activate", partName, "PlayerActivate")
 	HookPartEvent("player_hurt", partName, "PlayerHurt")
@@ -72,7 +71,6 @@ HookPartForward(Handle:fwd, const String:partName[PART_NAME_LENGTH], const Strin
 	new Function:partFunction = GetFunctionByName(INVALID_HANDLE, partFunctionName)
 	if (partFunction != INVALID_FUNCTION)
 	{
-		PrintToServer("Hook forward: %s", partFunctionName)
 		AddToForward(fwd, INVALID_HANDLE, partFunction);
 	}
 }
