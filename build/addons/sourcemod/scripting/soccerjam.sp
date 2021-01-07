@@ -29,6 +29,7 @@ Handle:WarmupUpgradesEnabledConVar
 
 #include "Events/BallLost"
 #include "Events/BallReceived"
+#include "Events/EntityCreated"
 #include "Events/MapStarted"
 
 #include "Modules/RemoveBallHolderWeapon"
@@ -91,6 +92,7 @@ public Plugin:myinfo =
 
 static PlayerGreeter playerGreeter
 static MapStartedEvent _mapStartedEvent
+static EntityCreatedEvent _entityCreatedEvent
 
 public OnPluginStart()
 {
@@ -159,6 +161,7 @@ public OnPluginStart()
 
 
 	_mapStartedEvent = new MapStartedEvent()
+	_entityCreatedEvent = new EntityCreatedEvent()
 
 	BallBouncing()
 
@@ -220,6 +223,8 @@ public OnPluginStart()
 
 	Testing()
 
+	SjEntitiesFinding(_entityCreatedEvent)
+
 	BallLostEvent ballLostEvent = new BallLostEvent()
 	BallSpawning(ballLostEvent, _mapStartedEvent)
 
@@ -252,6 +257,7 @@ public Action:CS_OnTerminateRound(&Float:delay, &CSRoundEndReason:reason)
 
 public OnEntityCreated(entity, const String:classname[])
 {
+	_entityCreatedEvent.Raise(entity, classname)
 	FireOnEntityCreated(entity, classname)
 }
 

@@ -1,4 +1,9 @@
-public SJE_OnEntityCreated(entity, const String:classname[])
+void SjEntitiesFinding(EntityCreatedEvent entityCreatedEvent)
+{
+	entityCreatedEvent.Subscribe(OnEntityCreated)
+}
+
+static void OnEntityCreated(entity, const String:classname[])
 {
 	if (IsValidEdict(entity))
 	{
@@ -6,7 +11,7 @@ public SJE_OnEntityCreated(entity, const String:classname[])
 	}
 }
 
-public SJE_OnEntitySpawned(entity)
+static void SJE_OnEntitySpawned(entity)
 {	
 	decl String:name[MAX_NAME_LENGTH];
 	GetEntPropString(entity, Prop_Data, "m_iName", name, sizeof(name));
