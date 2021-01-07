@@ -15,7 +15,7 @@ methodmap RoundTerminatedEvent < PrivateForward
 	public Action Raise(float& delay, CSRoundEndReason& reason)
 	{
 		Call_StartForward(this)
-		Call_PushFloatRef(delay);
+		Call_PushFloatRef(delay)
 		Call_PushCellRef(reason)
 		Action result
 		Call_Finish(result)

@@ -28,6 +28,7 @@ SjEngine CurrentEngine
 #include "Events/BallReceived"
 #include "Events/EntityCreated"
 #include "Events/MapStarted"
+#include "Events/PlayerCmdRun"
 #include "Events/RoundTerminated"
 
 #include "Modules/RemoveBallHolderWeapon"
@@ -89,8 +90,10 @@ public Plugin:myinfo =
 }
 
 static PlayerGreeter playerGreeter
-static MapStartedEvent _mapStartedEvent
+
 static EntityCreatedEvent _entityCreatedEvent
+static MapStartedEvent _mapStartedEvent
+static PlayerCmdRunEvent _playerCmdRunEvent
 static RoundTerminatedEvent _roundTerminatedEvent
 
 public OnPluginStart()
@@ -161,6 +164,7 @@ public OnPluginStart()
 	_mapStartedEvent = new MapStartedEvent()
 	_entityCreatedEvent = new EntityCreatedEvent()
 	_roundTerminatedEvent = new RoundTerminatedEvent()
+	_playerCmdRunEvent = new PlayerCmdRunEvent()
 
 	BallBouncing()
 
@@ -286,7 +290,7 @@ static OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
 	playerGreeter.GreetPlayer(userId)
 }
 
-public Action OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:angles[3], &weapon)
+public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int &weapon)
 {
-	return FireOnPlayerRunCmd(client, buttons)
+	return _playerCmdRunEvent.Raise(client, buttons)
 }
