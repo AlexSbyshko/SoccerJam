@@ -224,6 +224,8 @@ public OnPluginStart()
 
 	SjEntitiesFinding(_entityCreatedEvent)
 
+	DrawDisabling(_roundTerminatedEvent)
+
 	BallLostEvent ballLostEvent = new BallLostEvent()
 	BallSpawning(ballLostEvent, _mapStartedEvent)
 

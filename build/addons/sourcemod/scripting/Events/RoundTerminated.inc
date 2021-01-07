@@ -1,4 +1,4 @@
-typedef RoundTerminatedEventHandler = function void (float& delay, CSRoundEndReason& reason)
+typedef RoundTerminatedEventHandler = function Action (float& delay, CSRoundEndReason& reason)
 
 methodmap RoundTerminatedEvent < PrivateForward
 {

@@ -1,4 +1,9 @@
-public Action:NRD_OnTerminateRound(&Float:delay, &CSRoundEndReason:reason)
+void DrawDisabling(RoundTerminatedEvent roundTerminatedEvent)
+{
+	roundTerminatedEvent.Subscribe(OnRoundTerminated)
+}
+
+static Action OnRoundTerminated(float& delay, CSRoundEndReason& reason)
 {
 	if (reason == CSRoundEnd_Draw)
 	{
