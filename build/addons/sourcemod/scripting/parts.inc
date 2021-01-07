@@ -2,7 +2,6 @@
 static Handle:CustomForwardsArray
 static Handle:CustomForwardNamesArray
 
-static Handle:InitPartForward
 static Handle:OnEntityCreatedForward
 static Handle:OnTerminateRoundForward
 static Handle:OnPlayerRunCmdForward
@@ -26,7 +25,6 @@ InitPartSystem()
 
 CreateGameForwards()
 {
-	InitPartForward = CreateForward(ET_Ignore)
 	OnEntityCreatedForward = CreateForward(ET_Ignore, Param_Cell, Param_String)
 	OnTerminateRoundForward = CreateForward(ET_Event, Param_FloatByRef, Param_CellByRef)
 	OnPlayerRunCmdForward = CreateForward(ET_Event, Param_Cell, Param_CellByRef)
@@ -47,7 +45,6 @@ RegisterCustomForward(Handle:fwd, const String:postfix[])
 RegisterPart(const String:partName[PART_NAME_LENGTH])
 {
 	PushArrayString(PartsNamesArray, partName)
-	HookPartForward(InitPartForward, partName, "Init")
 	HookPartForward(OnEntityCreatedForward, partName, "OnEntityCreated")
 	HookPartForward(OnTerminateRoundForward, partName, "OnTerminateRound")
 	HookPartForward(OnPlayerRunCmdForward, partName, "OnPlayerRunCmd")
@@ -69,9 +66,6 @@ RegisterPart(const String:partName[PART_NAME_LENGTH])
 
 InitParts()
 {
-	Call_StartForward(InitPartForward)
-	Call_Finish()
-
 	new partsCount = GetArraySize(PartsNamesArray)
 	for (new i = 0; i < partsCount; i++)
 	{
