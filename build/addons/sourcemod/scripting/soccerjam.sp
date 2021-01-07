@@ -29,6 +29,8 @@ SjEngine CurrentEngine
 #include "Events/ClientActivated"
 #include "Events/ClientSpawned"
 #include "Events/ClientDisconnecting"
+#include "Events/ClientTeamChanging"
+#include "Events/ClientTeamChanged"
 #include "Events/EntityCreated"
 #include "Events/MapStarted"
 #include "Events/MatchRestarted"
@@ -98,6 +100,8 @@ static PlayerGreeter playerGreeter
 static ClientActivatedEvent _clientActivatedEvent
 static ClientDisconnectingEvent _clientDisconnectingEvent
 static ClientSpawnedEvent _clientSpawnedEvent
+static ClientTeamChangingEvent _clientTeamChangingEvent
+static ClientTeamChangedEvent _clientTeamChangedEvent
 static EntityCreatedEvent _entityCreatedEvent
 static MapStartedEvent _mapStartedEvent
 static MatchRestartedEvent _matchRestartedEvent
@@ -171,6 +175,8 @@ public OnPluginStart()
 	_clientActivatedEvent = new ClientActivatedEvent()
 	_clientDisconnectingEvent = new ClientDisconnectingEvent()
 	_clientSpawnedEvent = new ClientSpawnedEvent()
+	_clientTeamChangingEvent = new ClientTeamChangingEvent()
+	_clientTeamChangedEvent = new ClientTeamChangedEvent()
 	_mapStartedEvent = new MapStartedEvent()
 	_entityCreatedEvent = new EntityCreatedEvent()
 	_roundTerminatedEvent = new RoundTerminatedEvent()
@@ -187,7 +193,7 @@ public OnPluginStart()
 
 	DeathZoneProcessing()
 
-	GoalAssistProcessing()
+	GoalAssistProcessing(_clientTeamChangingEvent)
 
 	GoalDistanceCounting()
 
@@ -195,9 +201,9 @@ public OnPluginStart()
 
 	GoalScoring()
 
-	HelpShowing(_clientActivatedEvent)
+	HelpShowing(_clientActivatedEvent, _clientSpawnedEvent)
 
-	SpawnHealthSetting()
+	SpawnHealthSetting(_clientSpawnedEvent)
 
 	BallShooting(_playerCmdRunEvent)
 
@@ -207,7 +213,7 @@ public OnPluginStart()
 
 	StartHalf(_mapStartedEvent)
 
-	MatchProcessing(_mapStartedEvent, _matchRestartedEvent, _clientSpawnedEvent)
+	MatchProcessing(_mapStartedEvent, _matchRestartedEvent, _clientSpawnedEvent, _clientTeamChangedEvent)
 
 	RoundTimeExtending()
 
@@ -233,7 +239,7 @@ public OnPluginStart()
 
 	ShotChargeProgressBarShowing()
 
-	TeamModelSetting()
+	TeamModelSetting(_clientSpawnedEvent)
 
 	Testing()
 
@@ -255,6 +261,8 @@ public OnPluginStart()
 
 	DisablingFriendlyFire(_clientActivatedEvent)
 
+	WeaponsOnSpawnRemoving(_clientSpawnedEvent)
+
 	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
@@ -262,6 +270,8 @@ public OnPluginStart()
 	HookEventEx("player_activate", OnPlayerActivate)
 	HookEventEx("player_spawn", OnPlayerSpawn)
 	HookEventEx("cs_match_end_restart", OnMatchEndRestart)
+	HookEventEx("player_team", OnPrePlayerTeam, EventHookMode_Pre)
+	HookEventEx("player_team", OnPlayerTeam)
 }
 
 public OnMapStart()
@@ -326,4 +336,18 @@ static void OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
 	int client = GetClientOfUserId(GetEventInt(event, "userid"))
 
 	_clientSpawnedEvent.Raise(client)
+}
+
+static void OnPrePlayerTeam(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	int client = GetClientOfUserId(GetEventInt(event, "userid"))
+
+	_clientTeamChangingEvent.Raise(client)
+}
+
+static void OnPlayerTeam(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	int client = GetClientOfUserId(GetEventInt(event, "userid"))
+
+	_clientTeamChangedEvent.Raise(client)
 }

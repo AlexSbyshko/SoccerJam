@@ -6,8 +6,10 @@ static Handle:AssistantsArray
 
 static AssistCountStatsId
 
-void GoalAssistProcessing()
+void GoalAssistProcessing(ClientTeamChangingEvent clientTeamChangingEvent)
 {
+	clientTeamChangingEvent.Subscribe(OnClientTeamChanging)
+
 	AssistantsArray = CreateArray()
 
 	AssistCountStatsId = CreateMatchStats("Most assists")
@@ -32,9 +34,8 @@ public GA_OnBallReceived(ballHolder, oldBallOwner)
 	}
 }
 
-public GA_Event_PrePlayerTeam(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnClientTeamChanging(int client)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))
 	RemoveClientFromArray(client)
 }
 

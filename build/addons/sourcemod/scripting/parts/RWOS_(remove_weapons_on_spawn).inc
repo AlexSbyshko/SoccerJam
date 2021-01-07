@@ -1,8 +1,11 @@
 #include "Services/RemovePlayerWeapons"
 
-public RWOS_Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
+void WeaponsOnSpawnRemoving(ClientSpawnedEvent clienSpawnedEvent)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))
-	
+	clienSpawnedEvent.Subscribe(OnClientSpawned)
+}
+
+static void OnClientSpawned(int client)
+{
 	RemovePlayerWeapons(client, CS_SLOT_KNIFE)
 }

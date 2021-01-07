@@ -1,16 +1,17 @@
-static CtModelId
-static TModelId
+static int CtModelId
+static int TModelId
 
-void TeamModelSetting()
+void TeamModelSetting(ClientSpawnedEvent clientSpawnedEvent)
 {
+	clientSpawnedEvent.Subscribe(OnClientSpawned)
+
 	TModelId = CreateModel("team_red")
 	CtModelId = CreateModel("team_blue")
 }
 
-public TM_Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnClientSpawned(int client)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))
-	new team = GetClientTeam(client)
+	int team = GetClientTeam(client)
 	if (team == CS_TEAM_CT)
 	{
 		SetEntityModelById(client, CtModelId)

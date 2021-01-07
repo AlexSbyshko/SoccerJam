@@ -28,7 +28,6 @@ RegisterPart(const String:partName[PART_NAME_LENGTH])
 {
 	PushArrayString(PartsNamesArray, partName)
 
-	HookPartEvent("player_spawn", partName, "PlayerSpawn")
 	HookPartEvent("player_team", partName, "PlayerTeam")
 	HookPartEvent("player_death", partName, "PlayerDeath")
 	HookPartEvent("player_disconnect", partName, "PlayerDisconnect")

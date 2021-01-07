@@ -67,12 +67,14 @@ public GetWinLimit()
 void MatchProcessing(
 	MapStartedEvent mapStartedEvent,
 	MatchRestartedEvent matchRestartedEvent,
-	ClientSpawnedEvent clientSpawnedEvent
+	ClientSpawnedEvent clientSpawnedEvent,
+	ClientTeamChangedEvent clientTeamChangedEvent
 	)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
 	matchRestartedEvent.Subscribe(OnMatchRestarted)
 	clientSpawnedEvent.Subscribe(OnClientSpawned)
+	clientTeamChangedEvent.Subscribe(OnClientTeamChanged)
 
 	RegAdminCmd("sj_match_start", MTCH_Cmd_StartMatch, ADMFLAG_CHANGEMAP)
 	RegAdminCmd("sj_public_start", MTCH_Cmd_StartPublic, ADMFLAG_CHANGEMAP)
@@ -432,10 +434,9 @@ public Action:MTCH_Cmd_StartPublic(client, argc)
 	return Plugin_Handled
 }
 
-public Action:MTCH_Event_PlayerTeam(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnClientTeamChanged(int client)
 {	
 	CheckForStartMatch()
-	return Plugin_Continue
 }
 
 public Action:MTCH_Cmd_Say(client, const String:command[], argc) 
