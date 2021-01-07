@@ -2,8 +2,6 @@
 static Handle:CustomForwardsArray
 static Handle:CustomForwardNamesArray
 
-static Handle:OnClientDisconnectForward
-
 #define PART_NAME_LENGTH 16
 
 static Handle:PartsNamesArray = INVALID_HANDLE
@@ -13,13 +11,6 @@ InitPartSystem()
 	PartsNamesArray = CreateArray(PART_NAME_LENGTH)
 	CustomForwardsArray = CreateArray()
 	CustomForwardNamesArray = CreateArray(MAX_NAME_LENGTH)
-
-	CreateGameForwards()
-}
-
-CreateGameForwards()
-{
-	OnClientDisconnectForward = CreateForward(ET_Ignore, Param_Cell)
 }
 
 RegisterCustomForward(Handle:fwd, const String:postfix[])
@@ -36,7 +27,6 @@ RegisterCustomForward(Handle:fwd, const String:postfix[])
 RegisterPart(const String:partName[PART_NAME_LENGTH])
 {
 	PushArrayString(PartsNamesArray, partName)
-	HookPartForward(OnClientDisconnectForward, partName, "OnClientDisconnect")
 
 	HookPartEvent("cs_match_end_restart", partName, "MatchEndRestart")
 	HookPartEvent("cs_win_panel_round", partName, "WinPanelRound")
@@ -104,11 +94,4 @@ HookPartEvent(const String:hookName[], const String:partName[PART_NAME_LENGTH], 
 	{
 		HookEventEx(hookName, preFunction, EventHookMode_Pre)
 	}
-}
-
-stock FireOnClientDisconnect(client)
-{	
-	Call_StartForward(OnClientDisconnectForward)
-	Call_PushCell(client)
-	Call_Finish()
 }

@@ -273,7 +273,6 @@ public OnEntityCreated(entity, const String:classname[])
 public OnClientDisconnect(client)
 {
 	_clientDisconnectingEvent.Raise(client)
-	FireOnClientDisconnect(client)
 	if (IsClientInGame(client))
 	{
 		ClearClient(client)

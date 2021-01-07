@@ -21,7 +21,7 @@ public MSM_OnStartMatch()
 	ResetAllClientsMatchStats()
 }
 
-public OnClientDisconnecting(client)
+static void OnClientDisconnecting(client)
 {
 	ResetClientMatchStats(client)
 }
