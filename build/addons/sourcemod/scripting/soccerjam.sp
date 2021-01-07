@@ -28,6 +28,7 @@ SjEngine CurrentEngine
 #include "Events/BallReceived"
 #include "Events/EntityCreated"
 #include "Events/MapStarted"
+#include "Events/RoundTerminated"
 
 #include "Modules/RemoveBallHolderWeapon"
 
@@ -90,6 +91,7 @@ public Plugin:myinfo =
 static PlayerGreeter playerGreeter
 static MapStartedEvent _mapStartedEvent
 static EntityCreatedEvent _entityCreatedEvent
+static RoundTerminatedEvent _roundTerminatedEvent
 
 public OnPluginStart()
 {
@@ -158,6 +160,7 @@ public OnPluginStart()
 
 	_mapStartedEvent = new MapStartedEvent()
 	_entityCreatedEvent = new EntityCreatedEvent()
+	_roundTerminatedEvent = new RoundTerminatedEvent()
 
 	BallBouncing()
 
@@ -241,14 +244,14 @@ public OnMapStart()
 	_mapStartedEvent.Raise()
 }
 
-public Action:CS_OnTerminateRound(&Float:delay, &CSRoundEndReason:reason)
+public Action CS_OnTerminateRound(float& delay, CSRoundEndReason& reason)
 {
 	if (reason == CSRoundEnd_GameStart)
 	{
 		SJ_ResetTeamScores()
 		return Plugin_Continue
 	}
-	return FireOnTerminateRound(delay, reason)
+	return _roundTerminatedEvent.Raise(delay, reason)
 }
 
 public OnEntityCreated(entity, const String:classname[])
