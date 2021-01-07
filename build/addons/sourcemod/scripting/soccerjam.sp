@@ -250,6 +250,8 @@ public OnPluginStart()
 
 	MatchStatsManaging(_clientDisconnectingEvent)
 
+	DisablingFriendlyFire(_clientActivatedEvent)
+
 	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
