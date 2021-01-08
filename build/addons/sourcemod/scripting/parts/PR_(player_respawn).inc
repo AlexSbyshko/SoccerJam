@@ -1,6 +1,11 @@
-public PR_Event_PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
+void PlayerRespawning(ClientDiedEvent clientDiedEvent)
 {
-	int userId = GetEventInt(event, "userid")
+	clientDiedEvent.Subscribe(OnClientDied)
+}
+
+static void OnClientDied(int client)
+{
+	int userId = GetClientUserId(client)
 	CreateTimer(2.0, Timer_PlayerRespawn, userId)
 }
 

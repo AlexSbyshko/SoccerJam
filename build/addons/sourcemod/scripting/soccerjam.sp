@@ -27,8 +27,9 @@ SjEngine CurrentEngine
 #include "Events/BallLost"
 #include "Events/BallReceived"
 #include "Events/ClientActivated"
-#include "Events/ClientSpawned"
+#include "Events/ClientDied"
 #include "Events/ClientDisconnecting"
+#include "Events/ClientSpawned"
 #include "Events/ClientTeamChanging"
 #include "Events/ClientTeamChanged"
 #include "Events/EntityCreated"
@@ -98,6 +99,7 @@ public Plugin:myinfo =
 static PlayerGreeter playerGreeter
 
 static ClientActivatedEvent _clientActivatedEvent
+static ClientDiedEvent _clientDiedEvent
 static ClientDisconnectingEvent _clientDisconnectingEvent
 static ClientSpawnedEvent _clientSpawnedEvent
 static ClientTeamChangingEvent _clientTeamChangingEvent
@@ -173,6 +175,7 @@ public OnPluginStart()
 	RegisterPart("TM") // Team Models
 
 	_clientActivatedEvent = new ClientActivatedEvent()
+	_clientDiedEvent = new ClientDiedEvent()
 	_clientDisconnectingEvent = new ClientDisconnectingEvent()
 	_clientSpawnedEvent = new ClientSpawnedEvent()
 	_clientTeamChangingEvent = new ClientTeamChangingEvent()
@@ -263,13 +266,16 @@ public OnPluginStart()
 
 	WeaponsOnSpawnRemoving(_clientSpawnedEvent)
 
+	PlayerRespawning(_clientDiedEvent)
+
 	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
 
-	HookEventEx("player_activate", OnPlayerActivate)
-	HookEventEx("player_spawn", OnPlayerSpawn)
 	HookEventEx("cs_match_end_restart", OnMatchEndRestart)
+	HookEventEx("player_activate", OnPlayerActivate)
+	HookEventEx("player_death", OnPlayerDeath)
+	HookEventEx("player_spawn", OnPlayerSpawn)
 	HookEventEx("player_team", OnPrePlayerTeam, EventHookMode_Pre)
 	HookEventEx("player_team", OnPlayerTeam)
 }
@@ -329,6 +335,13 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 static void OnMatchEndRestart(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	_matchRestartedEvent.Raise()
+}
+
+static void OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	int client = GetClientOfUserId(GetEventInt(event, "userid"))
+
+	_clientDiedEvent.Raise(client)
 }
 
 static void OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)

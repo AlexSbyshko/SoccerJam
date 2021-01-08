@@ -4,7 +4,7 @@ methodmap ClientTeamChangedEvent < PrivateForward
 {
 	public ClientTeamChangedEvent()
 	{
-		return view_as<ClientTeamChangedEvent>(new PrivateForward(ET_Ignore))
+		return view_as<ClientTeamChangedEvent>(new PrivateForward(ET_Ignore, Param_Cell))
 	}
 
 	public void Subscribe(ClientTeamChangedEventHandler handler)
