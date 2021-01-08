@@ -92,6 +92,10 @@ static void ShootBall(client, float kickStrength)
 	kickOrigin[1] = frontOrigin[1]
 	kickOrigin[2] = frontOrigin[2] + BALL_KICK_HEIGHT_ADDITION
 
+	// Recreating the ball is needed for CS:GO.
+	// Otherwise, the ball just freezes in place.
+	RecreateBall()
+
 	TeleportEntity(g_Ball, kickOrigin, NULL_VECTOR, ballVelocity)
 	for (new i = 0; i < 3; i++)
 	{
