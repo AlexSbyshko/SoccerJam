@@ -1,15 +1,15 @@
 static Handle:OnBallHolderDeathForward
 
-void BallTeleportingOnHolderDeath()
+void BallTeleportingOnHolderDeath(ClientDiedEvent clientDiedEvent)
 {
+	clientDiedEvent.Subscribe(OnClientDied)
+
 	OnBallHolderDeathForward = CreateForward(ET_Ignore, Param_Cell)
 	RegisterCustomForward(OnBallHolderDeathForward, "OnBallHolderDeath")
 }
 
-public TBHD_Event_PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnClientDied(int client)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))
-
 	if (client == g_BallOwner)
 	{
 		RecreateBall()

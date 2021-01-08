@@ -232,7 +232,7 @@ public OnPluginStart()
 
 	SoundManaging()
 
-	BallTeleportingOnHolderDeath()
+	BallTeleportingOnHolderDeath(_clientDiedEvent)
 
 	KaMapsSupport()
 
