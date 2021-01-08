@@ -8,8 +8,10 @@ static BallStealsStatsId
 
 static BallReceivedEvent _ballReceivedEvent
 
-void BallReceiving(const BallReceivedEvent ballReceivedEvent)
+void BallReceiving(BallReceivedEvent ballReceivedEvent, ClientDyingEvent clientDyingEvent)
 {
+	clientDyingEvent.Subscribe(OnClientDying)
+
 	_ballReceivedEvent = ballReceivedEvent
 
 	OnBallReceivedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
@@ -39,9 +41,8 @@ public BR_OnBallTouch(ball, entity)
 	}
 }
 
-public BR_Event_PrePlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
-{
-	new client = GetClientOfUserId(GetEventInt(event, "userid"))	
+static void OnClientDying(int client, int killer)
+{	
 	if (client == g_BallHolder)
 	{
 		RemoveBallHolder()

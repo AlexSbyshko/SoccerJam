@@ -1,14 +1,17 @@
-public NFFK_Event_PrePlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
+void FragsForKillsDisabling(ClientDyingEvent clientDyingEvent)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
-	new attacker = GetClientOfUserId(GetEventInt(event, "attacker"));
-	if (!attacker || client == attacker)
+	clientDyingEvent.Subscribe(OnClientDying)
+}
+
+static void OnClientDying(int client, int killer)
+{
+	if (!killer || client == killer)
 	{
 		Client_SetScore(client, Client_GetScore(client) + 1)
 	}
 	else
 	{
-		Client_SetScore(attacker, Client_GetScore(attacker) - 1)
+		Client_SetScore(killer, Client_GetScore(killer) - 1)
 	}
 	Client_SetDeaths(client, Client_GetDeaths(client) - 1)
 }

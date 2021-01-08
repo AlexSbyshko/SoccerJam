@@ -28,6 +28,7 @@ SjEngine CurrentEngine
 #include "Events/BallReceived"
 #include "Events/ClientActivated"
 #include "Events/ClientDied"
+#include "Events/ClientDying"
 #include "Events/ClientDisconnecting"
 #include "Events/ClientSpawned"
 #include "Events/ClientTeamChanging"
@@ -100,6 +101,7 @@ static PlayerGreeter playerGreeter
 
 static ClientActivatedEvent _clientActivatedEvent
 static ClientDiedEvent _clientDiedEvent
+static ClientDyingEvent _clientDyingEvent
 static ClientDisconnectingEvent _clientDisconnectingEvent
 static ClientSpawnedEvent _clientSpawnedEvent
 static ClientTeamChangingEvent _clientTeamChangingEvent
@@ -176,6 +178,7 @@ public OnPluginStart()
 
 	_clientActivatedEvent = new ClientActivatedEvent()
 	_clientDiedEvent = new ClientDiedEvent()
+	_clientDyingEvent = new ClientDyingEvent()
 	_clientDisconnectingEvent = new ClientDisconnectingEvent()
 	_clientSpawnedEvent = new ClientSpawnedEvent()
 	_clientTeamChangingEvent = new ClientTeamChangingEvent()
@@ -256,7 +259,7 @@ public OnPluginStart()
 	BallSpawning(ballLostEvent, _mapStartedEvent)
 
 	BallReceivedEvent ballReceivedEvent = new BallReceivedEvent()
-	BallReceiving(ballReceivedEvent)
+	BallReceiving(ballReceivedEvent, _clientDyingEvent)
 
 	RemoveBallHolderWeapon(ballReceivedEvent, ballLostEvent)
 
@@ -268,16 +271,19 @@ public OnPluginStart()
 
 	PlayerRespawning(_clientDiedEvent)
 
+	FragsForKillsDisabling(_clientDyingEvent)
+
 	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
 
-	HookEventEx("cs_match_end_restart", OnMatchEndRestart)
-	HookEventEx("player_activate", OnPlayerActivate)
-	HookEventEx("player_death", OnPlayerDeath)
-	HookEventEx("player_spawn", OnPlayerSpawn)
-	HookEventEx("player_team", OnPrePlayerTeam, EventHookMode_Pre)
-	HookEventEx("player_team", OnPlayerTeam)
+	HookEvent("cs_match_end_restart", OnMatchEndRestart)
+	HookEvent("player_activate", OnPlayerActivate)
+	HookEvent("player_death", OnPlayerDying, EventHookMode_Pre)
+	HookEvent("player_death", OnPlayerDeath)
+	HookEvent("player_spawn", OnPlayerSpawn)
+	HookEvent("player_team", OnPrePlayerTeam, EventHookMode_Pre)
+	HookEvent("player_team", OnPlayerTeam)
 }
 
 public OnMapStart()
@@ -318,7 +324,7 @@ public OnClientDisconnect(client)
 	}
 }
 
-static void OnPlayerActivate(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnPlayerActivate(Handle event, const char[] name, bool dontBroadcast)
 {
 	new userId = GetEventInt(event, "userid")
 	int client = GetClientOfUserId(userId)
@@ -332,33 +338,41 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 	return _playerCmdRunEvent.Raise(client, buttons)
 }
 
-static void OnMatchEndRestart(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnMatchEndRestart(Handle event, const char[] name, bool dontBroadcast)
 {
 	_matchRestartedEvent.Raise()
 }
 
-static void OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnPlayerDying(Handle event, const char[] name, bool dontBroadcast)
+{
+	int client = GetClientOfUserId(GetEventInt(event, "userid"))
+	int attacker = GetClientOfUserId(GetEventInt(event, "attacker"))
+
+	_clientDyingEvent.Raise(client, attacker)
+}
+
+static void OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"))
 
 	_clientDiedEvent.Raise(client)
 }
 
-static void OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"))
 
 	_clientSpawnedEvent.Raise(client)
 }
 
-static void OnPrePlayerTeam(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnPrePlayerTeam(Handle event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"))
 
 	_clientTeamChangingEvent.Raise(client)
 }
 
-static void OnPlayerTeam(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnPlayerTeam(Handle event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"))
 
