@@ -28,7 +28,6 @@ RegisterPart(const String:partName[PART_NAME_LENGTH])
 {
 	PushArrayString(PartsNamesArray, partName)
 
-	HookPartEvent("player_disconnect", partName, "PlayerDisconnect")
 	HookPartEvent("round_end", partName, "RoundEnd")
 	HookPartEvent("round_freeze_end", partName, "RoundFreezeEnd")
 	HookPartEvent("round_prestart", partName, "RoundPreStart")
