@@ -215,7 +215,7 @@ public OnPluginStart()
 
 	ManageConfigs(_mapStartedEvent)
 
-	BallAutoReturning(_mapStartedEvent)
+	BallAutoReturning(_mapStartedEvent, _clientDisconnectingEvent)
 
 	StartHalf(_mapStartedEvent)
 
@@ -281,6 +281,7 @@ public OnPluginStart()
 	HookEvent("player_activate", OnPlayerActivate)
 	HookEvent("player_death", OnPlayerDying, EventHookMode_Pre)
 	HookEvent("player_death", OnPlayerDeath)
+	HookEvent("player_disconnect", OnPrePlayerDisconnected, EventHookMode_Pre)
 	HookEvent("player_spawn", OnPlayerSpawn)
 	HookEvent("player_team", OnPrePlayerTeam, EventHookMode_Pre)
 	HookEvent("player_team", OnPlayerTeam)
@@ -308,7 +309,6 @@ public OnEntityCreated(entity, const String:classname[])
 
 public OnClientDisconnect(client)
 {
-	_clientDisconnectingEvent.Raise(client)
 	if (IsClientInGame(client))
 	{
 		ClearClient(client)
@@ -377,4 +377,11 @@ static void OnPlayerTeam(Handle event, const char[] name, bool dontBroadcast)
 	int client = GetClientOfUserId(GetEventInt(event, "userid"))
 
 	_clientTeamChangedEvent.Raise(client)
+}
+
+static void OnPrePlayerDisconnected(Handle event, const char[] name, bool dontBroadcast)
+{
+	int client = GetClientOfUserId(GetEventInt(event, "userid"))
+
+	_clientDisconnectingEvent.Raise(client)
 }
