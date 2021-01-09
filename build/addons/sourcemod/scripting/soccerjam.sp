@@ -219,7 +219,7 @@ public OnPluginStart()
 
 	StartHalf(_mapStartedEvent)
 
-	MatchProcessing(_mapStartedEvent, _matchRestartedEvent, _clientSpawnedEvent, _clientTeamChangedEvent)
+	MatchProcessing(_mapStartedEvent, _matchRestartedEvent, _clientSpawnedEvent, _clientTeamChangedEvent, _clientDisconnectingEvent)
 
 	RoundTimeExtending()
 

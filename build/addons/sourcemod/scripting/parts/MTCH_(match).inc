@@ -68,13 +68,15 @@ void MatchProcessing(
 	MapStartedEvent mapStartedEvent,
 	MatchRestartedEvent matchRestartedEvent,
 	ClientSpawnedEvent clientSpawnedEvent,
-	ClientTeamChangedEvent clientTeamChangedEvent
+	ClientTeamChangedEvent clientTeamChangedEvent,
+	ClientDisconnectingEvent clientDisconnectingEvent
 	)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
 	matchRestartedEvent.Subscribe(OnMatchRestarted)
 	clientSpawnedEvent.Subscribe(OnClientSpawned)
 	clientTeamChangedEvent.Subscribe(OnClientTeamChanged)
+	clientDisconnectingEvent.Subscribe(OnClientDisconnecting)
 
 	RegAdminCmd("sj_match_start", MTCH_Cmd_StartMatch, ADMFLAG_CHANGEMAP)
 	RegAdminCmd("sj_public_start", MTCH_Cmd_StartPublic, ADMFLAG_CHANGEMAP)
@@ -235,7 +237,7 @@ static void OnClientSpawned(int client)
 	CheckForStartMatch()
 }
 
-public MTCH_Event_PlayerDisconnect(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnClientDisconnecting(int client)
 {	
 	CheckForStartMatch()
 }
