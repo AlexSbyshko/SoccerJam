@@ -1,5 +1,4 @@
 static Handle:BallSpawnCenterConVar
-static Handle:OnBallSpawnedForward
 static Handle:OnBallCreatedForward
 static bool:IsSpawnExists
 static BallModelId
@@ -32,8 +31,6 @@ void BallSpawning(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent, 
 	mapStartedEvent.Subscribe(OnMapStarted)
 	roundStartedEvent.Subscribe(OnRoundStarted)
 
-	OnBallSpawnedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
-	RegisterCustomForward(OnBallSpawnedForward, "OnBallSpawned")
 	OnBallCreatedForward = CreateForward(ET_Ignore, Param_Cell)
 	RegisterCustomForward(OnBallCreatedForward, "OnBallCreated")
 
@@ -162,7 +159,7 @@ Ball_RespawnAtCenter()
 	ClearBall()
 	SetEntityMoveType(g_Ball, MOVETYPE_FLYGRAVITY)
 	TeleportEntity(g_Ball, g_BallSpawnOrigin, NULL_VECTOR, g_StartBallVelocity)
-	FireOnBallSpawned(g_Ball, CS_TEAM_NONE)
+	BallSpawned.Raise(g_Ball, CS_TEAM_NONE)
 }
 
 RespawnBallNearRandomTeam()
@@ -180,7 +177,6 @@ RespawnBallNearTeam(team)
 	SetEntityMoveType(g_Ball, MOVETYPE_FLYGRAVITY)
 	TeleportEntity(g_Ball, spawnOrigin, NULL_VECTOR, g_StartBallVelocity)
 	BallSpawned.Raise(g_Ball, team)
-	FireOnBallSpawned(g_Ball, team)
 }
 
 RemoveBallHolder()
@@ -266,14 +262,6 @@ public Action:CMD_RespawnBall(client, argc)
 {
 	RespawnBallWithNotify()
 	return Plugin_Handled
-}
-
-FireOnBallSpawned(ballEntity, ballTeam)
-{
-	Call_StartForward(OnBallSpawnedForward)
-	Call_PushCell(ballEntity)
-	Call_PushCell(ballTeam)
-	Call_Finish()
 }
 
 FireOnBallCreated(ballEntity)
