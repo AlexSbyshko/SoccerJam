@@ -15,6 +15,7 @@ static void OnClientDied(int client)
 		RecreateBall()
 		TeleportBallToClient(client)
 		FireOnBallHolderDeath(client)
+		BallHolderDied.Raise(client)
 	}
 }
 

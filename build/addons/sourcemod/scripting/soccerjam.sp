@@ -25,6 +25,7 @@ const INVALID_UPGRADE = -1
 SjEngine CurrentEngine
 
 #include "Events/BallCreated"
+#include "Events/BallHolderDied"
 #include "Events/BallLost"
 #include "Events/BallReceived"
 #include "Events/BallShot"
@@ -50,6 +51,7 @@ SjEngine CurrentEngine
 #include "Events/SjConfigLoaded"
 
 BallCreatedEvent BallCreated
+BallHolderDiedEvent BallHolderDied
 BallReceivedEvent BallReceived
 BallShotEvent BallShot
 BallSpawnedEvent BallSpawned
@@ -195,6 +197,7 @@ public void OnPluginStart()
 	RegisterPart("TM") // Team Models
 
 	BallCreated = new BallCreatedEvent()
+	BallHolderDied = new BallHolderDiedEvent()
 	BallReceived = new BallReceivedEvent()
 	BallShot = new BallShotEvent()
 	BallSpawned = new BallSpawnedEvent()
