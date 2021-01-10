@@ -37,6 +37,7 @@ SjEngine CurrentEngine
 #include "Events/MapStarted"
 #include "Events/MatchRestarted"
 #include "Events/PlayerCmdRun"
+#include "Events/RoundEnding"
 #include "Events/RoundTerminated"
 
 #include "Modules/RemoveBallHolderWeapon"
@@ -110,9 +111,10 @@ static EntityCreatedEvent _entityCreatedEvent
 static MapStartedEvent _mapStartedEvent
 static MatchRestartedEvent _matchRestartedEvent
 static PlayerCmdRunEvent _playerCmdRunEvent
+static RoundEndingEvent _roundEndingEvent
 static RoundTerminatedEvent _roundTerminatedEvent
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	EngineVersion engineVersion = GetEngineVersion()
 	if (engineVersion == Engine_CSS)
@@ -185,6 +187,7 @@ public OnPluginStart()
 	_clientTeamChangedEvent = new ClientTeamChangedEvent()
 	_mapStartedEvent = new MapStartedEvent()
 	_entityCreatedEvent = new EntityCreatedEvent()
+	_roundEndingEvent = new RoundEndingEvent()
 	_roundTerminatedEvent = new RoundTerminatedEvent()
 	_playerCmdRunEvent = new PlayerCmdRunEvent()
 	_matchRestartedEvent = new MatchRestartedEvent()
@@ -285,9 +288,10 @@ public OnPluginStart()
 	HookEvent("player_spawn", OnPlayerSpawn)
 	HookEvent("player_team", OnPrePlayerTeam, EventHookMode_Pre)
 	HookEvent("player_team", OnPlayerTeam)
+	HookEvent("round_end", OnPreRoundEnd)
 }
 
-public OnMapStart()
+public void OnMapStart()
 {
 	_mapStartedEvent.Raise()
 }
@@ -302,12 +306,12 @@ public Action CS_OnTerminateRound(float& delay, CSRoundEndReason& reason)
 	return _roundTerminatedEvent.Raise(delay, reason)
 }
 
-public OnEntityCreated(entity, const String:classname[])
+public void OnEntityCreated(int entity, const char[] classname)
 {
 	_entityCreatedEvent.Raise(entity, classname)
 }
 
-public OnClientDisconnect(client)
+public void OnClientDisconnect(int client)
 {
 	if (IsClientInGame(client))
 	{
@@ -384,4 +388,9 @@ static void OnPrePlayerDisconnected(Handle event, const char[] name, bool dontBr
 	int client = GetClientOfUserId(GetEventInt(event, "userid"))
 
 	_clientDisconnectingEvent.Raise(client)
+}
+
+static void OnPreRoundEnd(Handle event, const char[] name, bool dontBroadcast)
+{
+	_roundEndingEvent.Raise()
 }
