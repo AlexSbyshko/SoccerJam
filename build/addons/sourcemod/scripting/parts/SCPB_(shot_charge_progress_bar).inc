@@ -4,6 +4,7 @@ static int ProgressBarDurationOffset
 void ShotChargeProgressBarShowing()
 {
 	ShotChargingStarted.Subscribe(OnShotChargingStarted)
+	ShotChargingEnded.Subscribe(OnShotChargindEnded)
 
 	ProgressBarStartTimeOffset = FindSendPropInfo("CCSPlayer", "m_flProgressBarStartTime")
 	ProgressBarDurationOffset = FindSendPropInfo("CCSPlayer", "m_iProgressBarDuration")
@@ -14,7 +15,7 @@ static void OnShotChargingStarted(int client)
 	StartProgressBar(client)
 }
 
-public void SCPB_OnShotChargindEnded(int client)
+static void OnShotChargindEnded(int client)
 {
 	StopProgressBar(client)
 }
