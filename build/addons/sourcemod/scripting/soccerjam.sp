@@ -219,7 +219,7 @@ public void OnPluginStart()
 
 	ManageConfigs(_mapStartedEvent)
 
-	BallAutoReturning(_mapStartedEvent, _clientDisconnectingEvent)
+	BallAutoReturning(_mapStartedEvent, _clientDisconnectingEvent, _roundStartedEvent)
 
 	RoundTimeExtending()
 

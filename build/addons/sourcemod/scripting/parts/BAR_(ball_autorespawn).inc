@@ -1,10 +1,11 @@
 static Handle:CvarBallAutoRespawn
 static Handle:TmrBallRespawn
 
-void BallAutoReturning(MapStartedEvent mapStartedEvent, ClientDisconnectingEvent clientDisconnectingEvent)
+void BallAutoReturning(MapStartedEvent mapStartedEvent, ClientDisconnectingEvent clientDisconnectingEvent, RoundStartedEvent roundStartedEvent)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
 	clientDisconnectingEvent.Subscribe(OnClientDisconnecting)
+	roundStartedEvent.Subscribe(OnRoundStarted)
 
 	CvarBallAutoRespawn = CreateConVar("sj_ball_respawn_time", "30", "Time after which the ball respawn (if no ball holder)", 0, true, 1.0)
 }
@@ -37,10 +38,9 @@ public BAR_OnBallSpawned(ballEntity, ballSpawnTeam)
 	StopBallRespawnTimer()
 }
 
-public Action:BAR_Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnRoundStarted()
 {
 	TmrBallRespawn = INVALID_HANDLE
-	return Plugin_Continue
 }
 
 public BAR_OnGoal(team, scorer)
