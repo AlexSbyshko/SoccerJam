@@ -8,6 +8,7 @@ static AssistCountStatsId
 
 void GoalAssistProcessing(ClientTeamChangingEvent clientTeamChangingEvent)
 {
+	BallReceived.Subscribe(OnBallReceived)
 	clientTeamChangingEvent.Subscribe(OnClientTeamChanging)
 
 	AssistantsArray = CreateArray()
@@ -18,7 +19,7 @@ void GoalAssistProcessing(ClientTeamChangingEvent clientTeamChangingEvent)
 	RegisterCustomForward(OnClientAssistedForward, "OnClientAssisted")
 }
 
-public GA_OnBallReceived(ballHolder, oldBallOwner)
+static void OnBallReceived(ballHolder, oldBallOwner)
 {
 	if (oldBallOwner > 0
 		&& oldBallOwner != ballHolder

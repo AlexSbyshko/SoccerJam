@@ -3,6 +3,8 @@ new g_BallSpriteTrail
 
 void BallTrailShowing()
 {
+	BallReceived.Subscribe(OnBallReceived)
+
 	InitGame()
 	MapFunction(CreateBallTrailProc, "CreateBallTrail")
 }
@@ -12,7 +14,7 @@ public BT_OnBallSpawned(ballEntity, team)
 	SetEntityRenderColor(g_BallSpriteTrail, g_TeamColors[team][0], g_TeamColors[team][1], g_TeamColors[team][2], g_TeamColors[team][3])
 }
 
-public BT_OnBallReceived(ballHolder, oldBallOwner)
+static void OnBallReceived(ballHolder, oldBallOwner)
 {
 	new team = GetClientTeam(ballHolder)
 	SetEntityRenderColor(g_BallSpriteTrail, g_TeamColors[team][0], g_TeamColors[team][1], g_TeamColors[team][2], g_TeamColors[team][3]);
