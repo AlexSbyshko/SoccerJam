@@ -227,7 +227,7 @@ public void OnPluginStart()
 
 	BombAndHostagesRemoving(_mapStartedEvent, _roundStartedEvent)
 
-	GoalSpawning(_mapStartedEvent, _roundPreStartedEvent)
+	GoalSpawning(_mapStartedEvent, _roundPreStartedEvent, _roundStartedEvent)
 
 	SpawnPointsSwapping(_mapStartedEvent)
 

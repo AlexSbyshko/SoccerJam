@@ -1,9 +1,10 @@
 static GoalOverrideModelId
 
-void GoalSpawning(MapStartedEvent mapStartedEvent, RoundPreStartedEvent roundPreStartedEvent)
+void GoalSpawning(MapStartedEvent mapStartedEvent, RoundPreStartedEvent roundPreStartedEvent, RoundStartedEvent roundStartedEvent)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
 	roundPreStartedEvent.Subscribe(OnRoundPreStarted)
+	roundStartedEvent.Subscribe(OnRoundStarted)
 
 	GoalOverrideModelId = CreateModel("goal_override")
 }
@@ -20,7 +21,7 @@ static void OnRoundPreStarted()
 	SetGoalEntity(CS_TEAM_CT, INVALID_ENT_REFERENCE)
 }
 
-public SJB_Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnRoundStarted()
 {
 	if (g_Goals[CS_TEAM_CT] == INVALID_ENT_REFERENCE)
 	{
