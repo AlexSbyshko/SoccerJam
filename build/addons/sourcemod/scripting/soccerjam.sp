@@ -64,7 +64,6 @@ SjConfigLoadedEvent SjConfigLoaded
 
 #include "PlayerGreeter"
 
-#include "parts"
 #include "parts/BALL_(ball)"
 #include "parts/BAR_(ball_autorespawn)"
 #include "parts/BBM_(ball_bounce_multiplier)"
@@ -151,50 +150,6 @@ public void OnPluginStart()
 	}
 
 	CreateConVar("soccerjamsource_version", SOCCERJAMSOURCE_VERSION, "SoccerJam: Source Version", FCVAR_SPONLY|FCVAR_UNLOGGED|FCVAR_DONTRECORD|FCVAR_REPLICATED|FCVAR_NOTIFY)
-	
-	InitPartSystem()
-
-	RegisterPart("BALL") // Ball
-	RegisterPart("BAR") // Ball AutoRespawn
-	RegisterPart("BBM") // Ball Bounce Multiplier
-	RegisterPart("BBS") // Ball Bounce Sound
-	RegisterPart("BE") // Ball Explosion
-	RegisterPart("BR") // Ball Receiving
-	RegisterPart("BT") // Ball Trail
-	RegisterPart("CM") // Config Manager
-	RegisterPart("DZ") // Death Zone
-	RegisterPart("FFI") // Frags For Interception
-	RegisterPart("GA") // Goal Assist
-	RegisterPart("GD") // Goal Distance
-	RegisterPart("GOAL") // Goal
-	RegisterPart("GSM") // Game Specific Manager
-	RegisterPart("HLP") // Help
-	RegisterPart("HLTH") // Health
-	RegisterPart("KAS") // KA_Soccer maps support
-	RegisterPart("MM") // Model Manager
-	RegisterPart("MSM") // Match Stats Manager
-	RegisterPart("MTCH") // Match
-	RegisterPart("MVP") // MVP Stars
-	RegisterPart("NDAG") // No Damage After Goal
-	RegisterPart("NFFK") // No Frags For Kill
-	RegisterPart("NOFF") // No Friendly Fire
-	RegisterPart("NRD") // No Round Draw
-	RegisterPart("NREM") // No Round End Message
-	RegisterPart("PAC") // Player Attack Check
-	RegisterPart("PR") // Player Respawn
-	RegisterPart("RBAH") // Remove Bomb And Hostages
-	RegisterPart("RTE") // Round Time Extend
-	RegisterPart("RWOS") // Remove Weapons On Spawn
-	RegisterPart("SCPB") // Shot Charge Progress Bar
-	RegisterPart("SG") // Speed and Gravity
-	RegisterPart("SJB") // SJ Builder
-	RegisterPart("SJE") // SJ Entities
-	RegisterPart("SHOT") // Shot
-	RegisterPart("SM") // Sound Manager
-	RegisterPart("SSP") // Swap Spawn Points
-	RegisterPart("TBHD") // Teleport Ball on Holder Death
-	RegisterPart("TEST") // Sound Manager
-	RegisterPart("TM") // Team Models
 
 	BallCreated = new BallCreatedEvent()
 	BallHolderDied = new BallHolderDiedEvent()
@@ -301,8 +256,6 @@ public void OnPluginStart()
 
 	RoundEndMessageDisabling(_roundEndingEvent)
 	MvpForGoalScoring()
-
-	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
 
