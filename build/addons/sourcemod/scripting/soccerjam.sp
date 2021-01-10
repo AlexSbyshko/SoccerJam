@@ -209,7 +209,7 @@ public void OnPluginStart()
 
 	GameSpecificConfigManaging()
 
-	GoalScoring()
+	GoalScoring(_roundStartedEvent)
 
 	HelpShowing(_clientActivatedEvent, _clientSpawnedEvent)
 

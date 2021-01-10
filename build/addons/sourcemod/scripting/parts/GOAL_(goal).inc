@@ -3,8 +3,10 @@ static Handle:OnGoalForward
 static GoalSoundId
 static GoalSirenSoundId
 
-void GoalScoring()
+void GoalScoring(RoundStartedEvent roundStartedEvent)
 {
+	roundStartedEvent.Subscribe(OnRoundStarted)
+
 	OnGoalForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
 	RegisterCustomForward(OnGoalForward, "OnGoal")
 
@@ -12,7 +14,7 @@ void GoalScoring()
 	GoalSirenSoundId = CreateSound("goal_siren")
 }
 
-public GOAL_Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnRoundStarted()
 {
 	g_Goal = false
 }
