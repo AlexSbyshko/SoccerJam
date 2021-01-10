@@ -7,6 +7,7 @@ void BallAutoReturning(
 	RoundStartedEvent roundStartedEvent,
 	BallReceivedEvent ballReceivedEvent)
 {
+	BallSpawned.Subscribe(OnBallSpawned)
 	mapStartedEvent.Subscribe(OnMapStarted)
 	clientDisconnectingEvent.Subscribe(OnClientDisconnecting)
 	roundStartedEvent.Subscribe(OnRoundStarted)
@@ -38,7 +39,7 @@ static void OnOnBallReceived(client, oldBallOwner)
 	StopBallRespawnTimer()
 }
 
-public BAR_OnBallSpawned(ballEntity, ballSpawnTeam)
+static void OnBallSpawned(ballEntity, ballSpawnTeam)
 {
 	StopBallRespawnTimer()
 }
