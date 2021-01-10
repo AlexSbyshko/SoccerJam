@@ -42,6 +42,8 @@ SjEngine CurrentEngine
 #include "Events/RoundStarted"
 #include "Events/RoundTerminated"
 
+BallReceivedEvent BallReceived
+
 #include "Modules/RemoveBallHolderWeapon"
 
 #include "PlayerGreeter"
@@ -98,6 +100,7 @@ public Plugin:myinfo =
 }
 
 static PlayerGreeter playerGreeter
+
 
 static ClientActivatedEvent _clientActivatedEvent
 static ClientDiedEvent _clientDiedEvent
@@ -177,6 +180,7 @@ public void OnPluginStart()
 	RegisterPart("TEST") // Sound Manager
 	RegisterPart("TM") // Team Models
 
+	BallReceived = new BallReceivedEvent()
 	_clientActivatedEvent = new ClientActivatedEvent()
 	_clientDiedEvent = new ClientDiedEvent()
 	_clientDyingEvent = new ClientDyingEvent()
@@ -254,12 +258,11 @@ public void OnPluginStart()
 	BallLostEvent ballLostEvent = new BallLostEvent()
 	BallSpawning(ballLostEvent, _mapStartedEvent, _roundStartedEvent)
 
-	BallReceivedEvent ballReceivedEvent = new BallReceivedEvent()
-	BallReceiving(ballReceivedEvent, _clientDyingEvent)
+	BallReceiving(_clientDyingEvent)
 
-	BallAutoReturning(_mapStartedEvent, _clientDisconnectingEvent, _roundStartedEvent, ballReceivedEvent)
+	BallAutoReturning(_mapStartedEvent, _clientDisconnectingEvent, _roundStartedEvent, BallReceived)
 
-	RemoveBallHolderWeapon(ballReceivedEvent, ballLostEvent)
+	RemoveBallHolderWeapon(BallReceived, ballLostEvent)
 
 	MatchStatsManaging(_clientDisconnectingEvent)
 

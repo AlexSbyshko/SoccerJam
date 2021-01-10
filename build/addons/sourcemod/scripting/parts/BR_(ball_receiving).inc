@@ -6,13 +6,9 @@ static BallInterceptionSoundId
 
 static BallStealsStatsId
 
-static BallReceivedEvent _ballReceivedEvent
-
-void BallReceiving(BallReceivedEvent ballReceivedEvent, ClientDyingEvent clientDyingEvent)
+void BallReceiving(ClientDyingEvent clientDyingEvent)
 {
 	clientDyingEvent.Subscribe(OnClientDying)
-
-	_ballReceivedEvent = ballReceivedEvent
 
 	OnBallReceivedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
 	RegisterCustomForward(OnBallReceivedForward, "OnBallReceived")
@@ -179,7 +175,7 @@ SetBallHolder(client)
 		SetBallOwner(client)
 		GetClientName(client, g_BallOwnerName, sizeof(g_BallOwnerName))
 		SetBallNotFree()
-		_ballReceivedEvent.Raise(client, oldBallOwner)
+		BallReceived.Raise(client, oldBallOwner)
 		FireOnBallReceived(client, oldBallOwner)
 	}
 }
