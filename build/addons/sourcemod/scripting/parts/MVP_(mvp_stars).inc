@@ -1,4 +1,9 @@
-public MVP_OnGoal(team, scorer)
+void MvpForGoalScoring()
+{
+	GoalScored.Subscribe(OnGoalScored)
+}
+
+static void OnGoalScored(team, scorer)
 {
 	IncreaseMvpCount(scorer);
 }

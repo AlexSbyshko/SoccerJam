@@ -73,6 +73,7 @@ ScoreGoal(team, scorer)
 		SetEventInt(event, "final_event", _:CSRoundEnd_TerroristWin)
 	}
 	
+	GoalScored.Raise(team, scorer)
 	FireOnGoal(team, scorer)
 }
 

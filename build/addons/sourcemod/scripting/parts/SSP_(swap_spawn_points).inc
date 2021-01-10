@@ -11,6 +11,7 @@ static SwapsCount
 
 void SpawnPointsSwapping(MapStartedEvent mapStartedEvent)
 {
+	GoalScored.Subscribe(OnGoalScored)
 	mapStartedEvent.Subscribe(OnMapStarted)
 }
 
@@ -43,7 +44,7 @@ stock Entity_GetAbsAngles(entity, Float:vec[3])
 }
 
 
-public SSP_OnGoal(team, scorer)
+static void OnGoalScored(team, scorer)
 {
 	SpawnPlaces()
 }

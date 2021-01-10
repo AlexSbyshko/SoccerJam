@@ -7,6 +7,7 @@ static AssistCountStatsId
 void GoalAssistProcessing(ClientTeamChangingEvent clientTeamChangingEvent)
 {
 	BallReceived.Subscribe(OnBallReceived)
+	GoalScored.Subscribe(OnGoalScored)
 	clientTeamChangingEvent.Subscribe(OnClientTeamChanging)
 
 	AssistantsArray = CreateArray()
@@ -35,7 +36,7 @@ static void OnClientTeamChanging(int client)
 	RemoveClientFromArray(client)
 }
 
-public GA_OnGoal(team, scorer)
+static void OnGoalScored(int team, int scorer)
 {
 	for (new client = 1; client <= MaxClients; client++)
 	{

@@ -8,6 +8,7 @@ void BallAutoReturning(
 	BallReceivedEvent ballReceivedEvent)
 {
 	BallSpawned.Subscribe(OnBallSpawned)
+	GoalScored.Subscribe(OnGoalScored)
 	mapStartedEvent.Subscribe(OnMapStarted)
 	clientDisconnectingEvent.Subscribe(OnClientDisconnecting)
 	roundStartedEvent.Subscribe(OnRoundStarted)
@@ -49,7 +50,7 @@ static void OnRoundStarted()
 	TmrBallRespawn = INVALID_HANDLE
 }
 
-public BAR_OnGoal(team, scorer)
+static void OnGoalScored(team, scorer)
 {
 	StopBallRespawnTimer()
 }

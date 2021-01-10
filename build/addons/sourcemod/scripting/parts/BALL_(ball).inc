@@ -27,6 +27,7 @@ void BallSpawning(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent, 
 {
 	_ballLostEvent = ballLostEvent
 
+	GoalScored.Subscribe(OnGoalScored)
 	mapStartedEvent.Subscribe(OnMapStarted)
 	roundStartedEvent.Subscribe(OnRoundStarted)
 
@@ -65,7 +66,7 @@ static void OnRoundStarted()
 	}
 }
 
-public BALL_OnGoal(team, scorer)
+static void OnGoalScored(int team, int scorer)
 {
 	g_BallSpawnTeam = GetConVarBool(BallSpawnCenterConVar) ? CS_TEAM_NONE :
 		(team == CS_TEAM_T) ? CS_TEAM_CT : CS_TEAM_T

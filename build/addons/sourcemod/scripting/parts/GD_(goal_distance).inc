@@ -6,6 +6,8 @@ static LongestGoalStatsId
 
 void GoalDistanceCounting()
 {
+	GoalScored.Subscribe(OnGoalScored)
+
 	LongestGoalStatsId = CreateMatchStats("Longest goal (m)")
 }
 
@@ -14,7 +16,7 @@ public GD_OnBallKicked(client)
 	GetClientAbsOrigin(client, LastShotOrigin)
 }
 
-public GD_OnGoal(team, scorer)
+static void OnGoalScored(team, scorer)
 {
 	decl Float:ballOrigin[3]
 	GetBallOrigin(ballOrigin)

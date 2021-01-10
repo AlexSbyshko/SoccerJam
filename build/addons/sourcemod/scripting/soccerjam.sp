@@ -36,6 +36,7 @@ SjEngine CurrentEngine
 #include "Events/ClientTeamChanging"
 #include "Events/ClientTeamChanged"
 #include "Events/EntityCreated"
+#include "Events/GoalScored"
 #include "Events/MapStarted"
 #include "Events/MatchRestarted"
 #include "Events/PlayerCmdRun"
@@ -48,6 +49,7 @@ SjEngine CurrentEngine
 BallCreatedEvent BallCreated
 BallReceivedEvent BallReceived
 BallSpawnedEvent BallSpawned
+GoalScoredEvent GoalScored
 SjConfigLoadedEvent SjConfigLoaded
 
 #include "Modules/RemoveBallHolderWeapon"
@@ -189,6 +191,7 @@ public void OnPluginStart()
 	BallCreated = new BallCreatedEvent()
 	BallReceived = new BallReceivedEvent()
 	BallSpawned = new BallSpawnedEvent()
+	GoalScored = new GoalScoredEvent()
 	SjConfigLoaded = new SjConfigLoadedEvent()
 
 	_clientActivatedEvent = new ClientActivatedEvent()
@@ -285,6 +288,7 @@ public void OnPluginStart()
 	FragsForKillsDisabling(_clientDyingEvent)
 
 	RoundEndMessageDisabling(_roundEndingEvent)
+	MvpForGoalScoring()
 
 	InitParts()
 	

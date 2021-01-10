@@ -3,11 +3,13 @@ static BallExplosionSoundId
 
 void BallExplosion()
 {
+	GoalScored.Subscribe(OnGoalScored)
+
 	ParticleSystemSpecificId = CreateSpecificString("explosion_particle_system")
 	BallExplosionSoundId = CreateSound("ball_explosion")
 }
 
-public BE_OnGoal()
+static void OnGoalScored(int team, int scorer)
 {
 	new BallExplosionEntity = CreateEntityByName("info_particle_system")
 
