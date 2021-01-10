@@ -290,7 +290,7 @@ public void OnPluginStart()
 	HookEvent("player_spawn", OnPlayerSpawn)
 	HookEvent("player_team", OnPrePlayerTeam, EventHookMode_Pre)
 	HookEvent("player_team", OnPlayerTeam)
-	HookEvent("round_end", OnPreRoundEnd)
+	HookEvent("round_end", OnPreRoundEnd, EventHookMode_Pre)
 }
 
 public void OnMapStart()
