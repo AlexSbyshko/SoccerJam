@@ -219,8 +219,6 @@ public void OnPluginStart()
 
 	ManageConfigs(_mapStartedEvent)
 
-	BallAutoReturning(_mapStartedEvent, _clientDisconnectingEvent, _roundStartedEvent)
-
 	RoundTimeExtending()
 
 	ModelManaging()
@@ -258,6 +256,8 @@ public void OnPluginStart()
 
 	BallReceivedEvent ballReceivedEvent = new BallReceivedEvent()
 	BallReceiving(ballReceivedEvent, _clientDyingEvent)
+
+	BallAutoReturning(_mapStartedEvent, _clientDisconnectingEvent, _roundStartedEvent, ballReceivedEvent)
 
 	RemoveBallHolderWeapon(ballReceivedEvent, ballLostEvent)
 

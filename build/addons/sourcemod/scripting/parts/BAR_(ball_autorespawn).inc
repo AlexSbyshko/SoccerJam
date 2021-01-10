@@ -1,11 +1,16 @@
 static Handle:CvarBallAutoRespawn
 static Handle:TmrBallRespawn
 
-void BallAutoReturning(MapStartedEvent mapStartedEvent, ClientDisconnectingEvent clientDisconnectingEvent, RoundStartedEvent roundStartedEvent)
+void BallAutoReturning(
+	MapStartedEvent mapStartedEvent,
+	ClientDisconnectingEvent clientDisconnectingEvent,
+	RoundStartedEvent roundStartedEvent,
+	BallReceivedEvent ballReceivedEvent)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
 	clientDisconnectingEvent.Subscribe(OnClientDisconnecting)
 	roundStartedEvent.Subscribe(OnRoundStarted)
+	ballReceivedEvent.Subscribe(OnOnBallReceived)
 
 	CvarBallAutoRespawn = CreateConVar("sj_ball_respawn_time", "30", "Time after which the ball respawn (if no ball holder)", 0, true, 1.0)
 }
@@ -28,7 +33,7 @@ public BAR_OnBallHolderDeath(client)
 	StartBallRespawnTimer()
 }
 
-public BAR_OnBallReceived(client, oldBallOwner)
+static void OnOnBallReceived(client, oldBallOwner)
 {
 	StopBallRespawnTimer()
 }
