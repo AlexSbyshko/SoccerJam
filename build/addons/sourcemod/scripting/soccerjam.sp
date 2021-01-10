@@ -254,7 +254,7 @@ public void OnPluginStart()
 	DrawDisabling(_roundTerminatedEvent)
 
 	BallLostEvent ballLostEvent = new BallLostEvent()
-	BallSpawning(ballLostEvent, _mapStartedEvent)
+	BallSpawning(ballLostEvent, _mapStartedEvent, _roundStartedEvent)
 
 	BallReceivedEvent ballReceivedEvent = new BallReceivedEvent()
 	BallReceiving(ballReceivedEvent, _clientDyingEvent)

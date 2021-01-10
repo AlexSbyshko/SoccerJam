@@ -25,11 +25,12 @@ enum SolidFlags_t
 
 static BallLostEvent _ballLostEvent
 
-void BallSpawning(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent)
+void BallSpawning(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent, RoundStartedEvent roundStartedEvent)
 {
 	_ballLostEvent = ballLostEvent
 
 	mapStartedEvent.Subscribe(OnMapStarted)
+	roundStartedEvent.Subscribe(OnRoundStarted)
 
 	OnBallSpawnedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
 	RegisterCustomForward(OnBallSpawnedForward, "OnBallSpawned")
@@ -51,7 +52,7 @@ static void OnMapStarted()
 	ClearBallSpawnPoint()
 }
 
-public BALL_Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnRoundStarted()
 {
 	CreateBall()
 	if (g_BallSpawnTeam == CS_TEAM_NONE)
