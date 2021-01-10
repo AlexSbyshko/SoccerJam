@@ -43,10 +43,12 @@ SjEngine CurrentEngine
 #include "Events/RoundPreStarted"
 #include "Events/RoundStarted"
 #include "Events/RoundTerminated"
+#include "Events/SjConfigLoaded"
 
 BallCreatedEvent BallCreated
 BallReceivedEvent BallReceived
 BallSpawnedEvent BallSpawned
+SjConfigLoadedEvent SjConfigLoaded
 
 #include "Modules/RemoveBallHolderWeapon"
 
@@ -187,6 +189,7 @@ public void OnPluginStart()
 	BallCreated = new BallCreatedEvent()
 	BallReceived = new BallReceivedEvent()
 	BallSpawned = new BallSpawnedEvent()
+	SjConfigLoaded = new SjConfigLoadedEvent()
 
 	_clientActivatedEvent = new ClientActivatedEvent()
 	_clientDiedEvent = new ClientDiedEvent()

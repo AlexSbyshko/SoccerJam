@@ -4,12 +4,14 @@ static String:BallBounceSoundPath[PLATFORM_MAX_PATH]
 
 void BallBounceSoundPlaying()
 {
+	SjConfigLoaded.Subscribe(OnSjConfigLoaded)
+
 	AddNormalSoundHook(BBS_Event_SoundPlayed)
 	HeBounceSoundSpecificId = CreateSpecificString("he_bounce_sound")
 	BallBounceSoundId = CreateSound("ball_bounce")
 }
 
-public BBS_OnSjConfigLoaded()
+static void OnSjConfigLoaded()
 {
 	GetSoundPathById(BallBounceSoundId, BallBounceSoundPath)
 }

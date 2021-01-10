@@ -10,6 +10,8 @@ static String:SoundPaths[MAX_SOUND_GROUPS][MAX_SOUNDS][PLATFORM_MAX_PATH]
 
 void SoundManaging()
 {
+	SjConfigLoaded.Subscribe(OnSjConfigLoaded)
+
 	CreateConfig("sounds.cfg", "sounds", SM_ReadConfig)
 }
 
@@ -43,7 +45,7 @@ public SM_ReadConfig(Handle:kv)
 	}
 }
 
-public SM_OnSjConfigLoaded()
+static void OnSjConfigLoaded()
 {
 	new soundId
 	for (new soundGroupId = 0; soundGroupId < SoundGroupsCount; soundGroupId++)

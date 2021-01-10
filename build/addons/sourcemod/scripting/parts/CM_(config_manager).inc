@@ -37,6 +37,7 @@ static void OnMapStarted()
 	}
 	
 	FireOnSjConfigLoaded()
+	SjConfigLoaded.Raise()
 }
 
 LoadConfig(configId)

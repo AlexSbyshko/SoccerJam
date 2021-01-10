@@ -6,10 +6,12 @@ static ModelCaches[MAX_MODELS]
 
 void ModelManaging()
 {
+	SjConfigLoaded.Subscribe(OnSjConfigLoaded)
+
 	CreateConfig("models.cfg", "models", MM_ReadConfig)
 }
 
-public MM_OnSjConfigLoaded()
+static void OnSjConfigLoaded()
 {
 	for (new modelId = 0; modelId < ModelsCount; modelId++)
 	{
