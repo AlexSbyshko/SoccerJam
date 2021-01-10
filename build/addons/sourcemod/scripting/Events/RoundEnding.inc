@@ -1,10 +1,10 @@
-typedef RoundEndingEventHandler = function void ()
+typedef RoundEndingEventHandler = function Action ()
 
 methodmap RoundEndingEvent < PrivateForward
 {
 	public RoundEndingEvent()
 	{
-		return view_as<RoundEndingEvent>(new PrivateForward(ET_Ignore))
+		return view_as<RoundEndingEvent>(new PrivateForward(ET_Event))
 	}
 
 	public void Subscribe(RoundEndingEventHandler handler)
@@ -12,9 +12,11 @@ methodmap RoundEndingEvent < PrivateForward
 		this.AddFunction(INVALID_HANDLE, handler)
 	}
 
-	public void Raise()
+	public Action Raise()
 	{
 		Call_StartForward(this)
-		Call_Finish()
+		Action result
+		Call_Finish(result)
+		return result
 	}
 }

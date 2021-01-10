@@ -276,6 +276,8 @@ public void OnPluginStart()
 
 	FragsForKillsDisabling(_clientDyingEvent)
 
+	RoundEndMessageDisabling(_roundEndingEvent)
+
 	InitParts()
 	
 	LoadTranslations("soccerjam.phrases")
@@ -390,7 +392,7 @@ static void OnPrePlayerDisconnected(Handle event, const char[] name, bool dontBr
 	_clientDisconnectingEvent.Raise(client)
 }
 
-static void OnPreRoundEnd(Handle event, const char[] name, bool dontBroadcast)
+static Action OnPreRoundEnd(Handle event, const char[] name, bool dontBroadcast)
 {
-	_roundEndingEvent.Raise()
+	return _roundEndingEvent.Raise()
 }

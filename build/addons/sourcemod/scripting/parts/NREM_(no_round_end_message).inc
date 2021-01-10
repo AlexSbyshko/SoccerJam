@@ -1,4 +1,9 @@
-public Action:NREM_Event_PreRoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
+void RoundEndMessageDisabling(RoundEndingEvent roungEndingEvent)
+{
+	roungEndingEvent.Subscribe(OnRoundEnding)
+}
+
+static Action OnRoundEnding()
 {
 	return Plugin_Handled
 }
