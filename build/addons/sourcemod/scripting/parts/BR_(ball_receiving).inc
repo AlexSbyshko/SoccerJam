@@ -7,6 +7,7 @@ static BallStealsStatsId
 void BallReceiving(ClientDyingEvent clientDyingEvent)
 {
 	BallCreated.Subscribe(OnBallCreated)
+	BallShot.Subscribe(OnBallShot)
 	clientDyingEvent.Subscribe(OnClientDying)
 	
 	BallKickSoundId = CreateSound("ball_kill")
@@ -41,7 +42,7 @@ static void OnClientDying(int client, int killer)
 	}
 }
 
-public BR_OnBallKicked(client)
+static void OnBallShot(int client)
 {
 	RemoveBallHolder()
 }

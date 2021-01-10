@@ -7,6 +7,7 @@ void BallAutoReturning(
 	RoundStartedEvent roundStartedEvent,
 	BallReceivedEvent ballReceivedEvent)
 {
+	BallShot.Subscribe(OnBallShot)
 	BallSpawned.Subscribe(OnBallSpawned)
 	GoalScored.Subscribe(OnGoalScored)
 	mapStartedEvent.Subscribe(OnMapStarted)
@@ -17,7 +18,7 @@ void BallAutoReturning(
 	CvarBallAutoRespawn = CreateConVar("sj_ball_respawn_time", "30", "Time after which the ball respawn (if no ball holder)", 0, true, 1.0)
 }
 
-public BAR_OnBallKicked(client)
+static void OnBallShot(int client)
 {
 	StartBallRespawnTimer()
 }

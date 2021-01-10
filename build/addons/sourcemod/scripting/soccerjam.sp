@@ -27,6 +27,7 @@ SjEngine CurrentEngine
 #include "Events/BallCreated"
 #include "Events/BallLost"
 #include "Events/BallReceived"
+#include "Events/BallShot"
 #include "Events/BallSpawned"
 #include "Events/ClientActivated"
 #include "Events/ClientDied"
@@ -48,6 +49,7 @@ SjEngine CurrentEngine
 
 BallCreatedEvent BallCreated
 BallReceivedEvent BallReceived
+BallShotEvent BallShot
 BallSpawnedEvent BallSpawned
 GoalScoredEvent GoalScored
 SjConfigLoadedEvent SjConfigLoaded
@@ -190,6 +192,7 @@ public void OnPluginStart()
 
 	BallCreated = new BallCreatedEvent()
 	BallReceived = new BallReceivedEvent()
+	BallShot = new BallShotEvent()
 	BallSpawned = new BallSpawnedEvent()
 	GoalScored = new GoalScoredEvent()
 	SjConfigLoaded = new SjConfigLoadedEvent()

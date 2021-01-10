@@ -1,4 +1,3 @@
-static Handle:OnBallKickedForward
 static PrivateForward OnShotChargingStartedForward
 static PrivateForward OnShotChargindEndedForward
 
@@ -11,9 +10,6 @@ static float StartChargingTimes[MAXPLAYERS+1]
 void BallShooting(PlayerCmdRunEvent playerCmdRunEvent)
 {
 	playerCmdRunEvent.Subscribe(OnPlayerCmdRun)
-
-	OnBallKickedForward = CreateForward(ET_Ignore, Param_Cell)	
-	RegisterCustomForward(OnBallKickedForward, "OnBallKicked")
 
 	OnShotChargingStartedForward = CreateForward(ET_Ignore, Param_Cell)
 	RegisterCustomForward(OnShotChargingStartedForward, "OnShotChargingStarted")
@@ -102,7 +98,7 @@ static void ShootBall(client, float kickStrength)
 		g_BallDistOrigin[0][i] = frontOrigin[i]
 	}	
 	PlaySoundByIdFromEntity(KickSoundId, client)
-	FireOnBallKicked(client)
+	BallShot.Raise(client)
 }
 
 bool:IsInterferenceForKick(client, Float:kickDistance)
@@ -176,13 +172,6 @@ GetClientFrontBallOrigin(client, Float:distance, height, Float:destOrigin[3])
 	destOrigin[0] = clientOrigin[0] + cos * distance
 	destOrigin[1] = clientOrigin[1] + sin * distance
 	destOrigin[2] = clientOrigin[2] + height
-}
-
-static FireOnBallKicked(client)
-{
-	Call_StartForward(OnBallKickedForward)
-	Call_PushCell(client)
-	Call_Finish()
 }
 
 static void FireOnShotChargingStarted(int client)
