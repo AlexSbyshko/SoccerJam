@@ -5,6 +5,7 @@ static GoalSirenSoundId
 
 void GoalScoring(RoundStartedEvent roundStartedEvent)
 {
+	BallCreated.Subscribe(OnBallCreated)
 	roundStartedEvent.Subscribe(OnRoundStarted)
 
 	OnGoalForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
@@ -19,7 +20,7 @@ static void OnRoundStarted()
 	g_Goal = false
 }
 
-public GOAL_OnBallCreated(ballEntity)
+static void OnBallCreated(int ballEntity)
 {
 	SDKHook(g_Ball, SDKHook_Touch, GOAL_OnBallTouch)
 }

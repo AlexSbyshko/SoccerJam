@@ -6,6 +6,7 @@ static BallStealsStatsId
 
 void BallReceiving(ClientDyingEvent clientDyingEvent)
 {
+	BallCreated.Subscribe(OnBallCreated)
 	clientDyingEvent.Subscribe(OnClientDying)
 	
 	BallKickSoundId = CreateSound("ball_kill")
@@ -17,7 +18,7 @@ void BallReceiving(ClientDyingEvent clientDyingEvent)
 	AddCommandListener(CMD_JoinTeam, "jointeam")
 }
 
-public BR_OnBallCreated(ballEntity)
+static void OnBallCreated(ballEntity)
 {
 	SDKHook(ballEntity, SDKHook_Touch, BR_OnBallTouch)
 }

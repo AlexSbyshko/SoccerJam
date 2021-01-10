@@ -95,6 +95,7 @@ CreateBall()
 	SetEntProp(g_Ball, Prop_Send, "m_usSolidFlags", FSOLID_NOT_SOLID | FSOLID_TRIGGER)
 
 	FireOnBallCreated(g_Ball)
+	BallCreated.Raise(g_Ball)
 }
 
 DestroyBall()

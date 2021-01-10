@@ -24,6 +24,7 @@ const INVALID_UPGRADE = -1
 
 SjEngine CurrentEngine
 
+#include "Events/BallCreated"
 #include "Events/BallLost"
 #include "Events/BallReceived"
 #include "Events/BallSpawned"
@@ -43,6 +44,7 @@ SjEngine CurrentEngine
 #include "Events/RoundStarted"
 #include "Events/RoundTerminated"
 
+BallCreatedEvent BallCreated
 BallReceivedEvent BallReceived
 BallSpawnedEvent BallSpawned
 
@@ -182,6 +184,7 @@ public void OnPluginStart()
 	RegisterPart("TEST") // Sound Manager
 	RegisterPart("TM") // Team Models
 
+	BallCreated = new BallCreatedEvent()
 	BallReceived = new BallReceivedEvent()
 	BallSpawned = new BallSpawnedEvent()
 

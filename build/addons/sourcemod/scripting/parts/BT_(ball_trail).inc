@@ -3,6 +3,7 @@ new g_BallSpriteTrail
 
 void BallTrailShowing()
 {
+	BallCreated.Subscribe(OnBallCreated)
 	BallReceived.Subscribe(OnBallReceived)
 	BallSpawned.Subscribe(OnBallSpawned)
 
@@ -29,7 +30,7 @@ InitGame()
 	I_Call_void_void(initGameFunc)
 }
 
-public BT_OnBallCreated(ballEntity)
+static void OnBallCreated(int ballEntity)
 {
 	I_Call_void_void(CreateBallTrailProc)
 }
