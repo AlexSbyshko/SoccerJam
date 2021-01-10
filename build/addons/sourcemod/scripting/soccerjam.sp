@@ -38,6 +38,7 @@ SjEngine CurrentEngine
 #include "Events/MatchRestarted"
 #include "Events/PlayerCmdRun"
 #include "Events/RoundEnding"
+#include "Events/RoundPreStarted"
 #include "Events/RoundTerminated"
 
 #include "Modules/RemoveBallHolderWeapon"
@@ -109,6 +110,7 @@ static MapStartedEvent _mapStartedEvent
 static MatchRestartedEvent _matchRestartedEvent
 static PlayerCmdRunEvent _playerCmdRunEvent
 static RoundEndingEvent _roundEndingEvent
+static RoundPreStartedEvent _roundPreStartedEvent
 static RoundTerminatedEvent _roundTerminatedEvent
 
 public void OnPluginStart()
@@ -183,6 +185,7 @@ public void OnPluginStart()
 	_mapStartedEvent = new MapStartedEvent()
 	_entityCreatedEvent = new EntityCreatedEvent()
 	_roundEndingEvent = new RoundEndingEvent()
+	_roundPreStartedEvent = new RoundPreStartedEvent()
 	_roundTerminatedEvent = new RoundTerminatedEvent()
 	_playerCmdRunEvent = new PlayerCmdRunEvent()
 	_matchRestartedEvent = new MatchRestartedEvent()
@@ -221,7 +224,7 @@ public void OnPluginStart()
 
 	BombAndHostagesRemoving(_mapStartedEvent)
 
-	GoalSpawning(_mapStartedEvent)
+	GoalSpawning(_mapStartedEvent, _roundPreStartedEvent)
 
 	SpawnPointsSwapping(_mapStartedEvent)
 
@@ -280,6 +283,7 @@ public void OnPluginStart()
 	HookEvent("player_team", OnPrePlayerTeam, EventHookMode_Pre)
 	HookEvent("player_team", OnPlayerTeam)
 	HookEvent("round_end", OnPreRoundEnd, EventHookMode_Pre)
+	HookEvent("round_prestart", OnRoundPreStarted)
 }
 
 public void OnMapStart()
@@ -384,4 +388,9 @@ static void OnPrePlayerDisconnected(Handle event, const char[] name, bool dontBr
 static Action OnPreRoundEnd(Handle event, const char[] name, bool dontBroadcast)
 {
 	return _roundEndingEvent.Raise()
+}
+
+static void OnRoundPreStarted(Handle event, const char[] name, bool dontBroadcast)
+{
+	_roundPreStartedEvent.Raise()
 }
