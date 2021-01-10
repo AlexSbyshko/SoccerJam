@@ -1,6 +1,7 @@
-void BombAndHostagesRemoving(MapStartedEvent mapStartedEvent)
+void BombAndHostagesRemoving(MapStartedEvent mapStartedEvent, RoundStartedEvent roundStartedEvent)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
+	roundStartedEvent.Subscribe(OnRoundStarted)
 }
 
 static void OnMapStarted()
@@ -8,7 +9,7 @@ static void OnMapStarted()
 	Entity_KillAllByClassName("func_bomb_target")
 }
 
-public RBAH_Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnRoundStarted()
 {	
 	Entity_KillAllByClassName("hostage_entity")
 }

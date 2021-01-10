@@ -225,7 +225,7 @@ public void OnPluginStart()
 
 	ModelManaging()
 
-	BombAndHostagesRemoving(_mapStartedEvent)
+	BombAndHostagesRemoving(_mapStartedEvent, _roundStartedEvent)
 
 	GoalSpawning(_mapStartedEvent, _roundPreStartedEvent)
 
