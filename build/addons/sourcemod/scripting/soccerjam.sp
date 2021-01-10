@@ -235,7 +235,7 @@ public void OnPluginStart()
 
 	BallTeleportingOnHolderDeath(_clientDiedEvent)
 
-	KaMapsSupport()
+	KaMapsSupport(_roundStartedEvent)
 
 	PlayerAttackChecking(_clientActivatedEvent)
 

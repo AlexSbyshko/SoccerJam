@@ -1,8 +1,9 @@
-void KaMapsSupport()
+void KaMapsSupport(RoundStartedEvent roundStartedEvent)
 {
+	roundStartedEvent.Subscribe(OnRoundStarted)
 }
 
-public Action:KAS_Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+static void OnRoundStarted()
 {
 	FindPoints();
 }
