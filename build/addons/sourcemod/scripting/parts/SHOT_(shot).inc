@@ -1,4 +1,3 @@
-static PrivateForward OnShotChargingStartedForward
 static PrivateForward OnShotChargindEndedForward
 
 static KickSoundId
@@ -10,9 +9,6 @@ static float StartChargingTimes[MAXPLAYERS+1]
 void BallShooting(PlayerCmdRunEvent playerCmdRunEvent)
 {
 	playerCmdRunEvent.Subscribe(OnPlayerCmdRun)
-
-	OnShotChargingStartedForward = CreateForward(ET_Ignore, Param_Cell)
-	RegisterCustomForward(OnShotChargingStartedForward, "OnShotChargingStarted")
 
 	OnShotChargindEndedForward = CreateForward(ET_Ignore, Param_Cell)
 	RegisterCustomForward(OnShotChargindEndedForward, "OnShotChargindEnded")
@@ -32,7 +28,6 @@ static Action OnPlayerCmdRun(int client, int& buttons)
 			{
 				ChargingClients[client] = true
 				StartChargingTimes[client] = GetGameTime()
-				FireOnShotChargingStarted(client)
 			}
 			SetBallInFront(client)
 		}
@@ -172,13 +167,6 @@ GetClientFrontBallOrigin(client, Float:distance, height, Float:destOrigin[3])
 	destOrigin[0] = clientOrigin[0] + cos * distance
 	destOrigin[1] = clientOrigin[1] + sin * distance
 	destOrigin[2] = clientOrigin[2] + height
-}
-
-static void FireOnShotChargingStarted(int client)
-{
-	Call_StartForward(OnShotChargingStartedForward)
-	Call_PushCell(client)
-	Call_Finish()
 }
 
 static void FireOnShotChargindEnded(int client)
