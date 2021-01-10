@@ -7,6 +7,7 @@ void BallAutoReturning(
 	RoundStartedEvent roundStartedEvent,
 	BallReceivedEvent ballReceivedEvent)
 {
+	BallHolderDied.Subscribe(OnBallHolderDied)
 	BallShot.Subscribe(OnBallShot)
 	BallSpawned.Subscribe(OnBallSpawned)
 	GoalScored.Subscribe(OnGoalScored)
@@ -31,7 +32,7 @@ static void OnClientDisconnecting(int client)
 	}
 }
 
-public BAR_OnBallHolderDeath(client)
+static void OnBallHolderDied(int client)
 {
 	StartBallRespawnTimer()
 }
