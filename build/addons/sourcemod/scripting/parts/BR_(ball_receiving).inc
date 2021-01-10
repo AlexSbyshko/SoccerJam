@@ -1,5 +1,3 @@
-static Handle:OnBallReceivedForward
-
 static BallKickSoundId
 static BallPickUpSoundId
 static BallInterceptionSoundId
@@ -9,9 +7,6 @@ static BallStealsStatsId
 void BallReceiving(ClientDyingEvent clientDyingEvent)
 {
 	clientDyingEvent.Subscribe(OnClientDying)
-
-	OnBallReceivedForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
-	RegisterCustomForward(OnBallReceivedForward, "OnBallReceived")
 	
 	BallKickSoundId = CreateSound("ball_kill")
 	BallPickUpSoundId = CreateSound("ball_pickup")
@@ -176,7 +171,6 @@ SetBallHolder(client)
 		GetClientName(client, g_BallOwnerName, sizeof(g_BallOwnerName))
 		SetBallNotFree()
 		BallReceived.Raise(client, oldBallOwner)
-		FireOnBallReceived(client, oldBallOwner)
 	}
 }
 
@@ -199,14 +193,6 @@ OnClientReceivedBall(client)
 bool:IsBallHolder(client)
 {
 	return (g_BallOwner == client) && !g_IsBallFree
-}
-
-static FireOnBallReceived(ballHolder, oldBallOwner)
-{
-	Call_StartForward(OnBallReceivedForward)
-	Call_PushCell(ballHolder)
-	Call_PushCell(oldBallOwner)
-	Call_Finish()
 }
 
 public Action:CMD_JoinTeam(client, const String:command[], argc) 
