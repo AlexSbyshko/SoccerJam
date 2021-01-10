@@ -1,5 +1,4 @@
 
-static Handle:OnGoalForward
 static GoalSoundId
 static GoalSirenSoundId
 
@@ -7,9 +6,6 @@ void GoalScoring(RoundStartedEvent roundStartedEvent)
 {
 	BallCreated.Subscribe(OnBallCreated)
 	roundStartedEvent.Subscribe(OnRoundStarted)
-
-	OnGoalForward = CreateForward(ET_Ignore, Param_Cell, Param_Cell)
-	RegisterCustomForward(OnGoalForward, "OnGoal")
 
 	GoalSoundId = CreateSound("goal")
 	GoalSirenSoundId = CreateSound("goal_siren")
@@ -74,15 +70,6 @@ ScoreGoal(team, scorer)
 	}
 	
 	GoalScored.Raise(team, scorer)
-	FireOnGoal(team, scorer)
-}
-
-FireOnGoal(team, scorer)
-{
-	Call_StartForward(OnGoalForward)
-	Call_PushCell(team)
-	Call_PushCell(scorer)
-	Call_Finish()
 }
 
 ShowGoalInfoForSpecs()
