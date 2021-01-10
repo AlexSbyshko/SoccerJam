@@ -1,5 +1,4 @@
 static Handle:BallSpawnCenterConVar
-static Handle:OnBallCreatedForward
 static bool:IsSpawnExists
 static BallModelId
 static FastBallPickUpSoundId
@@ -30,9 +29,6 @@ void BallSpawning(BallLostEvent ballLostEvent, MapStartedEvent mapStartedEvent, 
 
 	mapStartedEvent.Subscribe(OnMapStarted)
 	roundStartedEvent.Subscribe(OnRoundStarted)
-
-	OnBallCreatedForward = CreateForward(ET_Ignore, Param_Cell)
-	RegisterCustomForward(OnBallCreatedForward, "OnBallCreated")
 
 	BallModelId = CreateModel("ball")
 	FastBallPickUpSoundId = CreateSound("fastball_pickup")
@@ -94,7 +90,6 @@ CreateBall()
 
 	SetEntProp(g_Ball, Prop_Send, "m_usSolidFlags", FSOLID_NOT_SOLID | FSOLID_TRIGGER)
 
-	FireOnBallCreated(g_Ball)
 	BallCreated.Raise(g_Ball)
 }
 
@@ -263,11 +258,4 @@ public Action:CMD_RespawnBall(client, argc)
 {
 	RespawnBallWithNotify()
 	return Plugin_Handled
-}
-
-FireOnBallCreated(ballEntity)
-{	
-	Call_StartForward(OnBallCreatedForward)
-	Call_PushCell(ballEntity)
-	Call_Finish()
 }
