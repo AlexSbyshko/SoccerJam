@@ -1,7 +1,5 @@
 const MAX_ASSISTANTS = 2
 
-static Handle:OnClientAssistedForward
-
 static Handle:AssistantsArray
 
 static AssistCountStatsId
@@ -14,9 +12,6 @@ void GoalAssistProcessing(ClientTeamChangingEvent clientTeamChangingEvent)
 	AssistantsArray = CreateArray()
 
 	AssistCountStatsId = CreateMatchStats("Most assists")
-
-	OnClientAssistedForward  = CreateForward(ET_Ignore, Param_Cell)
-	RegisterCustomForward(OnClientAssistedForward, "OnClientAssisted")
 }
 
 static void OnBallReceived(ballHolder, oldBallOwner)
@@ -82,7 +77,6 @@ ShowAssistants(client)
 
 			AddMatchStatsValue(AssistCountStatsId, currentClient, 1)
 			count++
-			FireOnClientAssisted(currentClient)
 			if (count >= MAX_ASSISTANTS)
 			{
 				break
@@ -96,11 +90,4 @@ ShowAssistants(client)
 
 public ShowAssistantsHandler(Handle:menu, MenuAction:action, param1, param2)
 {
-}
-
-static FireOnClientAssisted(client)
-{
-	Call_StartForward(OnClientAssistedForward)
-	Call_PushCell(client)
-	Call_Finish()
 }
