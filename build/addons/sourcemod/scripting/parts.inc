@@ -27,8 +27,6 @@ RegisterCustomForward(Handle:fwd, const String:postfix[])
 RegisterPart(const String:partName[PART_NAME_LENGTH])
 {
 	PushArrayString(PartsNamesArray, partName)
-
-	HookPartEvent("round_start", partName, "RoundStart")	
 }
 
 InitParts()
@@ -62,24 +60,5 @@ HookPartForward(Handle:fwd, const String:partName[PART_NAME_LENGTH], const Strin
 	if (partFunction != INVALID_FUNCTION)
 	{
 		AddToForward(fwd, INVALID_HANDLE, partFunction);
-	}
-}
-
-HookPartEvent(const String:hookName[], const String:partName[PART_NAME_LENGTH], const String:postfix[])
-{
-	decl String:partFunctionName[MAX_NAME_LENGTH]
-	Format(partFunctionName, MAX_NAME_LENGTH, "%s_Event_%s", partName, postfix);
-	EventHook partFunction = view_as<EventHook>(GetFunctionByName(INVALID_HANDLE, partFunctionName))
-	if (partFunction != INVALID_FUNCTION)
-	{
-		HookEventEx(hookName, partFunction)
-	}
-
-	decl String:partPreFunctionName[MAX_NAME_LENGTH]
-	Format(partPreFunctionName, MAX_NAME_LENGTH, "%s_Event_Pre%s", partName, postfix);
-	EventHook preFunction = view_as<EventHook>(GetFunctionByName(INVALID_HANDLE, partPreFunctionName))
-	if (preFunction != INVALID_FUNCTION)
-	{
-		HookEventEx(hookName, preFunction, EventHookMode_Pre)
 	}
 }
