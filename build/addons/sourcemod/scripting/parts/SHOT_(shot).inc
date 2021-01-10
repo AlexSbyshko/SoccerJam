@@ -28,6 +28,7 @@ static Action OnPlayerCmdRun(int client, int& buttons)
 			{
 				ChargingClients[client] = true
 				StartChargingTimes[client] = GetGameTime()
+				ShotChargingStarted.Raise(client)
 			}
 			SetBallInFront(client)
 		}
