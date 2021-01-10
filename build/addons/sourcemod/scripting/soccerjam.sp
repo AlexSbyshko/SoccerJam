@@ -39,6 +39,7 @@ SjEngine CurrentEngine
 #include "Events/PlayerCmdRun"
 #include "Events/RoundEnding"
 #include "Events/RoundPreStarted"
+#include "Events/RoundStarted"
 #include "Events/RoundTerminated"
 
 #include "Modules/RemoveBallHolderWeapon"
@@ -111,6 +112,7 @@ static MatchRestartedEvent _matchRestartedEvent
 static PlayerCmdRunEvent _playerCmdRunEvent
 static RoundEndingEvent _roundEndingEvent
 static RoundPreStartedEvent _roundPreStartedEvent
+static RoundStartedEvent _roundStartedEvent
 static RoundTerminatedEvent _roundTerminatedEvent
 
 public void OnPluginStart()
@@ -186,6 +188,7 @@ public void OnPluginStart()
 	_entityCreatedEvent = new EntityCreatedEvent()
 	_roundEndingEvent = new RoundEndingEvent()
 	_roundPreStartedEvent = new RoundPreStartedEvent()
+	_roundStartedEvent = new RoundStartedEvent()
 	_roundTerminatedEvent = new RoundTerminatedEvent()
 	_playerCmdRunEvent = new PlayerCmdRunEvent()
 	_matchRestartedEvent = new MatchRestartedEvent()
@@ -284,6 +287,7 @@ public void OnPluginStart()
 	HookEvent("player_team", OnPlayerTeam)
 	HookEvent("round_end", OnPreRoundEnd, EventHookMode_Pre)
 	HookEvent("round_prestart", OnRoundPreStarted)
+	HookEvent("round_start", OnRoundStarted)
 }
 
 public void OnMapStart()
@@ -393,4 +397,9 @@ static Action OnPreRoundEnd(Handle event, const char[] name, bool dontBroadcast)
 static void OnRoundPreStarted(Handle event, const char[] name, bool dontBroadcast)
 {
 	_roundPreStartedEvent.Raise()
+}
+
+static void OnRoundStarted(Handle event, const char[] name, bool dontBroadcast)
+{
+	_roundStartedEvent.Raise()
 }
