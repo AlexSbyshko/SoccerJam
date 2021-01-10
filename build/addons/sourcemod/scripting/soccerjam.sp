@@ -277,7 +277,7 @@ public void OnPluginStart()
 	
 	LoadTranslations("soccerjam.phrases")
 
-	HookEvent("cs_match_end_restart", OnMatchEndRestart)
+	HookEventEx("cs_match_end_restart", OnMatchEndRestart)
 	HookEvent("player_activate", OnPlayerActivate)
 	HookEvent("player_death", OnPlayerDying, EventHookMode_Pre)
 	HookEvent("player_death", OnPlayerDeath)
@@ -286,7 +286,7 @@ public void OnPluginStart()
 	HookEvent("player_team", OnPrePlayerTeam, EventHookMode_Pre)
 	HookEvent("player_team", OnPlayerTeam)
 	HookEvent("round_end", OnPreRoundEnd, EventHookMode_Pre)
-	HookEvent("round_prestart", OnRoundPreStarted)
+	HookEventEx("round_prestart", OnRoundPreStarted)
 	HookEvent("round_start", OnRoundStarted)
 }
 
