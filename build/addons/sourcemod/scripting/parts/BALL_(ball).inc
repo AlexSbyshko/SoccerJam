@@ -179,6 +179,7 @@ RespawnBallNearTeam(team)
 	ClearBall()
 	SetEntityMoveType(g_Ball, MOVETYPE_FLYGRAVITY)
 	TeleportEntity(g_Ball, spawnOrigin, NULL_VECTOR, g_StartBallVelocity)
+	BallSpawned.Raise(g_Ball, team)
 	FireOnBallSpawned(g_Ball, team)
 }
 

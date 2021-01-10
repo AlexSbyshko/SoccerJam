@@ -26,6 +26,7 @@ SjEngine CurrentEngine
 
 #include "Events/BallLost"
 #include "Events/BallReceived"
+#include "Events/BallSpawned"
 #include "Events/ClientActivated"
 #include "Events/ClientDied"
 #include "Events/ClientDying"
@@ -43,6 +44,7 @@ SjEngine CurrentEngine
 #include "Events/RoundTerminated"
 
 BallReceivedEvent BallReceived
+BallSpawnedEvent BallSpawned
 
 #include "Modules/RemoveBallHolderWeapon"
 
@@ -181,6 +183,8 @@ public void OnPluginStart()
 	RegisterPart("TM") // Team Models
 
 	BallReceived = new BallReceivedEvent()
+	BallSpawned = new BallSpawnedEvent()
+
 	_clientActivatedEvent = new ClientActivatedEvent()
 	_clientDiedEvent = new ClientDiedEvent()
 	_clientDyingEvent = new ClientDyingEvent()
