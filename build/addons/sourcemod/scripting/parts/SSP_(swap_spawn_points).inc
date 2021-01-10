@@ -45,10 +45,7 @@ stock Entity_GetAbsAngles(entity, Float:vec[3])
 
 public SSP_OnGoal(team, scorer)
 {
-	if (IsMatchPublic())
-	{
-		SpawnPlaces()
-	}
+	SpawnPlaces()
 }
 
 public SSP_OnEndFirstHalf()

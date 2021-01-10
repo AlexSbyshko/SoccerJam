@@ -59,13 +59,11 @@ SjEngine CurrentEngine
 #include "parts/GD_(goal_distance)"
 #include "parts/GOAL_(goal)"
 #include "parts/GSM_(game_specific_manager)"
-#include "parts/HLF_(half)"
 #include "parts/HLP_(help)"
 #include "parts/HLTH_(health)"
 #include "parts/KAS_(ka_soccer_maps_support)"
 #include "parts/MM_(model_manager)"
 #include "parts/MSM_(match_stats_manager)"
-#include "parts/MTCH_(match)"
 #include "parts/MVP_(mvp_stars)"
 #include "parts/NDAG_(no_damage_after_goal)"
 #include "parts/NFFK_(no_frags_for_kill)"
@@ -81,7 +79,6 @@ SjEngine CurrentEngine
 #include "parts/SG_(speed_and_gravity)"
 #include "parts/SJB_(sj_builder)"
 #include "parts/SJE_(sj_entities)"
-#include "parts/SJT_(sj_timer)"
 #include "parts/SHOT_(shot).inc"
 #include "parts/SM_(sound_manager)"
 #include "parts/SSP_(swap_spawn_points)"
@@ -148,7 +145,6 @@ public void OnPluginStart()
 	RegisterPart("GD") // Goal Distance
 	RegisterPart("GOAL") // Goal
 	RegisterPart("GSM") // Game Specific Manager
-	RegisterPart("HLF") // Half
 	RegisterPart("HLP") // Help
 	RegisterPart("HLTH") // Health
 	RegisterPart("KAS") // KA_Soccer maps support
@@ -170,7 +166,6 @@ public void OnPluginStart()
 	RegisterPart("SG") // Speed and Gravity
 	RegisterPart("SJB") // SJ Builder
 	RegisterPart("SJE") // SJ Entities
-	RegisterPart("SJT") // SJ Timer	
 	RegisterPart("SHOT") // Shot
 	RegisterPart("SM") // Sound Manager
 	RegisterPart("SSP") // Swap Spawn Points
@@ -220,15 +215,9 @@ public void OnPluginStart()
 
 	BallAutoReturning(_mapStartedEvent, _clientDisconnectingEvent)
 
-	StartHalf(_mapStartedEvent)
-
-	MatchProcessing(_mapStartedEvent, _matchRestartedEvent, _clientSpawnedEvent, _clientTeamChangedEvent, _clientDisconnectingEvent)
-
 	RoundTimeExtending()
 
 	ModelManaging()
-
-	TimeCounting()
 
 	BombAndHostagesRemoving(_mapStartedEvent)
 

@@ -16,8 +16,7 @@ public Action Timer_PlayerRespawn(Handle timer, any userId)
 	{
 		if (!IsPlayerAlive(client) 
 			&& GetClientTeam(client) != CS_TEAM_NONE
-			&& GetClientTeam(client) != CS_TEAM_SPECTATOR
-			&& !Match_IsWaitingPlayers())
+			&& GetClientTeam(client) != CS_TEAM_SPECTATOR)
 		{
 			CS_RespawnPlayer(client)
 		}
