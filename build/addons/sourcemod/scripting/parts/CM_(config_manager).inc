@@ -1,5 +1,3 @@
-static Handle:OnSjConfigLoadedForward
-
 #define SJ_CONFIG_DIRECTORY "cfg/sourcemod/soccerjam"
 
 typedef ConfigProcessingFunc = function void (Handle kv);
@@ -13,9 +11,6 @@ static ConfigProcessingFunc:processingFunctions[MAX_CONFIGS]
 void ManageConfigs(MapStartedEvent mapStartedEvent)
 {
 	mapStartedEvent.Subscribe(OnMapStarted)
-
-	OnSjConfigLoadedForward = CreateForward(ET_Ignore)
-	RegisterCustomForward(OnSjConfigLoadedForward, "OnSjConfigLoaded")
 }
 
 CreateConfig(const String:fileName[], const String:rootSectionName[], ConfigProcessingFunc:processingFunc)
@@ -35,8 +30,7 @@ static void OnMapStarted()
 	{
 		LoadConfig(configId)
 	}
-	
-	FireOnSjConfigLoaded()
+
 	SjConfigLoaded.Raise()
 }
 
@@ -94,10 +88,4 @@ SjBuildPath(String:buffer[], maxlength, const String:additionPath[], any:...)
 	strcopy(configDirectory, sizeof(configDirectory), SJ_CONFIG_DIRECTORY);
 	Format(configDirectory, sizeof(configDirectory), "%s/%s", configDirectory, GameFolderName);
 	Format(buffer, maxlength, "%s/%s", configDirectory, path);
-}
-
-FireOnSjConfigLoaded()
-{
-	Call_StartForward(OnSjConfigLoadedForward)
-	Call_Finish()
 }
