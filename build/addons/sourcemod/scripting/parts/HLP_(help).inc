@@ -1,8 +1,8 @@
 static bool:IsNewPlayer[MAXPLAYERS + 1]
 
-void HelpShowing(ClientActivatedEvent clientActivatedEvent, ClientSpawnedEvent clientSpawnedEvent)
+void HelpShowing(ClientSpawnedEvent clientSpawnedEvent)
 {
-	clientActivatedEvent.Subscribe(OnClientActivated)
+	ClientActivated.Subscribe(OnClientActivated)
 	clientSpawnedEvent.Subscribe(OnClientSpawned)
 
 	AddCommandListener(HLP_Cmd_Say, "say")

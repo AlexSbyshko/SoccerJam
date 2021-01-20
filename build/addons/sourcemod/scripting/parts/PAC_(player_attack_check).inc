@@ -1,8 +1,8 @@
 static Handle:FightRadiusConVar = INVALID_HANDLE
 
-void PlayerAttackChecking(ClientActivatedEvent clientActivatedEvent)
+void PlayerAttackChecking()
 {
-	clientActivatedEvent.Subscribe(OnClientActivated)
+	ClientActivated.Subscribe(OnClientActivated)
 
 	FightRadiusConVar = CreateConVar("sj_fight_radius", "0", "The possibility of attack players.\n-1 = Everyone can attack all\n0 = Possible only attack ball holder, ball holder can attack all\n> 0 = Radius around the ball, where everyone can attack each", 0, true, -1.0)
 }

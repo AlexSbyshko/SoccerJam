@@ -1,6 +1,6 @@
-void DisablingFriendlyFire(ClientActivatedEvent clientActivatedEvent)
+void DisablingFriendlyFire()
 {
-	clientActivatedEvent.Subscribe(OnClientActivated)
+	ClientActivated.Subscribe(OnClientActivated)
 }
 
 static void OnClientActivated(int client)

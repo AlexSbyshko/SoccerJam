@@ -1,6 +1,6 @@
-void DisablingDamageAfterGoal(ClientActivatedEvent clientActivatedEvent)
+void DisablingDamageAfterGoal()
 {
-	clientActivatedEvent.Subscribe(OnClientActivated)
+	ClientActivated.Subscribe(OnClientActivated)
 }
 
 static void OnClientActivated(int client)

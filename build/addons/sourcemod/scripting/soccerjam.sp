@@ -55,6 +55,7 @@ BallHolderDiedEvent BallHolderDied
 BallReceivedEvent BallReceived
 BallShotEvent BallShot
 BallSpawnedEvent BallSpawned
+ClientActivatedEvent ClientActivated
 GoalScoredEvent GoalScored
 ShotChargingEndedEvent ShotChargingEnded
 ShotChargingStartedEvent ShotChargingStarted
@@ -117,7 +118,7 @@ public Plugin:myinfo =
 static PlayerGreeter playerGreeter
 
 
-static ClientActivatedEvent _clientActivatedEvent
+
 static ClientDiedEvent _clientDiedEvent
 static ClientDyingEvent _clientDyingEvent
 static ClientDisconnectingEvent _clientDisconnectingEvent
@@ -156,12 +157,12 @@ public void OnPluginStart()
 	BallReceived = new BallReceivedEvent()
 	BallShot = new BallShotEvent()
 	BallSpawned = new BallSpawnedEvent()
+	ClientActivated = new ClientActivatedEvent()
 	GoalScored = new GoalScoredEvent()
 	ShotChargingEnded = new ShotChargingEndedEvent()
 	ShotChargingStarted = new ShotChargingStartedEvent()
 	SjConfigLoaded = new SjConfigLoadedEvent()
 
-	_clientActivatedEvent = new ClientActivatedEvent()
 	_clientDiedEvent = new ClientDiedEvent()
 	_clientDyingEvent = new ClientDyingEvent()
 	_clientDisconnectingEvent = new ClientDisconnectingEvent()
@@ -195,7 +196,7 @@ public void OnPluginStart()
 
 	GoalScoring(_roundStartedEvent)
 
-	HelpShowing(_clientActivatedEvent, _clientSpawnedEvent)
+	HelpShowing(_clientSpawnedEvent)
 
 	SpawnHealthSetting(_clientSpawnedEvent)
 
@@ -219,9 +220,9 @@ public void OnPluginStart()
 
 	KaMapsSupport(_roundStartedEvent)
 
-	PlayerAttackChecking(_clientActivatedEvent)
+	PlayerAttackChecking()
 
-	SpeedAndGravityManaging(_clientActivatedEvent)
+	SpeedAndGravityManaging()
 
 	ShotChargeProgressBarShowing()
 
@@ -229,7 +230,7 @@ public void OnPluginStart()
 
 	Testing()
 
-	DisablingDamageAfterGoal(_clientActivatedEvent)
+	DisablingDamageAfterGoal()
 
 	SjEntitiesFinding(_entityCreatedEvent)
 
@@ -246,7 +247,7 @@ public void OnPluginStart()
 
 	MatchStatsManaging(_clientDisconnectingEvent)
 
-	DisablingFriendlyFire(_clientActivatedEvent)
+	DisablingFriendlyFire()
 
 	WeaponsOnSpawnRemoving(_clientSpawnedEvent)
 
@@ -315,7 +316,7 @@ static void OnPlayerActivate(Handle event, const char[] name, bool dontBroadcast
 	int client = GetClientOfUserId(userId)
 
 	playerGreeter.GreetPlayer(userId)
-	_clientActivatedEvent.Raise(client)
+	ClientActivated.Raise(client)
 }
 
 public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int &weapon)

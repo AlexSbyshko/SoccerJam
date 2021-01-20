@@ -1,9 +1,9 @@
 static Handle:BHSpeedMultiplierConVar
 static Float:BallHolderSpeedMultiplier
 
-void SpeedAndGravityManaging(ClientActivatedEvent clientActivatedEvent)
+void SpeedAndGravityManaging()
 {
-	clientActivatedEvent.Subscribe(OnClientActivated)
+	ClientActivated.Subscribe(OnClientActivated)
 
 	BHSpeedMultiplierConVar = CreateConVar("sj_ball_holder_speed_multiplier", "0.9", "Ball holder speed multiplier", 0, true, 0.0, true, 1.0)
 	HookConVarChange(BHSpeedMultiplierConVar, OnCVBHSpeedMultiplierChanged)
