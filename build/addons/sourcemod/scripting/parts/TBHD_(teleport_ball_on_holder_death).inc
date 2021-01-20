@@ -1,6 +1,6 @@
-void BallTeleportingOnHolderDeath(ClientDiedEvent clientDiedEvent)
+void BallTeleportingOnHolderDeath()
 {
-	clientDiedEvent.Subscribe(OnClientDied)
+	ClientDied.Subscribe(OnClientDied)
 }
 
 static void OnClientDied(int client)

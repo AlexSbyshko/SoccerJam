@@ -56,6 +56,7 @@ BallReceivedEvent BallReceived
 BallShotEvent BallShot
 BallSpawnedEvent BallSpawned
 ClientActivatedEvent ClientActivated
+ClientDiedEvent ClientDied
 GoalScoredEvent GoalScored
 ShotChargingEndedEvent ShotChargingEnded
 ShotChargingStartedEvent ShotChargingStarted
@@ -119,7 +120,7 @@ static PlayerGreeter playerGreeter
 
 
 
-static ClientDiedEvent _clientDiedEvent
+
 static ClientDyingEvent _clientDyingEvent
 static ClientDisconnectingEvent _clientDisconnectingEvent
 static ClientSpawnedEvent _clientSpawnedEvent
@@ -158,12 +159,13 @@ public void OnPluginStart()
 	BallShot = new BallShotEvent()
 	BallSpawned = new BallSpawnedEvent()
 	ClientActivated = new ClientActivatedEvent()
+	ClientDied = new ClientDiedEvent()
 	GoalScored = new GoalScoredEvent()
 	ShotChargingEnded = new ShotChargingEndedEvent()
 	ShotChargingStarted = new ShotChargingStartedEvent()
 	SjConfigLoaded = new SjConfigLoadedEvent()
 
-	_clientDiedEvent = new ClientDiedEvent()
+	
 	_clientDyingEvent = new ClientDyingEvent()
 	_clientDisconnectingEvent = new ClientDisconnectingEvent()
 	_clientSpawnedEvent = new ClientSpawnedEvent()
@@ -216,7 +218,7 @@ public void OnPluginStart()
 
 	SoundManaging()
 
-	BallTeleportingOnHolderDeath(_clientDiedEvent)
+	BallTeleportingOnHolderDeath()
 
 	KaMapsSupport(_roundStartedEvent)
 
@@ -251,7 +253,7 @@ public void OnPluginStart()
 
 	WeaponsOnSpawnRemoving(_clientSpawnedEvent)
 
-	PlayerRespawning(_clientDiedEvent)
+	PlayerRespawning()
 
 	FragsForKillsDisabling(_clientDyingEvent)
 
@@ -341,7 +343,7 @@ static void OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"))
 
-	_clientDiedEvent.Raise(client)
+	ClientDied.Raise(client)
 }
 
 static void OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)

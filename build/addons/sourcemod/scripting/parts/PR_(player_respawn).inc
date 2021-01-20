@@ -1,6 +1,6 @@
-void PlayerRespawning(ClientDiedEvent clientDiedEvent)
+void PlayerRespawning()
 {
-	clientDiedEvent.Subscribe(OnClientDied)
+	ClientDied.Subscribe(OnClientDied)
 }
 
 static void OnClientDied(int client)
