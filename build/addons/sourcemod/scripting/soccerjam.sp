@@ -7,7 +7,7 @@
 #include <adminmenu>
 #define REQUIRE_PLUGIN
 
-#define SOCCERJAMSOURCE_VERSION	 "2.1.4"
+#define SOCCERJAMSOURCE_VERSION	 "2.1.5"
 #define SOCCERJAMSOURCE_URL "https://github.com/AlexSbyshko/SoccerJam"
 
 typedef UpgradeFunc = function void (int client, float upgradeValue)
@@ -93,7 +93,7 @@ Handle:WarmupUpgradesEnabledConVar
 #include "parts/TU_(team_upgrade)"
 #include "Modules/PlayerUpgradesModule"
 
-public Plugin:myinfo = 
+public Plugin:myinfo =
 {
 	name = "SoccerJam: Source",
 	author = "Alex Sbyshko",
@@ -135,7 +135,7 @@ public OnPluginStart()
 	}
 
 	CreateConVar("soccerjamsource_version", SOCCERJAMSOURCE_VERSION, "SoccerJam: Source Version", FCVAR_SPONLY|FCVAR_UNLOGGED|FCVAR_DONTRECORD|FCVAR_REPLICATED|FCVAR_NOTIFY)
-	
+
 	WarmupUpgradesEnabledConVar = CreateConVar("sj_warmup_upgrades_enabled", "0", "Enable upgrades during Warmup", 0, true, 0.0, true, 1.0)
 	InitPartSystem()
 
@@ -179,7 +179,7 @@ public OnPluginStart()
 	RegisterPart("SG") // Speed and Gravity
 	RegisterPart("SJB") // SJ Builder
 	RegisterPart("SJE") // SJ Entities
-	RegisterPart("SJT") // SJ Timer	
+	RegisterPart("SJT") // SJ Timer
 	RegisterPart("SM") // Sound Manager
 	RegisterPart("SSP") // Swap Spawn Points
 	RegisterPart("TBHD") // Teleport Ball on Holder Death
@@ -205,7 +205,7 @@ public OnPluginStart()
 
 	InitModules()
 	InitParts()
-	
+
 	LoadTranslations("soccerjam.phrases")
 
 	HookEventEx("player_activate", OnPlayerActivate)
@@ -217,7 +217,7 @@ static RegisterModule(Module module)
 	{
 		InitFuncs[InitFuncsCount++] = module.InitFunc
 	}
-	
+
 	if (module.OnPlayerRunCmdFunc != INVALID_FUNCTION)
 	{
 		OnRunCmdFuncs[OnRunCmdFuncCount++] = module.OnPlayerRunCmdFunc
@@ -276,7 +276,7 @@ public OnClientDisconnect(client)
 		if (client == g_BallOwner
 			&& !g_Goal)
 		{
-			ClearBall()			
+			ClearBall()
 		}
 	}
 }
