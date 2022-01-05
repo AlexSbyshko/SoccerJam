@@ -1,9 +1,0 @@
-models/forlix/soccer/soccerball.dx80.vtx
-models/forlix/soccer/soccerball.dx90.vtx
-models/forlix/soccer/soccerball.mdl
-models/forlix/soccer/soccerball.phy
-models/forlix/soccer/soccerball.sw.vtx
-models/forlix/soccer/soccerball.vvd
-models/forlix/soccer/soccerball.xbox.vtx
-materials/models/forlix/soccer/soccerball.vmt
-materials/models/forlix/soccer/soccerball.vtf
